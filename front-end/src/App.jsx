@@ -1,10 +1,8 @@
-import Header from "./components/Header"
+import Error404 from "./pages/Error404"
 
 function App() {
   return (
-    <>
-      <Header/>
-    </>
+    <Error404/>
   )
 }
 
