@@ -25,6 +25,12 @@ footer {
     opacity: 0.75;
 }
 
+.foot-banner a {
+    text-decoration: none;
+    color: #3e3232;
+    opacity: 0.75;
+}
+
 .foot-content {
     padding: 45px 100px;
 }

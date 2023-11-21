@@ -12,7 +12,9 @@ const Footer = () => {
                             <div className="pre-bean"></div>
                             <h3>The Mega Papers</h3>
                         </div>
-                        <p className="mega-para">This is an innovative digital platform designed to revolutionize the way we consume and engage with news. Our Website creates a seamless online space where writers and readers can connect and interact around the news.</p>
+                        <div className="mega-para">
+                            This is an innovative digital platform designed to revolutionize the way we consume and engage with news. Our Website creates a seamless online space where writers and readers can connect and interact around the news.
+                        </div>
                     </div>
                     <div className="categories">
                         <div className="foot-title">
@@ -49,8 +51,8 @@ const Footer = () => {
                 </div>
             </div>
             <div className="foot-banner">
-                <p>Privacy Policy | Terms & Conditions</p>
-                <p>Copyright © The Mega Papers @ 2023</p>
+                <div> <a href="/policy">Privacy Policy | Terms & Conditions</a></div>
+                <div>Copyright © The Mega Papers @ 2023</div>
             </div>
         </footer>
     )
