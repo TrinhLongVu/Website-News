@@ -3,6 +3,8 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import '../styles/footer.css'
 
 const Footer = () => {
+    const today = new Date();
+
     return (
         <footer>
             <div className="foot-content">
@@ -52,7 +54,7 @@ const Footer = () => {
             </div>
             <div className="foot-banner">
                 <div> <a href="/policy">Privacy Policy | Terms & Conditions</a></div>
-                <div>Copyright © The Mega Papers @ 2023</div>
+                <div>Copyright © The Mega Papers @ {today.getFullYear}</div>
             </div>
         </footer>
     )

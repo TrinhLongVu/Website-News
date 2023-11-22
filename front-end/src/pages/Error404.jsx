@@ -22,7 +22,6 @@ const Error404 = () => {
                 </div>
                 </div>
             </div>
-            <Footer/>
         </>
     )
 }
