@@ -89,18 +89,18 @@ footer {
     outline: none;
 }
 
-.category-list {
+.foot-category-list {
     margin-left: 25px;
     list-style-type: none;
     color: #3e3232;
     opacity: 0.75;
 }
 
-.category-list > li {
+.foot-category-list > li {
     margin-bottom: 8px;
 }
 
-.category-list > li > a {
+.foot-category-list > li > a {
     font-size: 12px;
     text-decoration: none;
     color: inherit;
