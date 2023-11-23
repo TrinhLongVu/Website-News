@@ -1,6 +1,6 @@
-import Login from "../components/authen/Login";
-import Register from "../components/authen/Register";
-import "../styles/authen.css";
+import Login from "./Login";
+import Register from "./Register";
+import "./authentication.css";
 
 const Authentication = ({ authenType }) => {
   return (

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import "../styles/footer.css";
+import "./footer.css";
 
 const Footer = () => {
   const today = new Date();

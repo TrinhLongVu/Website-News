@@ -7,7 +7,7 @@
     left: 0;
     right: 0;
     height: 980px;
-    background-image: url("../assets/images/bg-auth.png");
+    background-image: url("../../assets/bg-auth.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -110,7 +110,7 @@ p span {
 .gg-login {
     width: 64px;
     height: 64px;
-    background-image: url("../assets/images/gg.png");
+    background-image: url("../../assets/gg.png");
     border: solid 1px black;
     border-radius: 32px;
     background-position: center;

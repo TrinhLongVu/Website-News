@@ -1,4 +1,4 @@
-import "../../styles/components/category-card.css";
+import "./category-card.css";
 
 const CategoryCard = ({ bg, title }) => {
   return (
