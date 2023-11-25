@@ -1,0 +1,16 @@
+{
+    "writer":[
+        {
+            "ID":"W001", 
+            "Full_name ":"Nguyen Van Be",
+            "Email_address": "nvBe@gmail.com",
+            "Birthday": "12/4/2002",
+            "Gender": "female",
+            "ID_writer_follow": ["W002", "W003", "W004"],
+            "Saved_news": ["A001", "A002", "A003"],
+            "Image_Avatar": "https://vivureviews.com/wp-content/uploads/2022/08/avatar-vo-danh-2.jpg",
+            "ID_article": ["W004", "A004_W005"],
+            "ID_user_follow": ["R001", "W002"]
+        }
+    ]
+}
