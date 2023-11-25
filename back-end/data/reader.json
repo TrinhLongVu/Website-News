@@ -1,0 +1,15 @@
+{
+    "reader": [
+        {
+        "ID":"R001", 
+        "Full_name ":"Nguyen An",
+        "Email_address": "nguyena@gmail.com",
+        "Birthday": "12/3/2002",
+        "Gender": "male",
+        "ID_writer_follow": ["W001", "W002", "W003"],
+        "Saved_news": ["A001", "A002", "A003"],
+        "Image_Avatar": "https://vivureviews.com/wp-content/uploads/2022/08/avatar-vo-danh-2.jpg"
+        }
+        
+    ]
+}
