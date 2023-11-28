@@ -1,9 +1,8 @@
-import Error404 from "./pages/Error404"
+import Home from "./Pages/Home/Home";
+import About from "./pages/About-Us/About";
 
 function App() {
-  return (
-    <Error404/>
-  )
+  return <About/>;
 }
 
-export default App
+export default App;

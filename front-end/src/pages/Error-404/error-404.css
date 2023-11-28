@@ -4,7 +4,7 @@
 .body-404 {
     width: 1260px;
     height: 800px;
-    background-image: url('../assets/images/bg-404.png');
+    background-image: url('../../assets/bg-404.png');
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -52,4 +52,9 @@
     font-family: 'Inknut Antiqua';
     text-decoration: none;
     color: inherit;
+}
+
+.btn-404:hover {
+    background-color: #ffcb00;
+    color: white;
 }
