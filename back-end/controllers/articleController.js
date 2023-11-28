@@ -1,4 +1,6 @@
-exports.getAllArticle = (req, res) => {
+const Article = require('../models/articleModel')
+
+exports.getAllArticle = (req, res, next) => {
     res.status(200).json({
         status: "success",
         data: [{
@@ -6,28 +8,44 @@ exports.getAllArticle = (req, res) => {
             title: 'Nguyen An Nam'
         }]
     });
+    next();
 }
 
-exports.getArticle = (req, res) => {
+exports.getArticle = (req, res, next) => {
     res.status(500).send({
         status: "error",
     })
+    next();
 }
 
-exports.createArticle = (req, res) => {
+exports.createArticle = async (req, res, next) => {
+    try {
+        const newArticle = await Article.create(req.body);
+        res.status(201).json({
+            status: 'success',
+            data: {
+                article: newArticle
+            }
+        })
+    } catch(err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err 
+        })
+    }
+
+}
+
+exports.updateArticle = (req, res, next) => {
     res.status(500).send({
         status: "error",
     })
+    next();
 }
 
-exports.updateArticle = (req, res) => {
+exports.deleteArticle = (req, res, next) => {
     res.status(500).send({
         status: "error",
     })
-}
-
-exports.deleteArticle = (req, res) => {
-    res.status(500).send({
-        status: "error",
-    })
+    next();
 }
