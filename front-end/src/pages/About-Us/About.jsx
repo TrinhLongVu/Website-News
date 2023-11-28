@@ -36,7 +36,10 @@ const About = () => {
             <div className = "team-info-container">
                 <div className = "map"></div>
                 <div className = "info">
-                    <h3><div className = "rectangle"></div>Mega Papers Information</h3>
+                    <h3>
+                        <div className = "rectangle"></div>
+                        Mega Papers Information
+                    </h3>
                     <p><AiOutlineMail /> Email: Management@MegaPapers.News</p>
                     <p><AiOutlinePhone /> Phone Number: +1(234)567-890</p>
                     <p><AiOutlineAim /> Address: 227D Nguyen Van Cu, Ward 4, District 5, Ho Chi Minh City</p>
@@ -46,10 +49,15 @@ const About = () => {
 
             <div className = "member-info-container">
                 <div className = "title-container">
-                    <div className = "rectangle"></div>
+                    <h3>
+                        <div className = "rectangle"></div>
+                        The Mega Papers Team
+                    </h3>
+
+                    {/* <div className = "rectangle"></div>
                     <div className = "info-title">
                         <p>The Mega Papers team</p>
-                    </div>
+                    </div> */}
                 </div>
                 <div className = "member-list">
                     <div className = "member">

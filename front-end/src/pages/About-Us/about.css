@@ -118,6 +118,11 @@
     margin-left: 3%;
     margin-top: 8%;
 }
+
+.info>h3{
+    font-size: larger;
+}
+
 .info>p{
     margin-top: 15px;
     margin-left: 10px;
@@ -127,7 +132,6 @@
     margin-top: 25px;
     width: 1260px;
     height: 350px;
-
 }
 
 .title-container{
@@ -140,6 +144,12 @@
     margin-top: 25px;
 }
 
+.title-container>h3{
+    margin-left: 10px;
+    margin-bottom: auto;
+    font-size:larger;
+}
+
 .rectangle{
     width: 5px;
     height: 12px;
@@ -149,14 +159,7 @@
     align-items: center;
     gap: 6px;
     display: inline-flex;
-    margin-right: 2px;
-}
-
-.info-title{
-    font-size: 20px;
-    font-family: 'Roboto';
-    font-weight: bold;
-    margin-bottom: 10px;
+    margin-right: 3px;
 }
 
 .member-list{
