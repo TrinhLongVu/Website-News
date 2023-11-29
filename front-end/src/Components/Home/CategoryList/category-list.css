@@ -1,6 +1,12 @@
 .categories-list {
     width: 1260px;
+    position: relative;
     display: flex;
     justify-content: space-between;
-    overflow-x: hidden;
+    overflow-x: scroll;
+    scrollbar-color: rgba(0, 255,255, 255);
+}
+
+.categories-list::-webkit-scrollbar {
+    display: none;
 }

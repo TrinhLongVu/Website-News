@@ -1,0 +1,32 @@
+.home-section {
+    margin: 30px 0;
+}
+
+.home-section-banner {
+    margin: 0 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.show-all {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100px;
+    color: #3e3232;
+    text-decoration: none;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.home-section-content {
+    margin-top: 10px;
+}
+
+.article-container {
+    width: 1260px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}

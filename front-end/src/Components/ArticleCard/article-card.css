@@ -1,0 +1,90 @@
+.article-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px 0;
+    padding: 10px;
+    width: 300px;
+    height: 390px;
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    cursor: pointer;
+}
+
+.article-thumbnail {
+    width: 280px;
+    height: 190px;
+    background-size: contain;
+    background-position: center center;
+    border-radius: 12px;
+}
+
+.article-desc {
+    width: 280px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.article-title {
+    white-space: nowrap;
+    width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.article-para {
+    width: 280px;
+    font-size: 12px;
+    color: #3e3232;
+    opacity: 0.75;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-author {
+    padding: 14px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 280px;
+    height: 73px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+}
+
+.author-avt {
+    width: 45px;
+    height: 45px;
+    background-color: white;
+    border: 0.5px solid black;
+    border-radius: 12px;
+}
+
+.author-info {
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.author-name {
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-time {
+    font-size: 14px;
+    color: #3e3232;
+    opacity: 0.75;
+}
+
+.save-btn {
+    cursor: pointer;
+}
