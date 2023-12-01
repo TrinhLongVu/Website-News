@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faEye,
   faTags,
   faMedal,
   faChevronRight,
@@ -8,10 +9,12 @@ import {
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import CategoryList from "../../Components/Home/CategoryList/CategoryList";
-import "./home.css";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
+import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
 
 import image from "../../assets/sport-tag.jpeg";
+
+import "./home.css";
 
 const Home = () => {
   const exampleArticle = {
@@ -26,6 +29,14 @@ const Home = () => {
     time: "2 hours ago",
   };
 
+  const articleList = [
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+  ];
+
   return (
     <>
       <Header />
@@ -34,7 +45,7 @@ const Home = () => {
           <h2>
             <FontAwesomeIcon icon={faTags} /> Categories
           </h2>
-          <a href="" className="show-all">
+          <a href="" className="show-all-btn">
             Show all <FontAwesomeIcon icon={faChevronRight} />
           </a>
         </div>
@@ -45,9 +56,19 @@ const Home = () => {
       <div className="home-section">
         <div className="home-section-banner">
           <h2>
+            <FontAwesomeIcon icon={faEye} /> Most Read
+          </h2>
+        </div>
+        <div className="home-section-content">
+          <ArticleSlider articles={articleList} />
+        </div>
+      </div>
+      <div className="home-section">
+        <div className="home-section-banner">
+          <h2>
             <FontAwesomeIcon icon={faMedal} /> Popular
           </h2>
-          <a href="" className="show-all">
+          <a href="" className="show-all-btn">
             Show all <FontAwesomeIcon icon={faChevronRight} />
           </a>
         </div>
