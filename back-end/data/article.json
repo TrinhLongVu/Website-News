@@ -5,7 +5,7 @@
       "Title": "Israel-Hamas War Amid Hostage Releases, Israel Faces Dilemma Over Resuming Invasion",
       "Category": ["military"],
       "Detail": "The joy unleashed in Israel this weekend with the release of some Israeli hostages from Gaza has created a dilemma for Israel’s leaders, analysts say.\nFor now, Israel is set to continue its invasion of Gaza after a four-day truce that ends on Tuesday morning.\nBut the terms of the truce also allow for the cease-fire to be extended.",
-      "ID-author": "W001",
+      "ID_author": "W001",
       "posted_time": "25/11/2023",
       "view": 200,
       "Image": "https://media.cnn.com/api/v1/images/stellar/prod/231019130234-02-gaza-images-1019.jpg?c=16x9&q=h_720,w_1280,c_fill"
@@ -15,7 +15,7 @@
       "Title": "Exploring the Impact of Climate Change on Global Agriculture",
       "Category": ["environment"],
       "Detail": "Climate change poses a significant threat to global agriculture, affecting crop yields and food security. This article explores the various impacts of climate change on different crops and regions.",
-      "ID-author": "W002",
+      "ID_author": "W002",
       "posted_time": "26/11/2023",
       "view": 150,
       "Image": "https://example.com/image_a001.jpg"
@@ -25,7 +25,7 @@
       "Title": "Advancements in Artificial Intelligence: A Look into the Future",
       "Category": ["technology"],
       "Detail": "Artificial Intelligence (AI) continues to advance rapidly, shaping the future of various industries. This article discusses the latest breakthroughs in AI technology and its potential impact on society.",
-      "ID-author": "W004",
+      "ID_author": "W004",
       "posted_time": "27/11/2023",
       "view": 180,
       "Image": "https://standardsfacility.org/sites/default/files/styles/thematic_widescreen/public/Climate_change_page.JPG?itok=C7f3IiRd"
@@ -35,7 +35,7 @@
       "Title": "The Rise of Sustainable Energy: A Global Perspective",
       "Category": ["energy"],
       "Detail": "As the world shifts towards sustainable energy sources, this article provides a comprehensive overview of the global perspective on renewable energy adoption, challenges, and future prospects.",
-      "ID-author": "W007",
+      "ID_author": "W007",
       "posted_time": "28/11/2023",
       "view": 220,
       "Image": "https://bombaytribune.com/wp-content/uploads/2023/11/IMG_20231116_205220.jpg"
@@ -45,7 +45,7 @@
       "Title": "Discovering Hidden Gems: Unexplored Tourist Destinations Around the World",
       "Category": ["travel"],
       "Detail": "Step off the beaten path and explore uncharted territories. This article unveils some of the world's hidden gems, inviting travelers to discover unique and lesser-known tourist destinations.",
-      "ID-author": "W001",
+      "ID_author": "W001",
       "posted_time": "29/11/2023",
       "view": 130,
       "Image": "https://www.exploreyourworlds.com/wp-content/uploads/2021/01/DSC3050-scaled.jpg"
@@ -55,7 +55,7 @@
       "Title": "Culinary Adventures: Exploring Exotic Flavors Across Continents",
       "Category": ["food"],
       "Detail": "Embark on a journey of taste with exotic flavors from different corners of the world. This article introduces readers to unique and delicious culinary experiences that transcend cultural boundaries.",
-      "ID-author": "W000",
+      "ID_author": "W000",
       "posted_time": "30/11/2023",
       "view": 190,
       "Image": "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/64c395f9403403001d6c0efd.webp"
@@ -65,7 +65,7 @@
       "Title": "The Impact of Social Media on Mental Health: Navigating the Digital Age",
       "Category": ["health"],
       "Detail": "In the era of social media dominance, this article explores the effects of digital platforms on mental health. It addresses challenges and offers insights into maintaining a healthy relationship with technology.",
-      "ID-author": "W008",
+      "ID_author": "W008",
       "posted_time": "1/12/2023",
       "view": 210,
       "Image": "https://res.cloudinary.com/jerrick/image/upload/v1685397700/647520c4365a8f001d7f56ea.jpg"
@@ -75,7 +75,7 @@
       "Title": "Space Exploration: Unveiling the Mysteries Beyond Our Solar System",
       "Category": ["science"],
       "Detail": "Venture into the cosmos as we explore the mysteries of space beyond our solar system. This article delves into recent advancements in space exploration and the quest for extraterrestrial life.",
-      "ID-author": "W009",
+      "ID_author": "W009",
       "posted_time": "2/12/2023",
       "view": 170,
       "Image": "https://ts2.space/wp-content/uploads/2023/11/compressed_img-qfM3BmKnkeDKPdLqXSV2M5Vk.png"
@@ -85,7 +85,7 @@
       "Title": "The Evolution of Fashion: Trends Through the Decades",
       "Category": ["fashion"],
       "Detail": "Take a nostalgic journey through the fashion trends that defined each decade. This article reflects on the evolution of style, from the iconic looks of the past to the contemporary fashion landscape.",
-      "ID-author": "W004",
+      "ID_author": "W004",
       "posted_time": "3/12/2023",
       "view": 160,
       "Image": "https://cdn.thecollector.com/wp-content/uploads/2023/04/wacky-trends-in-fashion-history.jpg"
@@ -95,7 +95,7 @@
       "Title": "The Art of Mindfulness: Cultivating Presence in a Busy World",
       "Category": ["lifestyle"],
       "Detail": "Amidst the chaos of modern life, discover the transformative power of mindfulness. This article explores the art of being present, fostering inner peace, and navigating the challenges of a busy world.",
-      "ID-author": "W005",
+      "ID_author": "W005",
       "posted_time": "4/12/2023",
       "view": 140,
       "Image": "https://media.licdn.com/dms/image/D4D12AQEewCnBNtYRjg/article-cover_image-shrink_720_1280/0/1696413232408?e=2147483647&v=beta&t=dr_Kdfe-_Fryqr8bSUAyC4uy7bgPWo3Jn8Z5T57Q2pM"
