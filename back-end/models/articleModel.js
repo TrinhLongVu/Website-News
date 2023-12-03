@@ -29,6 +29,14 @@ const articleSchema = new Schema({
         type: Number,
         default: 0
     },
+    likes: {
+        type: Number,
+        default: 0
+    },
+    isPriority: {
+        type: Boolean,
+        default: false
+    },
     Image: {
         type: String
     },

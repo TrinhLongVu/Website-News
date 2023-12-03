@@ -1,20 +1,39 @@
 const Article = require('../models/articleModel')
+const fs = require('fs');
 
-exports.getAllArticle = (req, res, next) => {
-    res.status(200).json({
-        status: "success",
-        data: [{
-            id: 1,
-            title: 'Nguyen An Nam'
-        }]
-    });
+exports.getAllArticle = async (req, res, next) => {
+    try {
+        const data = await Article.find()
+        res.status(200).json({
+            status: "success",
+            data: data
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            msg: err
+        })
+    }
     next();
 }
 
-exports.getArticle = (req, res, next) => {
-    res.status(500).send({
-        status: "error",
-    })
+exports.getArticle = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        console.log(id)
+        const data = await Article.findById(id);
+        res.status(200).json({
+            status: "success",
+            data: data
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            msg: err
+        })
+    }
     next();
 }
 
@@ -27,19 +46,69 @@ exports.createArticle = async (req, res, next) => {
                 article: newArticle
             }
         })
-    } catch(err) {
+    } catch (err) {
         res.status(400).json({
             status: "fail",
-            msg: err 
+            msg: err
+        })
+    }
+}
+
+exports.createAllArticle = async (req, res, next) => {
+    try {
+        const filePath = `${__dirname}data\\article.json`.replace('controllers', '');
+        const articles = JSON.parse(fs.readFileSync(filePath, 'utf-8')).article;
+        for (const article of articles) {
+            article.posted_time = new Date();
+            await Article.create(article);
+        }
+        res.status(201).json({
+            status: 'success'
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
         })
     }
 
 }
 
-exports.updateArticle = (req, res, next) => {
-    res.status(500).send({
-        status: "error",
-    })
+exports.updateArticle = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const update = await Article.findByIdAndUpdate(id, req.body, {
+            new: true
+        })
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    }
+    catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
+        })
+    }
+    next();
+}
+
+exports.getTop5Views = async (req, res, next) => {
+    try {
+        const data = await Article.find({ view: { $exists: true } }).sort({ view: -1 }).limit(5);
+        console.log(data)
+        res.status(200).json({
+            status: 'success',
+            data: data
+        })
+    }
+    catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
+        })
+    }
     next();
 }
 
