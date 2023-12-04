@@ -20,7 +20,7 @@ const ArticleCard = ({ article }) => {
   };
 
   const inspectAuthor = () => {
-    if (!event.target.closest(".save-btn")) {
+    if (!event.target.closest(".card-save-btn")) {
       window.location.href = "#";
     }
   };
@@ -47,7 +47,7 @@ const ArticleCard = ({ article }) => {
         <FontAwesomeIcon
           icon={isSaved ? solidBookmark : regularBookmark}
           onClick={saveArticle}
-          className="save-btn"
+          className="card-save-btn"
         />
       </div>
     </div>
