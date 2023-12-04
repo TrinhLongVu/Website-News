@@ -21,7 +21,6 @@ exports.getAllArticle = async (req, res, next) => {
 exports.getArticle = async (req, res, next) => {
     try {
         const id = req.params.id;
-        console.log(id)
         const data = await Article.findById(id);
         res.status(200).json({
             status: "success",
@@ -97,10 +96,26 @@ exports.updateArticle = async (req, res, next) => {
 exports.getTop5Views = async (req, res, next) => {
     try {
         const data = await Article.find({ view: { $exists: true } }).sort({ view: -1 }).limit(5);
-        console.log(data)
         res.status(200).json({
             status: 'success',
             data: data
+        })
+    }
+    catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
+        })
+    }
+    next();
+}
+
+exports.getCategory = async (req, res, next) => {
+    try {
+        const scienceArticles = await Article.find({ Category: { $in: [req.params.name] } }).exec();
+        res.status(200).json({
+            status: 'success',
+            data: scienceArticles
         })
     }
     catch (err) {

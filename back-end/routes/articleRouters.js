@@ -9,9 +9,12 @@ router
     .post(articleController.createArticle)
 
 router
-    .route('create/createAll')
+    .route('/create/createAll')
     .post(articleController.createAllArticle)
 
+router
+    .route('/category/:name')
+    .get(articleController.getCategory)
 router
     .route('/top/getTop5Views')
     .get(articleController.getTop5Views)
