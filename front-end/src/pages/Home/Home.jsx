@@ -15,6 +15,7 @@ import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
 import image from "../../assets/sport-tag.jpeg";
 
 import "./home.css";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 const Home = () => {
   const exampleArticle = {
