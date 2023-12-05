@@ -5,6 +5,7 @@ exports.getAllUsers = (req, res) => {
 }
 
 exports.createUser = (req, res) => {
+    console.log(req.body)
     res.status(500).send({
         status: "error",
     })
