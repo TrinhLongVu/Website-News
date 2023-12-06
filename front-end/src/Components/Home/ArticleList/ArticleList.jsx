@@ -1,7 +1,5 @@
 import "./article-list.css";
 
-import image from "../../../assets/art-tag.jpeg";
-
 const ArticleList = ({ articles }) => {
   const [firstArticle, ...restArticles] = articles;
 

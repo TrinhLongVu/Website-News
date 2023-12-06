@@ -14,12 +14,12 @@ import CategorySlider from "../../Components/Home/CategorySlider/CategorySlider"
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
 
-import image from "../../assets/sport-tag.jpeg";
+import image from "../../assets/social-tag.jpeg";
 
-import "./home.css";
 import ArticlePanel from "../../Components/Home/ArticlePanel/ArticlePanel";
 import ArticleList from "../../Components/Home/ArticleList/ArticleList";
 
+import "./home.css";
 const Home = () => {
   const exampleArticle = {
     thumbnail: image,
