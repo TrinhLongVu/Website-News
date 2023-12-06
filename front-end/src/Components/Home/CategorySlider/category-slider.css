@@ -1,3 +1,16 @@
+.categories-list {
+    width: 1260px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    overflow-x: scroll;
+    scrollbar-color: rgba(0, 255,255, 255);
+}
+
+.categories-list::-webkit-scrollbar {
+    display: none;
+}
+
 .category-card {
     margin: 0 15px;
     width: 170px;
@@ -13,7 +26,7 @@
     position: relative;
 }
 
-.card-bg {
+.category-card-bg {
     width: 168px;
     height: 48px;
     border-radius: 12px;
@@ -23,7 +36,7 @@
     filter: blur(1.5px);
 }
 
-.card-title {
+.category-card-title {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

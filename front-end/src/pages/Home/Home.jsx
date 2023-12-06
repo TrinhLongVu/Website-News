@@ -10,7 +10,7 @@ import {
 
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import CategoryList from "../../Components/Home/CategoryList/CategoryList";
+import CategorySlider from "../../Components/Home/CategorySlider/CategorySlider";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
 
@@ -65,7 +65,7 @@ const Home = () => {
           </a>
         </div>
         <div className="home-section-content">
-          <CategoryList />
+          <CategorySlider />
         </div>
       </div>
       <div className="home-section">
