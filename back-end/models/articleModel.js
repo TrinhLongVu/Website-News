@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
     Title: {
-        type: String, 
+        type: String,
         require: [true, 'A article must have a title']
     },
     Category: {
