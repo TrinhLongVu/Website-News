@@ -13,29 +13,29 @@ import cultureImg from "../../../assets/culture-tag.jpeg";
 import "./category-slider.css";
 const CategorySlider = () => {
   const categoryList = [
-    { img: envImg, title: "Environment" },
-    { img: techImg, title: "Technology" },
-    { img: energyImg, title: "Energy" },
-    { img: travelImg, title: "Travel" },
-    { img: foodImg, title: "Food" },
-    { img: healthImg, title: "Health" },
-    { img: scienceImg, title: "Science" },
-    { img: fashionImg, title: "Fashion" },
-    { img: lifestyleImg, title: "Lifestyle" },
-    { img: socialImg, title: "Social" },
-    { img: cultureImg, title: "Culture" },
+    { img: envImg, name: "Environment", link: "#" },
+    { img: techImg, name: "Technology", link: "#" },
+    { img: energyImg, name: "Energy", link: "#" },
+    { img: travelImg, name: "Travel", link: "#" },
+    { img: foodImg, name: "Food", link: "#" },
+    { img: healthImg, name: "Health", link: "#" },
+    { img: scienceImg, name: "Science", link: "#" },
+    { img: fashionImg, name: "Fashion", link: "#" },
+    { img: lifestyleImg, name: "Lifestyle", link: "#" },
+    { img: socialImg, name: "Social", link: "#" },
+    { img: cultureImg, name: "Culture", link: "#" },
   ];
   return (
     <div className="categories-list">
       {categoryList.map((category, index) => (
-        <a href="" className="category-card">
+        <a href={category.link} className="category-card">
           <div
             className="category-card-bg"
             style={{
               backgroundImage: `url("${category.img}")`,
             }}
           ></div>
-          <h3 className="category-card-title">#{category.title}</h3>
+          <h3 className="category-card-name">#{category.name}</h3>
         </a>
       ))}
     </div>

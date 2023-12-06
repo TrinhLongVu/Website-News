@@ -2,17 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import "./breadcrumbs.css";
 
-const Breadcrumbs = () => {
-  const crumbList = [
-    {
-      name: "Categories",
-      link: "/categories",
-    },
-    {
-      name: "About",
-      link: "/about",
-    },
-  ];
+const Breadcrumbs = ({ crumbList }) => {
   return (
     <>
       <div class="breadcrumbs">
