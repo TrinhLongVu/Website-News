@@ -1,0 +1,115 @@
+.article-list {
+    padding: 20px 20px;
+    width: 1260px;
+    height: 455px;
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.article-list::-webkit-scrollbar {
+    display: none;
+}
+
+.list-big-article {
+    display: flex;
+    align-items: end;
+    margin-right: 10px;
+    padding: 15px 15px;
+    width: 620px;
+    height: 420px;
+    border-radius: 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.list-big-article-info {
+    width: 100%;
+    height: 120px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    cursor: pointer;
+}
+
+.list-big-article-title {
+    padding: 15px 10px;
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-big-article-para {
+    margin: 5px 0;
+    padding: 0 10px;
+    width: 100%;
+    font-size: 15px;
+    color: #3e3232;
+    opacity: 0.75;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.list-small-items {
+    height: 420px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.list-small-card {
+    background-color: white;
+    margin: 0 10px;
+    padding: 10px 10px;
+    width: 490px;
+    height: 200px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    z-index: 5;
+}
+
+.list-small-card-img {
+    width: 180px;
+    height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 12px;
+}
+
+.list-small-card-info {
+    width: 275px;
+    padding: 20px 5px;
+}
+
+.list-small-card-title {
+    white-space: nowrap;
+    width: 100%;
+    font-size: 18px;
+    font-weight: medium;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-small-card-para {
+    margin: 15px 0;
+    width: 100%;
+    font-size: 14px;
+    line-height: 20px;
+    color: #3e3232;
+    opacity: 0.75;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

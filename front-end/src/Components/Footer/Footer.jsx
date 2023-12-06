@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="row-content">
           <div className="mega-about">
             <div className="foot-title">
-              <div className="pre-bean"></div>
+              <div className="foot-pre-bean"></div>
               <h3>The Mega Papers</h3>
             </div>
             <div className="mega-para">
@@ -23,7 +23,7 @@ const Footer = () => {
           </div>
           <div className="categories">
             <div className="foot-title">
-              <div className="pre-bean"></div>
+              <div className="foot-pre-bean"></div>
               <h3>Categories</h3>
             </div>
             <ul className="foot-category-list">
@@ -51,7 +51,7 @@ const Footer = () => {
         <div className="row-content">
           <div className="newsletter">
             <div className="foot-title">
-              <div className="pre-bean"></div>
+              <div className="foot-pre-bean"></div>
               <h3>Newsletters</h3>
             </div>
             <form action="" className="mail-box">
@@ -65,7 +65,7 @@ const Footer = () => {
           </div>
           <div className="social">
             <div className="foot-title">
-              <div className="pre-bean"></div>
+              <div className="foot-pre-bean"></div>
               <h3>Social Network</h3>
             </div>
           </div>

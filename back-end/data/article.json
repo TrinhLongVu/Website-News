@@ -1,104 +1,331 @@
 {
   "article": [
     {
-      "ID": "A000",
       "Title": "Israel-Hamas War Amid Hostage Releases, Israel Faces Dilemma Over Resuming Invasion",
       "Category": ["military"],
       "Detail": "The joy unleashed in Israel this weekend with the release of some Israeli hostages from Gaza has created a dilemma for Israel’s leaders, analysts say.\nFor now, Israel is set to continue its invasion of Gaza after a four-day truce that ends on Tuesday morning.\nBut the terms of the truce also allow for the cease-fire to be extended.",
-      "ID-author": "W001",
+      "ID_author": "W001",
       "posted_time": "25/11/2023",
       "view": 200,
-      "Image": "https://vivureviews.com/wp-content/uploads/2022/08/avatar-vo-danh-2.jpg"
+      "Image": "https://media.cnn.com/api/v1/images/stellar/prod/231019130234-02-gaza-images-1019.jpg?c=16x9&q=h_720,w_1280,c_fill"
     },
     {
-      "ID": "A001",
       "Title": "Exploring the Impact of Climate Change on Global Agriculture",
       "Category": ["environment"],
       "Detail": "Climate change poses a significant threat to global agriculture, affecting crop yields and food security. This article explores the various impacts of climate change on different crops and regions.",
-      "ID-author": "W002",
+      "ID_author": "W002",
       "posted_time": "26/11/2023",
       "view": 150,
       "Image": "https://example.com/image_a001.jpg"
     },
     {
-      "ID": "A002",
       "Title": "Advancements in Artificial Intelligence: A Look into the Future",
       "Category": ["technology"],
       "Detail": "Artificial Intelligence (AI) continues to advance rapidly, shaping the future of various industries. This article discusses the latest breakthroughs in AI technology and its potential impact on society.",
-      "ID-author": "W004",
+      "ID_author": "W004",
       "posted_time": "27/11/2023",
       "view": 180,
-      "Image": "https://example.com/image_a002.jpg"
+      "Image": "https://standardsfacility.org/sites/default/files/styles/thematic_widescreen/public/Climate_change_page.JPG?itok=C7f3IiRd"
     },
     {
-      "ID": "A003",
       "Title": "The Rise of Sustainable Energy: A Global Perspective",
       "Category": ["energy"],
       "Detail": "As the world shifts towards sustainable energy sources, this article provides a comprehensive overview of the global perspective on renewable energy adoption, challenges, and future prospects.",
-      "ID-author": "W007",
+      "ID_author": "W007",
       "posted_time": "28/11/2023",
       "view": 220,
-      "Image": "https://example.com/image_a003.jpg"
+      "Image": "https://bombaytribune.com/wp-content/uploads/2023/11/IMG_20231116_205220.jpg"
     },
     {
-      "ID": "A004",
       "Title": "Discovering Hidden Gems: Unexplored Tourist Destinations Around the World",
       "Category": ["travel"],
       "Detail": "Step off the beaten path and explore uncharted territories. This article unveils some of the world's hidden gems, inviting travelers to discover unique and lesser-known tourist destinations.",
-      "ID-author": "W001",
+      "ID_author": "W001",
       "posted_time": "29/11/2023",
       "view": 130,
-      "Image": "https://example.com/image_a004.jpg"
+      "Image": "https://www.exploreyourworlds.com/wp-content/uploads/2021/01/DSC3050-scaled.jpg"
     },
     {
-      "ID": "A005",
       "Title": "Culinary Adventures: Exploring Exotic Flavors Across Continents",
       "Category": ["food"],
       "Detail": "Embark on a journey of taste with exotic flavors from different corners of the world. This article introduces readers to unique and delicious culinary experiences that transcend cultural boundaries.",
-      "ID-author": "W000",
+      "ID_author": "W000",
       "posted_time": "30/11/2023",
       "view": 190,
-      "Image": "https://example.com/image_a005.jpg"
+      "Image": "https://res.cloudinary.com/jerrick/image/upload/d_642250b563292b35f27461a7.png,f_jpg,fl_progressive,q_auto,w_1024/64c395f9403403001d6c0efd.webp"
     },
     {
-      "ID": "A006",
       "Title": "The Impact of Social Media on Mental Health: Navigating the Digital Age",
       "Category": ["health"],
       "Detail": "In the era of social media dominance, this article explores the effects of digital platforms on mental health. It addresses challenges and offers insights into maintaining a healthy relationship with technology.",
-      "ID-author": "W008",
+      "ID_author": "W008",
       "posted_time": "1/12/2023",
       "view": 210,
-      "Image": "https://example.com/image_a006.jpg"
+      "Image": "https://res.cloudinary.com/jerrick/image/upload/v1685397700/647520c4365a8f001d7f56ea.jpg"
     },
     {
-      "ID": "A007",
       "Title": "Space Exploration: Unveiling the Mysteries Beyond Our Solar System",
       "Category": ["science"],
       "Detail": "Venture into the cosmos as we explore the mysteries of space beyond our solar system. This article delves into recent advancements in space exploration and the quest for extraterrestrial life.",
-      "ID-author": "W009",
+      "ID_author": "W009",
       "posted_time": "2/12/2023",
       "view": 170,
-      "Image": "https://example.com/image_a007.jpg"
+      "Image": "https://ts2.space/wp-content/uploads/2023/11/compressed_img-qfM3BmKnkeDKPdLqXSV2M5Vk.png"
     },
+    
     {
-      "ID": "A008",
       "Title": "The Evolution of Fashion: Trends Through the Decades",
       "Category": ["fashion"],
       "Detail": "Take a nostalgic journey through the fashion trends that defined each decade. This article reflects on the evolution of style, from the iconic looks of the past to the contemporary fashion landscape.",
-      "ID-author": "W004",
+      "ID_author": "W004",
       "posted_time": "3/12/2023",
       "view": 160,
-      "Image": "https://example.com/image_a008.jpg"
+      "Image": "https://cdn.thecollector.com/wp-content/uploads/2023/04/wacky-trends-in-fashion-history.jpg"
     },
     {
-      "ID": "A009",
       "Title": "The Art of Mindfulness: Cultivating Presence in a Busy World",
       "Category": ["lifestyle"],
       "Detail": "Amidst the chaos of modern life, discover the transformative power of mindfulness. This article explores the art of being present, fostering inner peace, and navigating the challenges of a busy world.",
-      "ID-author": "W005",
+      "ID_author": "W005",
       "posted_time": "4/12/2023",
       "view": 140,
-      "Image": "https://example.com/image_a009.jpg"
+      "Image": "https://media.licdn.com/dms/image/D4D12AQEewCnBNtYRjg/article-cover_image-shrink_720_1280/0/1696413232408?e=2147483647&v=beta&t=dr_Kdfe-_Fryqr8bSUAyC4uy7bgPWo3Jn8Z5T57Q2pM"
+    },
+    {
+      "Title": "Yoga: A Way of Life",
+      "Category": ["health", "lifestyle"],
+      "Detail": "Discover the benefits of yoga for your body, mind and spirit. Learn the basics of yoga poses, breathing techniques and meditation. This article will help you start your own yoga practice and enjoy its positive effects.",
+      "ID_author": "W012",
+      "posted_time": "2023-12-04T11:23:45.123Z",
+      "rating": 0,
+      "view": 87,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2015/07/02/10/40/woman-828888_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "Save Water, Save Life",
+      "Category": ["environment", "social"],
+      "Detail": "Water is essential for life, but it is also a scarce and precious resource. Learn why water conservation is important, how you can save water at home and in your community, and what are the consequences of water scarcity. This article will inspire you to take action and join the global movement to save water.",
+      "ID_author": "W034",
+      "posted_time": "2023-12-04T12:34:56.789Z",
+      "rating": 0,
+      "view": 102,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/03/27/16/50/beach-2179624_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "A World Without Water: A Dystopian Scenario",
+      "Category": ["fiction", "science"],
+      "Detail": "Imagine a world where water is no longer available, where droughts, wars and diseases have wiped out most of the living beings. How would you survive in such a world? What would you do to find water? This article will take you on a journey to a dystopian future where water is the most valuable and rare commodity.",
+      "ID_author": "W045",
+      "posted_time": "2023-12-04T13:45:67.456Z",
+      "rating": 0,
+      "view": 76,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2016/11/29/10/07/desert-1868628_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "The Importance of Education: A Lifelong Learning Process",
+      "Category": ["education", "personal"],
+      "Detail": "Education is not just a matter of going to school and getting a degree. It is a lifelong process of acquiring knowledge, skills and values that can help you grow as a person and contribute to society. This article will explain why education is important, what are the benefits of education, and how you can pursue your educational goals.",
+      "ID_author": "W056",
+      "posted_time": "2023-12-04T14:56:78.123Z",
+      "rating": 0,
+      "view": 92,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2014/05/02/21/49/laptop-336373_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "Teachers’ Day: A Tribute to the Gurus",
+      "Category": ["culture", "celebration"],
+      "Detail": "Teachers’ day is a special occasion to honor and appreciate the teachers who have shaped our lives and guided us in our learning journey. This article will tell you the history and significance of teachers’ day, how it is celebrated in different countries, and how you can express your gratitude to your teachers.",
+      "ID_author": "W067",
+      "posted_time": "2023-12-04T15:67:89.789Z",
+      "rating": 0,
+      "view": 85,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2015/05/15/14/50/conference-768441_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "Road Safety: A Matter of Life and Death",
+      "Category": ["safety", "travel"],
+      "Detail": "Road accidents are one of the leading causes of death and injury in the world. They can be prevented by following some simple rules and precautions. This article will give you some tips on how to drive safely, how to avoid road hazards, and what to do in case of an emergency.",
+      "ID_author": "W078",
+      "posted_time": "2023-12-04T16:78:90.456Z",
+      "rating": 0,
+      "view": 94,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2016/02/13/12/26/traffic-1197825_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "Pollution: A Threat to Our Planet",
+      "Category": ["environment", "health"],
+      "Detail": "Pollution is the contamination of the natural environment by human activities. It can have harmful effects on the health of humans, animals and plants, as well as on the quality of life. This article will explain the causes and types of pollution, the impacts of pollution, and the solutions to reduce pollution.",
+      "ID_author": "W089",
+      "posted_time": "2023-12-04T17:89:01.123Z",
+      "rating": 0,
+      "view": 101,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2014/12/22/00/04/pollution-576367_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "Healthy Eating: A Balance of Taste and Nutrition",
+      "Category": ["health", "food"],
+      "Detail": "Healthy eating is not about depriving yourself of your favorite foods or following a strict diet. It is about making smart choices that can help you maintain a healthy weight, prevent diseases, and boost your energy. This article will give you some tips on how to eat healthy, what are the benefits of healthy eating, and how you can enjoy your food without guilt.",
+      "ID_author": "W090",
+      "posted_time": "2023-12-04T18:90:12.789Z",
+      "rating": 0,
+      "view": 88,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/09/16/19/21/salad-2756467_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "Indian Independence: A Struggle for Freedom",
+      "Category": ["history", "politics"],
+      "Detail": "Indian independence was the result of a long and hard-fought struggle against the British colonial rule. It involved various movements, leaders, and events that shaped the history of India and the world. This article will give you an overview of the Indian independence movement, its causes, phases, and outcomes.",
+      "ID_author": "W091",
+      "posted_time": "2023-12-04T19:91:23.456Z",
+      "rating": 0,
+      "view": 95,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/08/15/15/14/india-2645374_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "Home Remedies: Natural Cures for Common Ailments",
+      "Category": ["health", "home"],
+      "Detail": "Home remedies are simple and effective treatments that can be made from natural ingredients found in your kitchen or garden. They can help you deal with common ailments such as cold, cough, headache, stomach ache, and more. This article will give you some examples of home remedies, how they work, and how to use them safely.",
+      "ID_author": "W092",
+      "posted_time": "2023-12-04T20:92:34.123Z",
+      "rating": 0,
+      "view": 89,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/03/14/14/49/spices-2140692_960_720.jpg",
+      "comments": []
+    },
+    {
+      "Title": "The Art of Origami: How to Fold Paper into Beautiful Shapes",
+      "Category": ["culture"],
+      "Detail": "Origami is the Japanese art of folding paper into various shapes and forms, such as animals, flowers, and geometric figures. Origami is not only a fun and creative hobby, but also a way to express oneself and appreciate the beauty of nature. This article will teach you the basics of origami, from the types of paper and tools you need, to the common symbols and techniques you will encounter. You will also learn how to make some simple and elegant origami models, such as a crane, a butterfly, and a lotus.",
+      "ID_author": "W012",
+      "posted_time": "2023-12-04T11:23:45.123Z",
+      "rating": 0,
+      "view": 87,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2016/11/29/13/00/origami-1869708_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "The History and Significance of Diwali: The Festival of Lights",
+      "Category": ["culture"],
+      "Detail": "Diwali is one of the most important and celebrated festivals in India and among Hindus around the world. It marks the victory of light over darkness, good over evil, and knowledge over ignorance. Diwali is a time of joy, gratitude, and prosperity, as well as a time to honor the gods and goddesses, especially Lakshmi, the goddess of wealth and fortune. This article will explain the origins and legends of Diwali, the rituals and customs associated with it, and the ways people celebrate it today.",
+      "ID_author": "W034",
+      "posted_time": "2023-12-04T12:34:56.789Z",
+      "rating": 0,
+      "view": 105,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/10/17/16/10/diwali-2860832_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "The Magic of Harry Potter: How a Boy Wizard Captivated the World",
+      "Category": ["culture"],
+      "Detail": "Harry Potter is a series of seven fantasy novels written by J.K. Rowling, which chronicles the adventures of a young wizard, Harry Potter, and his friends, Ron Weasley and Hermione Granger, as they attend Hogwarts School of Witchcraft and Wizardry and fight against the dark lord, Voldemort. Harry Potter is not only a literary phenomenon, but also a cultural phenomenon, as it has inspired millions of fans across the globe, spawned a successful film franchise, and created a vast and vibrant fandom. This article will explore the themes and messages of Harry Potter, the impact and influence of Harry Potter on popular culture, and the reasons why Harry Potter is still relevant and beloved today.",
+      "ID_author": "W045",
+      "posted_time": "2023-12-04T13:45:12.456Z",
+      "rating": 0,
+      "view": 234,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/01/31/21/32/harry-potter-2026884_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "The Beauty and Diversity of African Masks: A Guide to Their Meaning and Use",
+      "Category": ["culture"],
+      "Detail": "African masks are one of the most recognizable and fascinating forms of African art. They are not only artistic expressions, but also powerful symbols of the identity, beliefs, and values of the people who make and wear them. African masks are used for various purposes, such as rituals, ceremonies, festivals, and performances. They can represent ancestors, spirits, animals, or mythical beings. They can also convey emotions, moods, or messages. This article will introduce you to the different types and styles of African masks, the materials and techniques used to create them, and the cultural and historical context behind them.",
+      "ID_author": "W056",
+      "posted_time": "2023-12-04T14:56:23.789Z",
+      "rating": 0,
+      "view": 76,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2016/11/18/19/01/africa-1837435_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "The Mystery and Charm of Chinese Calligraphy: An Introduction to the Ancient Art of Writing",
+      "Category": ["culture"],
+      "Detail": "Chinese calligraphy is the art of writing Chinese characters with a brush and ink, following certain rules and principles. Chinese calligraphy is not only a way of communication, but also a way of expression, aesthetics, and philosophy. Chinese calligraphy has a long and rich history, dating back to the Shang dynasty (1600-1046 BC). It has evolved into various styles and schools, reflecting the personality and mood of the calligraphers. Chinese calligraphy is also a form of meditation, as it requires concentration, balance, and harmony. This article will give you an overview of the origins and development of Chinese calligraphy, the basic elements and tools of Chinese calligraphy, and the benefits and enjoyment of practicing Chinese calligraphy.",
+      "ID_author": "W067",
+      "posted_time": "2023-12-04T15:12:34.567Z",
+      "rating": 0,
+      "view": 92,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/09/07/08/54/money-2724241_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "The Music and Meaning of Flamenco: A Passionate and Expressive Art Form from Spain",
+      "Category": ["culture"],
+      "Detail": "Flamenco is a musical genre and a dance form that originated in Andalusia, the southern region of Spain, in the 18th century. Flamenco is a fusion of various influences, such as Gypsy, Moorish, Jewish, and Christian cultures. Flamenco is characterized by its intense and emotional vocals, its rhythmic and complex guitar playing, and its graceful and dynamic movements. Flamenco is not only a performance, but also a way of life, a culture, and a spirit. This article will explain the history and evolution of flamenco, the main components and styles of flamenco, and the significance and symbolism of flamenco.",
+      "ID_author": "W078",
+      "posted_time": "2023-12-04T16:23:45.678Z",
+      "rating": 0,
+      "view": 101,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2016/11/29/09/49/adult-1868750_960_720.jpg",
+      "comments": []
+    },
+  
+    {
+      "Title": "The Legend and Lore of Halloween: How a Celtic Festival Became a Global Celebration",
+      "Category": ["culture"],
+      "Detail": "Halloween is a popular and festive holiday that is celebrated on October 31st every year. Halloween is a time of fun, excitement, and creativity, as people dress up in costumes, carve pumpkins, go trick-or-treating, watch horror movies, and attend parties. Halloween is also a time of mystery, magic, and superstition, as people believe in ghosts, witches, vampires, and other supernatural beings. Halloween has a long and fascinating history, tracing back to the ancient Celtic festival of Samhain, which marked the end of summer and the beginning of winter. This article will explore the origins and traditions of Halloween, the symbols and meanings of Halloween, and the ways people celebrate Halloween around the world.",
+      "ID_author": "W089",
+      "posted_time": "2023-12-04T17:34:56.789Z",
+      "rating": 0,
+      "view": 156,
+      "likes": 0,
+      "isPriority": false,
+      "Image": "https://cdn.pixabay.com/photo/2017/10/31/19/05/web-2904130_960_720.jpg",
+      "comments": []
     }
   ]
 }
