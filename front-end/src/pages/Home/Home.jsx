@@ -3,6 +3,7 @@ import {
   faEye,
   faTags,
   faMedal,
+  faHeart,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,7 +16,7 @@ import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
 import image from "../../assets/sport-tag.jpeg";
 
 import "./home.css";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import ArticlePanel from "../../Components/Home/ArticlePanel/ArticlePanel";
 
 const Home = () => {
   const exampleArticle = {
@@ -62,6 +63,20 @@ const Home = () => {
         </div>
         <div className="home-section-content">
           <ArticleSlider articles={articleList} />
+        </div>
+      </div>
+      <div className="home-section">
+        <div className="home-section-banner">
+          <h2>
+            <FontAwesomeIcon icon={faHeart} /> Most Liked
+          </h2>
+        </div>
+        <div className="home-section-content">
+          <div className="article-container">
+            <ArticlePanel article={exampleArticle} />
+            <ArticlePanel article={exampleArticle} />
+            <ArticlePanel article={exampleArticle} />
+          </div>
         </div>
       </div>
       <div className="home-section">
