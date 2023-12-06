@@ -28,21 +28,21 @@ const ArticleCard = ({ article }) => {
   return (
     <div className="article-card" onClick={readArticle}>
       <div
-        className="article-thumbnail"
+        className="article-card-thumbnail"
         style={{ backgroundImage: `url(${article.thumbnail})` }}
       ></div>
-      <div className="article-desc">
-        <h4 className="article-title">{article.title}</h4>
-        <div className="article-para">{article.content}</div>
+      <div className="article-card-desc">
+        <h4 className="article-card-title">{article.title}</h4>
+        <div className="article-card-para">{article.content}</div>
       </div>
-      <div className="article-author" onClick={inspectAuthor}>
+      <div className="article-card-author" onClick={inspectAuthor}>
         <div
-          className="author-avt"
+          className="card-author-avt"
           style={{ backgroundImage: `url(${article.author.avatar})` }}
         ></div>
-        <div className="author-info">
-          <h3 className="author-name">{article.author.name}</h3>
-          <div className="post-time">{article.time}</div>
+        <div className="card-author-info">
+          <h3 className="card-author-name">{article.author.name}</h3>
+          <div className="card-post-time">{article.time}</div>
         </div>
         <FontAwesomeIcon
           icon={isSaved ? solidBookmark : regularBookmark}
