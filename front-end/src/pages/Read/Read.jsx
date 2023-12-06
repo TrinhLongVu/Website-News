@@ -13,7 +13,7 @@ import {
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
-import image from "../../assets/sport-tag.jpeg";
+import image from "../../assets/tech-tag.jpeg";
 import "./read.css";
 
 const Read = () => {
@@ -105,7 +105,7 @@ const Read = () => {
 
                 <textarea
                   className="comment-input-box-readonly"
-                  value="Can't wait to see how Netflix Chopper's Adaption!!! this is such a great Series"
+                  value="Can't wait to see how Netflix Chopper's Adaption!!! This is such a great Series"
                   readOnly
                 ></textarea>
               </div>
