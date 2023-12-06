@@ -9,7 +9,7 @@ import cultureImg from "../../../assets/culture-tag.jpeg";
 
 import "./category-slider.css";
 const CategorySlider = () => {
-  const categoryData = [
+  const categoryList = [
     { img: cultureImg, title: "Culture" },
     { img: foodImg, title: "Food" },
     { img: artImg, title: "Art" },
@@ -21,8 +21,8 @@ const CategorySlider = () => {
   ];
   return (
     <div className="categories-list">
-      {categoryData.map((category, index) => (
-        <div className="category-card">
+      {categoryList.map((category, index) => (
+        <a href="" className="category-card">
           <div
             className="category-card-bg"
             style={{
@@ -30,7 +30,7 @@ const CategorySlider = () => {
             }}
           ></div>
           <h3 className="category-card-title">#{category.title}</h3>
-        </div>
+        </a>
       ))}
     </div>
   );
