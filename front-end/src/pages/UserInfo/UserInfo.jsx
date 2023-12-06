@@ -72,7 +72,7 @@ const UserInfo = () => {
           <h1 className="account-title">Account Information</h1>
 
           <div className="info-field">
-            <h3>Username</h3>
+            <h3 className="title-input">Username</h3>
             <input
               className="info-inp"
               type="text"
@@ -85,7 +85,7 @@ const UserInfo = () => {
           </div>
 
           <div className="info-field">
-            <h3>Email</h3>
+            <h3 className="title-input">Email</h3>
             <input
               className="info-inp"
               type="email"
@@ -98,7 +98,7 @@ const UserInfo = () => {
           </div>
 
           <div className="info-field">
-            <h3>Bio</h3>
+            <h3 className="title-input">Bio</h3>
             <textarea
               className="bio-inp"
               name="bio"
@@ -114,7 +114,7 @@ const UserInfo = () => {
           <h1 className="personal-title">Personal Information</h1>
 
           <div className="info-field">
-            <h3>Birthday</h3>
+            <h3 className="title-input">Birthday</h3>
             <input
               className="info-inp"
               type="date"
@@ -128,7 +128,7 @@ const UserInfo = () => {
           </div>
 
           <div className="info-field">
-            <h3>Gender</h3>
+            <h3 className="title-input">Gender</h3>
             <input
               className="info-inp"
               type="text"
@@ -142,7 +142,7 @@ const UserInfo = () => {
           </div>
 
           <div className="info-field">
-            <h3>Phone number</h3>
+            <h3 className="title-input">Phone number</h3>
             <input
               className="info-inp"
               type="tel"
@@ -156,7 +156,7 @@ const UserInfo = () => {
           </div>
 
           <div className="info-field">
-            <h3>Address</h3>
+            <h3 className="title-input">Address</h3>
             <input
               className="info-inp"
               type="text"
