@@ -1,11 +1,13 @@
 import Home from "./Pages/Home/Home";
-import About from "./pages/About-Us/About";
-import MultiCategory from "./Pages/MultiCategory/MultiCategory";
+// import About from "./pages/About-Us/About";
+// import MultiCategory from "./Pages/MultiCategory/MultiCategory";
+import SingleCategory from "./Pages/SingleCategory/SingleCategory";
 
 function App() {
   return (
     <>
-      <MultiCategory />
+      {/* <SingleCategory pageCategory="Technology" /> */}
+      <Home />
     </>
   );
 }

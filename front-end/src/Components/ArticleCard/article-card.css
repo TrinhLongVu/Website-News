@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 10px;
+    margin: 15px 7.5px;
     width: 300px;
     height: 390px;
     border-radius: 12px;
@@ -14,7 +15,8 @@
 .article-card-thumbnail {
     width: 280px;
     height: 190px;
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center center;
     border-radius: 12px;
 }
