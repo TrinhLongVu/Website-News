@@ -26,7 +26,7 @@ exports.createUser = async (req, res, next) => {
         // check username is Taken
         const isTaken = await User.findOne({ UserName });
 
-        // Nếu username is Taken, return fail
+        // If username is Taken, return fail
         if (isTaken) {
             return res.status(400).json({
                 status: "fail",
@@ -68,16 +68,62 @@ exports.createUser = async (req, res, next) => {
 }
 
 
-exports.getUser = (req, res) => {
-    res.status(500).send({
-        status: "error",
-    })
+exports.getUser = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        // Find the user by ID and delete it
+        const finduser = await User.findById(_id);
+
+        if (!finduser) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        res.status(201).json({
+            status: 'success',
+            data: finduser
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
 }
 
-exports.updateUser = (req, res) => {
-    res.status(500).send({
-        status: "error",
-    })
+exports.updateUser = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        const update = await User.findByIdAndUpdate(_id, req.body, {
+            new: true
+        })
+
+        if (!update) {
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Update fail.',
+            });
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+    next();
 }
 
 exports.deleteUser = async (req, res, next) => {
