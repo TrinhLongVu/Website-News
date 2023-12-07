@@ -1,35 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSeedling,
-  faGears,
-  faChargingStation,
-  faPlaneDeparture,
-  faHamburger,
-  faHandHoldingMedical,
-  faFlask,
-  faShirt,
-  faUsers,
-  faCocktail,
-  faUsersRays,
-} from "@fortawesome/free-solid-svg-icons";
-
-import envImg from "../../assets/env-tag.jpeg";
-import techImg from "../../assets/tech-tag.jpeg";
-import energyImg from "../../assets/energy-tag.jpeg";
-import travelImg from "../../assets/travel-tag.jpeg";
-import foodImg from "../../assets/food-tag.jpeg";
-import healthImg from "../../assets/health-tag.jpeg";
-import scienceImg from "../../assets/science-tag.jpeg";
-import fashionImg from "../../assets/fashion-tag.jpeg";
-import lifestyleImg from "../../assets/lifestyle-tag.jpeg";
-import socialImg from "../../assets/social-tag.jpeg";
-import cultureImg from "../../assets/culture-tag.jpeg";
 
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import image from "../../assets/env-tag.jpeg";
+
+import categoryList from "../../GlobalVars";
 
 import "./single-category.css";
 const SingleCategory = ({ pageCategory }) => {
@@ -44,21 +21,7 @@ const SingleCategory = ({ pageCategory }) => {
     },
   ];
 
-  const bannerCategoryList = [
-    { icon: faSeedling, name: "Environment", img: envImg },
-    { icon: faGears, name: "Technology", img: techImg },
-    { icon: faChargingStation, name: "Energy", img: energyImg },
-    { icon: faPlaneDeparture, name: "Travel", img: travelImg },
-    { icon: faHamburger, name: "Food", img: foodImg },
-    { icon: faHandHoldingMedical, name: "Health", img: healthImg },
-    { icon: faFlask, name: "Science", img: scienceImg },
-    { icon: faShirt, name: "Fashion", img: fashionImg },
-    { icon: faCocktail, name: "Lifestyle", img: lifestyleImg },
-    { icon: faUsers, name: "Social", img: socialImg },
-    { icon: faUsersRays, name: "Culture", img: cultureImg },
-  ];
-
-  const bannerCategory = bannerCategoryList.find(
+  const bannerCategory = categoryList.find(
     (category) => category.name === pageCategory
   );
 

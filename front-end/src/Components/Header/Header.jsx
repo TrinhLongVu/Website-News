@@ -11,6 +11,8 @@ import {
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
 
+import categoryList from "../../GlobalVars";
+
 const Header = () => {
   const timeoutRef = useRef(null);
 
@@ -65,7 +67,6 @@ const Header = () => {
   ];
 
   const userInfo = {
-    username: "Simon",
     avatar: "https://i.pravatar.cc/301",
   };
 
@@ -93,14 +94,11 @@ const Header = () => {
               onMouseEnter={openCategoriesDropdown}
               onMouseLeave={closeCategoriesDropdown}
             >
-              <a href="">Culture</a>
-              <a href="">Food</a>
-              <a href="">Art</a>
-              <a href="">Technology</a>
-              <a href="">Fashion</a>
-              <a href="">Health</a>
-              <a href="">Sport</a>
-              <a href="">Movies</a>
+              {categoryList.map((category, index) => (
+                <a href={category.link} key={index}>
+                  {category.name}
+                </a>
+              ))}
             </div>
           )}
         </div>

@@ -16,6 +16,5 @@
 .article-container {
     width: 1260px;
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
 }

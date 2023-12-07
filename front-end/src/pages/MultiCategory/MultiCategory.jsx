@@ -1,18 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSeedling,
-  faGears,
-  faChargingStation,
-  faPlaneDeparture,
-  faHamburger,
-  faHandHoldingMedical,
-  faChevronRight,
-  faFlask,
-  faShirt,
-  faUsers,
-  faCocktail,
-  faUsersRays,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import Header from "../../Components/Header/Header";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
@@ -22,6 +9,8 @@ import Footer from "../../Components/Footer/Footer";
 import image from "../../assets/science-tag.jpeg";
 
 import "./multi-category.css";
+
+import categoryList from "../../GlobalVars";
 
 const MultiCategory = () => {
   const routeList = [
@@ -48,80 +37,12 @@ const MultiCategory = () => {
     exampleArticle,
     exampleArticle,
   ];
-  const categoriesList = [
-    {
-      icon: faSeedling,
-      name: "Environment",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faGears,
-      name: "Technology",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faChargingStation,
-      name: "Energy",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faPlaneDeparture,
-      name: "Travel",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faHamburger,
-      name: "Food",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faHandHoldingMedical,
-      name: "Health",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faFlask,
-      name: "Science",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faShirt,
-      name: "Fashion",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faCocktail,
-      name: "Lifestyle",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faUsers,
-      name: "Social",
-      link: "#",
-      articles: articleList,
-    },
-    {
-      icon: faUsersRays,
-      name: "Culture",
-      link: "#",
-      articles: articleList,
-    },
-  ];
 
   return (
     <>
       <Header />
       <Breadcrumbs crumbList={routeList} />
-      {categoriesList.map((category, index) => (
+      {categoryList.map((category, index) => (
         <div key={index} className="home-section">
           <div className="home-section-banner">
             <h2>
@@ -133,7 +54,7 @@ const MultiCategory = () => {
           </div>
           <div className="home-section-content">
             <div className="article-container">
-              {category.articles.map((article, articleIndex) => (
+              {articleList.map((article, articleIndex) => (
                 <ArticleCard key={articleIndex} article={article} />
               ))}
             </div>

@@ -8,22 +8,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./footer.css";
 
+import categoryList from "../../GlobalVars";
+
 const Footer = () => {
   const today = new Date();
-
-  const categoryList = [
-    { link: "#", name: "Environment" },
-    { link: "#", name: "Technology" },
-    { link: "#", name: "Energy" },
-    { link: "#", name: "Travel" },
-    { link: "#", name: "Food" },
-    { link: "#", name: "Health" },
-    { link: "#", name: "Science" },
-    { link: "#", name: "Fashion" },
-    { link: "#", name: "Lifestyle" },
-    { link: "#", name: "Social" },
-    { link: "#", name: "Culture" },
-  ];
 
   return (
     <footer>
