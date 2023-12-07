@@ -6,7 +6,7 @@ import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import image from "../../assets/env-tag.jpeg";
 
-import categoryList from "../../GlobalVars";
+import { categoryList } from "../../Global";
 
 import "./single-category.css";
 const SingleCategory = ({ pageCategory }) => {
@@ -55,7 +55,7 @@ const SingleCategory = ({ pageCategory }) => {
           {bannerCategory.name}
         </div>
       )}
-      <div className="article-container">
+      <div className="single-category-article-container">
         <ArticleCard article={exampleArticle} />
         <ArticleCard article={exampleArticle} />
         <ArticleCard article={exampleArticle} />

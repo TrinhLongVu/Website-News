@@ -11,7 +11,7 @@ import {
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
 
-import categoryList from "../../GlobalVars";
+import { categoryList } from "../../Global";
 
 const Header = () => {
   const timeoutRef = useRef(null);

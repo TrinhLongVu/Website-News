@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./footer.css";
 
-import categoryList from "../../GlobalVars";
+import { categoryList } from "../../Global";
 
 const Footer = () => {
   const today = new Date();

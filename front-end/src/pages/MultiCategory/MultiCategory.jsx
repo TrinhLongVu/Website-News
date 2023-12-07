@@ -10,7 +10,7 @@ import image from "../../assets/science-tag.jpeg";
 
 import "./multi-category.css";
 
-import categoryList from "../../GlobalVars";
+import { categoryList } from "../../Global";
 
 const MultiCategory = () => {
   const routeList = [

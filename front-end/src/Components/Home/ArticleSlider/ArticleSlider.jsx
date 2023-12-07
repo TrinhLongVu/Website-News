@@ -5,7 +5,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 import "./article-slider.css";
 
-import image from "../../../assets/social-tag.jpeg";
+import { calcTime } from "../../../Global";
 
 const ArticleSlider = () => {
   const sliderRef = useRef(null);
@@ -38,33 +38,15 @@ const ArticleSlider = () => {
       }
     }
   };
-  const exampleArticle = {
-    thumbnail: image,
-    title:
-      "Opening Day of the Boating Season so let's set sail to the big blue sea",
-    content:
-      "So, you finally went to your first boxing class and learned the basics of the sport. You also learned that it’s recommended to wrap your hands before putting on the gloves. But there are times when you just don’t feel like wrapping them and you wonder why you even need them. Well, this blog is going to explain the benefits of wrapping your hands.",
-    author: {
-      name: "James adnaklndnadkjn",
-      avatar: "https://picsum.photos/200/300",
-    },
-    time: "2 hours ago",
-  };
 
-  const articleList = [
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-  ];
-
-  const [data, setData] = useState(null);
+  const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/article/top/getTop5Views")
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((json) => {
+        setArticleList(json.data);
+      });
   }, []);
 
   return (
@@ -75,12 +57,12 @@ const ArticleSlider = () => {
             key={idx}
             className="article-slider-item"
             style={{
-              backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.25)), url(${article.thumbnail})`,
+              backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.25)), url(${article.Image})`,
             }}
           >
-            <h2>{article.title}</h2>
-            <h4>{article.author.name}</h4>
-            <h5>{article.time}</h5>
+            <h2>{article.Title}</h2>
+            <h4>{article.ID_author}</h4>
+            <h5>{calcTime(article.posted_time)}</h5>
           </div>
         ))}
         <div className="article-slider-btn slider-left" onClick={scrollLeft}>

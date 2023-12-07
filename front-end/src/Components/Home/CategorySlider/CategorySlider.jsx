@@ -1,4 +1,4 @@
-import categoryList from "../../../GlobalVars";
+import { categoryList } from "../../../Global";
 
 import "./category-slider.css";
 const CategorySlider = () => {
