@@ -8,8 +8,7 @@ exports.getAllArticle = async (req, res, next) => {
             status: "success",
             data: data
         });
-    }
-    catch (err) {
+    } catch (err) {
         res.status(400).json({
             status: 'fail',
             msg: err
@@ -26,8 +25,7 @@ exports.getArticle = async (req, res, next) => {
             status: "success",
             data: data
         });
-    }
-    catch (err) {
+    } catch (err) {
         res.status(400).json({
             status: 'fail',
             msg: err
@@ -83,8 +81,7 @@ exports.updateArticle = async (req, res, next) => {
             status: 'success',
             data: update
         })
-    }
-    catch (err) {
+    } catch (err) {
         res.status(500).send({
             status: "error",
             msg: err
@@ -95,13 +92,18 @@ exports.updateArticle = async (req, res, next) => {
 
 exports.getTop5Views = async (req, res, next) => {
     try {
-        const data = await Article.find({ view: { $exists: true } }).sort({ view: -1 }).limit(5);
+        const data = await Article.find({
+            view: {
+                $exists: true
+            }
+        }).sort({
+            view: -1
+        }).limit(5);
         res.status(200).json({
             status: 'success',
             data: data
         })
-    }
-    catch (err) {
+    } catch (err) {
         res.status(500).send({
             status: "error",
             msg: err
@@ -112,13 +114,42 @@ exports.getTop5Views = async (req, res, next) => {
 
 exports.getCategory = async (req, res, next) => {
     try {
-        const scienceArticles = await Article.find({ Category: { $in: [req.params.name] } }).exec();
+        const article = await Article.find({
+            Category: {
+                $in: [req.params.name]
+            }
+        }).exec();
         res.status(200).json({
             status: 'success',
-            data: scienceArticles
+            data: article
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
         })
     }
-    catch (err) {
+    next();
+}
+
+exports.getPagination = async (req, res, next) => {
+    const query = req.query
+    const skip = (query.page - 1) * query.limit
+    try {
+        const dt = await Article.find({
+            Category: {
+                $in: [query.category]
+            }
+        })
+            .skip(skip)
+            .limit(query.limit)
+            .exec()
+        res.status(200).json({
+            status: 'success',
+            data: dt
+        })
+        
+    } catch (err) {
         res.status(500).send({
             status: "error",
             msg: err

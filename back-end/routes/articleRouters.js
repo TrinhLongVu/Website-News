@@ -15,9 +15,14 @@ router
 router
     .route('/category/:name')
     .get(articleController.getCategory)
+
 router
     .route('/top/getTop5Views')
     .get(articleController.getTop5Views)
+
+router 
+    .route('/page/pagination')
+    .get(articleController.getPagination)
 
 router
     .route('/:id')
