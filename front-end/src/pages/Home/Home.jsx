@@ -34,14 +34,6 @@ const Home = () => {
     time: "2 hours ago",
   };
 
-  const articleSliderList = [
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-  ];
-
   const newArticleList = [
     exampleArticle,
     exampleArticle,
@@ -75,7 +67,7 @@ const Home = () => {
           </h2>
         </div>
         <div className="home-section-content">
-          <ArticleSlider articles={articleSliderList} />
+          <ArticleSlider />
         </div>
       </div>
       <div className="home-section">
