@@ -25,17 +25,62 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export const categoryList = [
-  { icon: faSeedling, name: "Environment", img: envImg, link: "" },
-  { icon: faGears, name: "Technology", img: techImg, link: "" },
-  { icon: faChargingStation, name: "Energy", img: energyImg, link: "" },
-  { icon: faPlaneDeparture, name: "Travel", img: travelImg, link: "" },
-  { icon: faHamburger, name: "Food", img: foodImg, link: "" },
-  { icon: faHandHoldingMedical, name: "Health", img: healthImg, link: "" },
-  { icon: faFlask, name: "Science", img: scienceImg, link: "" },
-  { icon: faShirt, name: "Fashion", img: fashionImg, link: "" },
-  { icon: faCocktail, name: "Lifestyle", img: lifestyleImg, link: "" },
-  { icon: faUsers, name: "Social", img: socialImg, link: "" },
-  { icon: faUsersRays, name: "Culture", img: cultureImg, link: "" },
+  {
+    icon: faSeedling,
+    name: "Environment",
+    img: envImg,
+    link: "/categories/environment",
+  },
+  {
+    icon: faGears,
+    name: "Technology",
+    img: techImg,
+    link: "/categories/technology",
+  },
+  {
+    icon: faChargingStation,
+    name: "Energy",
+    img: energyImg,
+    link: "/categories/energy",
+  },
+  {
+    icon: faPlaneDeparture,
+    name: "Travel",
+    img: travelImg,
+    link: "/categories/travel",
+  },
+  { icon: faHamburger, name: "Food", img: foodImg, link: "/categories/food" },
+  {
+    icon: faHandHoldingMedical,
+    name: "Health",
+    img: healthImg,
+    link: "/categories/health",
+  },
+  {
+    icon: faFlask,
+    name: "Science",
+    img: scienceImg,
+    link: "/categories/science",
+  },
+  {
+    icon: faShirt,
+    name: "Fashion",
+    img: fashionImg,
+    link: "/categories/fashion",
+  },
+  {
+    icon: faCocktail,
+    name: "Lifestyle",
+    img: lifestyleImg,
+    link: "/categories/lifestyle",
+  },
+  { icon: faUsers, name: "Social", img: socialImg, link: "/categories/social" },
+  {
+    icon: faUsersRays,
+    name: "Culture",
+    img: cultureImg,
+    link: "/categories/culture",
+  },
 ];
 
 export const calcTime = (postedTime) => {

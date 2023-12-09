@@ -23,11 +23,7 @@
     position: relative;
     cursor: pointer;
     float: left;
-}
-
-.crumb a {
     text-decoration: none;
-    color: inherit;
 }
 
 .crumb:after {

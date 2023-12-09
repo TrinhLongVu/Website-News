@@ -1,14 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../../components/Header/Header";
-
 import "./error-404.css";
+
+import { Link } from "react-router-dom";
 
 const Error404 = () => {
   return (
     <>
-      <Header />
       <div className="body-404">
         <div className="content-404">
           <div className="title-404">
@@ -23,9 +22,9 @@ const Error404 = () => {
             <a href="" className="btn-404">
               Go Back
             </a>
-            <a href="" className="btn-404">
+            <Link to="/" className="btn-404">
               Go Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>

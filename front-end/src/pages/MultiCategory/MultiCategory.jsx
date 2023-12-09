@@ -1,16 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../../Components/Header/Header";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
-import Footer from "../../Components/Footer/Footer";
 
 import image from "../../assets/science-tag.jpeg";
 
 import "./multi-category.css";
 
 import { categoryList } from "../../Global";
+import { Link } from "react-router-dom";
 
 const MultiCategory = () => {
   const routeList = [
@@ -40,7 +39,6 @@ const MultiCategory = () => {
 
   return (
     <>
-      <Header />
       <Breadcrumbs crumbList={routeList} />
       {categoryList.map((category, index) => (
         <div key={index} className="home-section">
@@ -48,9 +46,9 @@ const MultiCategory = () => {
             <h2>
               <FontAwesomeIcon icon={category.icon} /> {category.name}
             </h2>
-            <a href={category.link} className="show-all-btn">
+            <Link to={category.link} className="show-all-btn">
               Show all <FontAwesomeIcon icon={faChevronRight} />
-            </a>
+            </Link>
           </div>
           <div className="home-section-content">
             <div className="article-container">
@@ -61,7 +59,6 @@ const MultiCategory = () => {
           </div>
         </div>
       ))}
-      <Footer />
     </>
   );
 };

@@ -9,6 +9,7 @@ import {
 import "./footer.css";
 
 import { categoryList } from "../../Global";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const today = new Date();
@@ -39,9 +40,12 @@ const Footer = () => {
             </div>
             <div className="foot-section-content" id="foot-categories">
               {categoryList.map((category, idx) => (
-                <a href={category.link} key={idx}>
+                <Link to={category.link} key={idx}>
                   {category.name}
-                </a>
+                </Link>
+                // <a href={category.link} key={idx}>
+                //   {category.name}
+                // </a>
               ))}
             </div>
           </div>

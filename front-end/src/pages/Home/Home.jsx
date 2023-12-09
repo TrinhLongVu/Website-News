@@ -8,18 +8,17 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import CategorySlider from "../../Components/Home/CategorySlider/CategorySlider";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
-
-import image from "../../assets/social-tag.jpeg";
-
 import ArticlePanel from "../../Components/Home/ArticlePanel/ArticlePanel";
 import ArticleList from "../../Components/Home/ArticleList/ArticleList";
 
+import image from "../../assets/social-tag.jpeg";
+
 import "./home.css";
+
+import { Link } from "react-router-dom";
 const Home = () => {
   const exampleArticle = {
     thumbnail: image,
@@ -46,15 +45,14 @@ const Home = () => {
 
   return (
     <>
-      <Header />
       <div className="home-section">
         <div className="home-section-banner">
           <h2>
             <FontAwesomeIcon icon={faTags} /> Categories
           </h2>
-          <a href="" className="show-all-btn">
+          <Link to="/categories" className="show-all-btn">
             Show all <FontAwesomeIcon icon={faChevronRight} />
-          </a>
+          </Link>
         </div>
         <div className="home-section-content">
           <CategorySlider />
@@ -115,7 +113,6 @@ const Home = () => {
           <ArticleList articles={newArticleList} />
         </div>
       </div>
-      <Footer />
     </>
   );
 };

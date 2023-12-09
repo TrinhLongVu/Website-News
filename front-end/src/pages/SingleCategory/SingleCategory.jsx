@@ -1,7 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import image from "../../assets/env-tag.jpeg";
@@ -9,11 +7,15 @@ import image from "../../assets/env-tag.jpeg";
 import { categoryList } from "../../Global";
 
 import "./single-category.css";
-const SingleCategory = ({ pageCategory }) => {
+
+import { useParams } from "react-router-dom";
+const SingleCategory = () => {
+  const { name } = useParams();
+  let pageCategory = name.charAt(0).toUpperCase() + name.slice(1);
   const routeList = [
     {
       name: pageCategory,
-      link: "/categories/environment",
+      link: `/categories/${name}`,
     },
     {
       name: "Categories",
@@ -39,7 +41,6 @@ const SingleCategory = ({ pageCategory }) => {
   };
   return (
     <>
-      <Header />
       <Breadcrumbs crumbList={routeList} />
       {bannerCategory && (
         <div
@@ -67,7 +68,6 @@ const SingleCategory = ({ pageCategory }) => {
         <ArticleCard article={exampleArticle} />
         <ArticleCard article={exampleArticle} />
       </div>
-      <Footer />
     </>
   );
 };

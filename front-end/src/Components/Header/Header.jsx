@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
@@ -73,9 +73,9 @@ const Header = () => {
   let notiNum = 0;
   return (
     <header>
-      <a className="logo" href="#">
+      <Link to="/" className="logo">
         THE MEGA PAPERS
-      </a>
+      </Link>
       <div className="list-shower-container">
         <div className="list-shower">
           <div
@@ -83,7 +83,7 @@ const Header = () => {
             onMouseEnter={openCategoriesDropdown}
             onMouseLeave={closeCategoriesDropdown}
           >
-            <a href="">Categories</a>
+            <Link to="/categories">Categories</Link>
             <div className="dropdown-ico">
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
@@ -95,9 +95,9 @@ const Header = () => {
               onMouseLeave={closeCategoriesDropdown}
             >
               {categoryList.map((category, index) => (
-                <a href={category.link} key={index}>
+                <Link to={category.link} key={index}>
                   {category.name}
-                </a>
+                </Link>
               ))}
             </div>
           )}
