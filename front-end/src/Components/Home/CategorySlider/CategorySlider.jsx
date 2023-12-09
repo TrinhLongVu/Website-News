@@ -4,8 +4,8 @@ import "./category-slider.css";
 const CategorySlider = () => {
   return (
     <div className="categories-list">
-      {categoryList.map((category) => (
-        <a href={category.link} className="category-card">
+      {categoryList.map((category, idx) => (
+        <a href={category.link} key={idx} className="category-card">
           <div
             className="category-card-bg"
             style={{

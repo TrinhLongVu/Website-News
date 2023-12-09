@@ -38,8 +38,10 @@ const Footer = () => {
               </div>
             </div>
             <div className="foot-section-content" id="foot-categories">
-              {categoryList.map((category) => (
-                <a href={category.link}>{category.name}</a>
+              {categoryList.map((category, idx) => (
+                <a href={category.link} key={idx}>
+                  {category.name}
+                </a>
               ))}
             </div>
           </div>

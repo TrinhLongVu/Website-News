@@ -1,0 +1,121 @@
+.cmt-section {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.cmt-cnt {
+    font-family: 'Inter';
+    padding: 0 30px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#cmt-icon {
+    margin: 0 10px;
+}
+
+
+.cmt-input-box {
+    font-family: 'Inter';
+    width: 100%;
+    margin: 30px 0;
+    padding: 20px 20px;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cmt-avt {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 1px solid black;
+}
+
+textarea {
+    resize: none;
+    padding: 10px;
+    width: 90%;
+    font-size: 18px;
+    border: 1px solid black;
+    border-radius: 10px 10px 10px 0;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+.send-cmt-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #f8f8f8;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.send-cmt-btn:hover {
+    background-color: #ccd1d9;
+}
+
+.other-cmt-box {
+    font-family: 'Inter';
+    margin: 10px 0;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.other-cmt-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-name {
+    margin-left: 20px;
+}
+
+.other-cmt-content {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    background-color: white;
+    font-size: 18px;
+    border: 1px solid black;
+    border-radius: 0 10px 10px 10px;
+}
+
+.msg-box {
+    height: 150px;
+    font-family: 'Inter';
+    font-size: 20px;
+    color: #3e3232;
+    opacity: 0.75;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.msg-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.cmt-hr {
+    border: 0;
+    height: 2px;
+    width: 50%;
+    margin: 30px auto;
+    background: rgba(62, 50, 50, 0.75);;
+}
