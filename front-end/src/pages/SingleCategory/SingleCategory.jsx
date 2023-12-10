@@ -1,3 +1,5 @@
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
@@ -8,10 +10,24 @@ import { categoryList } from "../../Global";
 
 import "./single-category.css";
 
-import { useParams } from "react-router-dom";
 const SingleCategory = () => {
   const { name } = useParams();
+  const navigate = useNavigate();
+
   let pageCategory = name.charAt(0).toUpperCase() + name.slice(1);
+
+  const isValidCategory = (categoryName) => {
+    return categoryList.some(
+      (category) => category.name.toLowerCase() === categoryName.toLowerCase()
+    );
+  };
+
+  useEffect(() => {
+    if (!isValidCategory(name)) {
+      navigate("*");
+    }
+  }, []);
+
   const routeList = [
     {
       name: pageCategory,

@@ -3,9 +3,13 @@ import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
 import "./error-404.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Error404 = () => {
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1); // This will go back to the last page visited
+  };
   return (
     <>
       <div className="body-404">
@@ -19,9 +23,9 @@ const Error404 = () => {
           </div>
           <div className="explain-404">OOPS !!! SOMETHING WENT WRONG !!!</div>
           <div className="nav-btn">
-            <a href="" className="btn-404">
+            <Link to="#" className="btn-404" onClick={goBack}>
               Go Back
-            </a>
+            </Link>
             <Link to="/" className="btn-404">
               Go Home
             </Link>

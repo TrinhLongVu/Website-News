@@ -180,6 +180,13 @@ header {
     transition: all 0.15s ease;
 }
 
+.following-name {
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .dropdown-menu a:first-child:hover {
     border-radius: 12px 12px 0 0;
 }

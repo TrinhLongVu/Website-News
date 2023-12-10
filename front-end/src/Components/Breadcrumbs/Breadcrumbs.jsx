@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 const Breadcrumbs = ({ crumbList }) => {
   return (
     <>
-      <div class="breadcrumbs">
-        {crumbList.reverse().map((crumb, index) => (
-          <Link to={crumb.link} className="crumb">
+      <div className="breadcrumbs">
+        {crumbList.reverse().map((crumb, idx) => (
+          <Link key={idx} to={crumb.link} className="crumb">
             {crumb.name}
           </Link>
         ))}

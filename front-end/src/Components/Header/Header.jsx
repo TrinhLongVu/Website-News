@@ -55,7 +55,7 @@ const Header = () => {
   });
 
   const following = {
-    username: "Simon",
+    username: "Simon Zacki Sa Murasaki",
     avatar: "https://i.pravatar.cc/300",
   };
   const following_list = [
@@ -127,7 +127,7 @@ const Header = () => {
                       className="following-avt"
                       style={{ backgroundImage: `url(${following.avatar})` }}
                     ></div>
-                    {following.username}
+                    <div className="following-name">{following.username}</div>
                   </a>
                 ))
               ) : (
@@ -167,13 +167,13 @@ const Header = () => {
               Saved
             </a>
             <hr />
-            <a href="">
+            <Link>
               <FontAwesomeIcon
                 icon={faRightFromBracket}
                 className="profile-ico"
               />
               Sign out
-            </a>
+            </Link>
           </div>
         )}
       </div>

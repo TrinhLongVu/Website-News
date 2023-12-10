@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
@@ -37,7 +38,7 @@ const Register = () => {
         </button>
       </form>
       <div className="authen-route">
-        Already have an account? <a href="">Sign in</a>
+        Already have an account? <Link to="/authentication/login">Sign In</Link>
       </div>
     </>
   );
