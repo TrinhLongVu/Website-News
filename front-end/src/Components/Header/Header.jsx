@@ -7,6 +7,7 @@ import {
   faUser,
   faRightFromBracket,
   faBookmark,
+  faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
@@ -71,6 +72,7 @@ const Header = () => {
   };
 
   let notiNum = 0;
+  const isAuthenticated = false;
   return (
     <header>
       <Link to="/" className="logo">
@@ -143,40 +145,49 @@ const Header = () => {
           className="search-input"
           placeholder="Search Articles"
         />
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
       </form>
-      <div className="noti">
-        <div className="noti-bell">
-          <FontAwesomeIcon icon={faBell} />
-        </div>
-        {notiNum > 0 && <div className="noti-num">{notiNum}</div>}
-      </div>
-      <div
-        className="avt-dropdown-btn"
-        style={{ backgroundImage: `url(${userInfo.avatar})` }}
-        onClick={showAvatarDropdown}
-      >
-        {showAvtDropdown && (
-          <div className="dropdown-menu" id="avt-dropdown">
-            <a href="">
-              <FontAwesomeIcon icon={faUser} className="profile-ico" />
-              Profile
-            </a>
-            <a href="">
-              <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
-              Saved
-            </a>
-            <hr />
-            <Link>
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                className="profile-ico"
-              />
-              Sign out
-            </Link>
+      {isAuthenticated ? (
+        <>
+          <div className="noti">
+            <div className="noti-bell">
+              <FontAwesomeIcon icon={faBell} />
+            </div>
+            {notiNum > 0 && <div className="noti-num">{notiNum}</div>}
           </div>
-        )}
-      </div>
+          <div
+            className="avt-dropdown-btn"
+            style={{ backgroundImage: `url(${userInfo.avatar})` }}
+            onClick={showAvatarDropdown}
+          >
+            {showAvtDropdown && (
+              <div className="dropdown-menu" id="avt-dropdown">
+                <a href="">
+                  <FontAwesomeIcon icon={faUser} className="profile-ico" />
+                  Profile
+                </a>
+                <a href="">
+                  <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
+                  Saved
+                </a>
+                <hr />
+                <Link>
+                  <FontAwesomeIcon
+                    icon={faRightFromBracket}
+                    className="profile-ico"
+                  />
+                  Sign out
+                </Link>
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <Link to="/authentication/login" className="head-login-btn">
+          LOGIN
+          <FontAwesomeIcon icon={faRightToBracket} className="head-login-ico" />
+        </Link>
+      )}
     </header>
   );
 };

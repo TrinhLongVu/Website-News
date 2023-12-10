@@ -3,12 +3,12 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import image from "../../assets/env-tag.jpeg";
 
 import { categoryList } from "../../Global";
 
 import "./single-category.css";
+import ArticleShelf from "../../Components/AricleShelf/ArticleShelf";
 
 const SingleCategory = () => {
   const { name } = useParams();
@@ -55,6 +55,24 @@ const SingleCategory = () => {
     },
     time: "2 hours ago",
   };
+
+  const exampleArticleList = [
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+    exampleArticle,
+  ];
+
   return (
     <>
       <Breadcrumbs crumbList={routeList} />
@@ -72,18 +90,7 @@ const SingleCategory = () => {
           {bannerCategory.name}
         </div>
       )}
-      <div className="single-category-article-container">
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-        <ArticleCard article={exampleArticle} />
-      </div>
+      <ArticleShelf articles={exampleArticleList} />
     </>
   );
 };

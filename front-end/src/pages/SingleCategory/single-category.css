@@ -17,9 +17,3 @@
 .category-banner-icon {
     margin: 0 15px;
 }
-
-.single-category-article-container {
-    width: 1260px;
-    display: flex;
-    flex-wrap: wrap;
-}

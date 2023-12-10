@@ -14,7 +14,7 @@ const ArticleCard = ({ article }) => {
   };
 
   const readArticle = () => {
-    if (!event.target.closest(".article-author")) {
+    if (!event.target.closest(".article-card-author")) {
       window.location.href = "/";
     }
   };
