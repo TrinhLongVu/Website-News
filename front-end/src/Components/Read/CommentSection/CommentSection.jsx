@@ -15,7 +15,7 @@ const CommentSection = ({ article, isAuthenticated }) => {
   const [comments, setComments] = useState(["hello"]);
 
   const sendComment = (event) => {
-    const cmtInput = document.querySelector("textarea");
+    const cmtInput = document.querySelector(".cmt-input-field");
     cmtInput.style.height = "auto";
     cmtInput.style.width = "90%";
     if (commentInput.trim() !== "") {
@@ -47,6 +47,7 @@ const CommentSection = ({ article, isAuthenticated }) => {
           <div className="cmt-input-box">
             <a href="#" className="cmt-avt"></a>
             <textarea
+              className="cmt-input-field"
               placeholder="What do you think?"
               value={commentInput}
               readOnly={!isAuthenticated}

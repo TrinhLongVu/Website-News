@@ -13,11 +13,9 @@ import {
   faBookmark as faSave,
 } from "@fortawesome/free-regular-svg-icons";
 
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import image from "../../assets/tech-tag.jpeg";
-import ArticleFrame from "../../Components/Read/ReadFrame/ArticleFrame";
+import ArticleFrame from "../../Components/Read/ArticleFrame/ArticleFrame";
 import CommentSection from "../../Components/Read/CommentSection/CommentSection";
 
 import "./read.css";
@@ -49,7 +47,6 @@ const Read = () => {
 
   return (
     <>
-      <Header />
       <div className="read-page">
         <div className="read-page-left">
           <ArticleFrame />
@@ -85,8 +82,6 @@ const Read = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };

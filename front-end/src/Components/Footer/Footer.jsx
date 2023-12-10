@@ -43,9 +43,6 @@ const Footer = () => {
                 <Link to={category.link} key={idx}>
                   {category.name}
                 </Link>
-                // <a href={category.link} key={idx}>
-                //   {category.name}
-                // </a>
               ))}
             </div>
           </div>

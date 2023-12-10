@@ -38,7 +38,7 @@
     border: 1px solid black;
 }
 
-textarea {
+.cmt-input-field {
     resize: none;
     padding: 10px;
     width: 90%;
@@ -47,7 +47,7 @@ textarea {
     border-radius: 10px 10px 10px 0;
 }
 
-textarea:focus {
+.cmt-input-field:focus {
     outline: none;
 }
 
