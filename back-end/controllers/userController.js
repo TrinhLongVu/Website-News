@@ -1,7 +1,11 @@
 const fs = require('fs');
 const User = require('../models/userModel')
 
-const FunctionForUser = require('./function/functionForUser')
+//=========================== FUNCTION =========================================================================
+function checkIfElementExists(element, array) {
+    return array.includes(element);
+}
+//=============================================================================================================
 
 exports.getAllUsers = async (req, res, next) => {
     try {
@@ -233,7 +237,7 @@ exports.getWriter = async (req, res, next) => {
         //==== Set statusFollow: return 'Followed' or 'Have not followed'
         const _id_user = req.body._id;
         statusFollow = 'Have not followed'
-        if (FunctionForUser.checkIfElementExists(_id_user, find_user_writer.ID_user_follow)) {
+        if (checkIfElementExists(_id_user, find_user_writer.ID_user_follow)) {
             statusFollow = 'Followed'
         }
 
@@ -294,7 +298,7 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
         }
 
 
-        if (FunctionForUser.checkIfElementExists(_id_user, find_user_writer.ID_user_follow)) {
+        if (checkIfElementExists(_id_user, find_user_writer.ID_user_follow)) {
             //   Followed => Unfollow
             //========================== Delete ID =========================================
 
