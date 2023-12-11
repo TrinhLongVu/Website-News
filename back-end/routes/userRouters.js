@@ -22,11 +22,9 @@ router
 
 
 router
-    .route('/follow/:id')  // :id of writer
-    .patch(userController.followWriter)
+    .route('/pages/:id')  // :id of writer
+    .get(userController.getWriter)
+    .patch(userController.Follow_Or_UnFollow_Writer) // To Follow or Unfollow a writer (:id is writer's id, User's id is in response body) 
 
-router
-    .route('/unfollow/:id')  // :id of writer
-    .patch(userController.UnfollowWriter)
 
 module.exports = router;

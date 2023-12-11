@@ -1,6 +1,8 @@
 const fs = require('fs');
 const User = require('../models/userModel')
 
+const FunctionForUser = require('./function/functionForUser')
+
 exports.getAllUsers = async (req, res, next) => {
     try {
         const alldata = await User.find()
@@ -33,6 +35,7 @@ exports.createUser = async (req, res, next) => {
                 msg: "Username is already taken",
             });
         }
+
 
         //===========check confirm Password==========================
 
@@ -108,13 +111,12 @@ exports.createAllUser = async (req, res, next) => {
 
 }
 
-
 exports.getUser = async (req, res, next) => {
     try {
 
         const _id = req.params.id;
 
-        // Find the user by ID and delete it
+        // Find the user by ID 
         const finduser = await User.findById(_id);
 
         if (!finduser) {
@@ -197,8 +199,60 @@ exports.deleteUser = async (req, res, next) => {
 }
 
 
+//===============================    WRITER     =====================================================
 
-exports.followWriter = async (req, res, next) => {
+exports.getWriter = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        // Find the user by ID 
+        const find_user_writer = await User.findById(_id);
+
+        if (!find_user_writer) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        //==== Check writer, If role is "writer"
+
+        if (find_user_writer.Role != "writer") {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Not Writer.',
+            });
+        }
+
+
+
+        //==== Set statusFollow: return 'Followed' or 'Have not followed'
+        const _id_user = req.body._id;
+        statusFollow = 'Have not followed'
+        if (FunctionForUser.checkIfElementExists(_id_user, find_user_writer.ID_user_follow)) {
+            statusFollow = 'Followed'
+        }
+
+
+
+        res.status(201).json({
+            status: 'success',
+            statusFollow: statusFollow,
+            data: find_user_writer
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
     try {
 
         const _id_writer = req.params.id;
@@ -240,17 +294,33 @@ exports.followWriter = async (req, res, next) => {
         }
 
 
-        //========================== PUSH ID =========================================
+        if (FunctionForUser.checkIfElementExists(_id_user, find_user_writer.ID_user_follow)) {
+            //   Followed => Unfollow
+            //========================== Delete ID =========================================
 
-        find_user_user.ID_follow_writer.push(_id_writer);
-        find_user_writer.ID_user_follow.push(_id_user);
+            find_user_user.ID_follow_writer = find_user_user.ID_follow_writer.filter(function (element) {
+                return element !== _id_writer;
+            });
+
+            find_user_writer.ID_user_follow = find_user_writer.ID_user_follow.filter(function (element) {
+                return element !== _id_user;
+            });
+
+        }
+        else {
+            //  'Have not followed' => following
+            //========================== PUSH ID =========================================
+
+            find_user_user.ID_follow_writer.push(_id_writer);
+            find_user_writer.ID_user_follow.push(_id_user);
+
+        }
 
         //========================== UPDATE WRITE AND USER=========================================
 
         const update_writer = await User.findByIdAndUpdate(_id_writer, find_user_writer, {
             new: true
         })
-
 
         const update_user = await User.findByIdAndUpdate(_id_user, find_user_user, {
             new: true
@@ -263,93 +333,6 @@ exports.followWriter = async (req, res, next) => {
             return res.status(404).json({
                 status: 'fail',
                 msg: 'Follow fail.',
-            });
-        }
-
-        res.status(201).json({
-            status: 'success',
-            data: { update_user, update_writer }
-        })
-    } catch (err) {
-        res.status(400).json({
-            status: "fail",
-            msg: err
-        })
-    }
-    next();
-}
-
-
-exports.UnfollowWriter = async (req, res, next) => {
-    try {
-
-        const _id_writer = req.params.id;
-
-        //====================find writer====================
-        // Find the user by ID 
-        const find_user_writer = await User.findById(_id_writer);
-
-        if (!find_user_writer) {
-            // If the user with the specified ID is not found, return an error response
-            return res.status(404).json({
-                status: 'fail',
-                msg: 'Writer not found.',
-            });
-        }
-
-        //==== Check writer, If role is "writer"
-
-        if (find_user_writer.Role != "writer") {
-            // If the user with the specified ID is not found, return an error response
-            return res.status(404).json({
-                status: 'fail',
-                msg: 'Not Writer.',
-            });
-        }
-
-
-        //====================find user====================
-        const _id_user = req.body._id;
-        // Find the user by ID 
-        const find_user_user = await User.findById(_id_user);
-
-        if (!find_user_user) {
-            // If the user with the specified ID is not found, return an error response
-            return res.status(404).json({
-                status: 'fail',
-                msg: 'Writer not found.',
-            });
-        }
-
-
-        //========================== Delete ID =========================================
-
-        find_user_user.ID_follow_writer = find_user_user.ID_follow_writer.filter(function (element) {
-            return element !== _id_writer;
-        });
-
-        find_user_writer.ID_user_follow = find_user_writer.ID_user_follow.filter(function (element) {
-            return element !== _id_user;
-        });
-
-        //========================== UPDATE WRITE AND USER=========================================
-
-        const update_writer = await User.findByIdAndUpdate(_id_writer, find_user_writer, {
-            new: true
-        })
-
-
-        const update_user = await User.findByIdAndUpdate(_id_user, find_user_user, {
-            new: true
-        })
-
-        //=========================================================================
-
-
-        if (!update_writer || !update_user) {
-            return res.status(404).json({
-                status: 'fail',
-                msg: 'Unfollow fail.',
             });
         }
 
