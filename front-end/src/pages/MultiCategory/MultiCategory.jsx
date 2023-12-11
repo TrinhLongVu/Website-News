@@ -2,14 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import ArticleCard from "../../Components/ArticleCard/ArticleCard";
-
-import image from "../../assets/science-tag.jpeg";
 
 import "./multi-category.css";
-
+import { useState, useEffect } from "react";
 import { categoryList } from "../../Global";
 import { Link } from "react-router-dom";
+import ArticleShelf from "../../Components/AricleShelf/ArticleShelf";
 
 const MultiCategory = () => {
   const routeList = [
@@ -18,24 +16,30 @@ const MultiCategory = () => {
       link: "/categories",
     },
   ];
-  const exampleArticle = {
-    thumbnail: image,
-    title:
-      "Opening Day of the Boating Season so let's set sail to the big blue sea",
-    content:
-      "So, you finally went to your first boxing class and learned the basics of the sport. You also learned that it’s recommended to wrap your hands before putting on the gloves. But there are times when you just don’t feel like wrapping them and you wonder why you even need them. Well, this blog is going to explain the benefits of wrapping your hands.",
-    author: {
-      name: "James adnaklndnadkjn",
-      avatar: "https://picsum.photos/200/300",
-    },
-    time: "2 hours ago",
-  };
-  const articleList = [
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-  ];
+
+  const [categoriesArticleList, setCategoriesArticleList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchPromises = categoryList.map(async (category) => {
+          const response = await fetch(
+            `http://localhost:8000/api/v1/article/page/pagination?page=1&limit=4&category=${category.name.toLowerCase()}`
+          );
+          const json = await response.json();
+          return json.data;
+        });
+
+        const fetchedArticleList = await Promise.all(fetchPromises);
+        console.log(fetchedArticleList);
+        setCategoriesArticleList(fetchedArticleList);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -52,9 +56,12 @@ const MultiCategory = () => {
           </div>
           <div className="home-section-content">
             <div className="article-container">
-              {articleList.map((article, articleIndex) => (
-                <ArticleCard key={articleIndex} article={article} />
-              ))}
+              {categoriesArticleList[index] && (
+                <ArticleShelf
+                  key={index}
+                  articles={categoriesArticleList[index]}
+                />
+              )}
             </div>
           </div>
         </div>
