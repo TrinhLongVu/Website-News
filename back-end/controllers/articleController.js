@@ -99,11 +99,11 @@ exports.getTop5Views = async (req, res, next) => {
         if (name == 'views') {
             console.log("trueeee");
             data = await Article.find({
-                    view: {
-                        $exists: true,
-                        $gt: 0
-                    }
-                })
+                view: {
+                    $exists: true,
+                    $gt: 0
+                }
+            })
                 .sort({
                     view: -1
                 }).limit(limit);
@@ -163,10 +163,10 @@ exports.getPagination = async (req, res, next) => {
     const skip = (query.page - 1) * query.limit
     try {
         const dt = await Article.find({
-                Category: {
-                    $in: [query.category]
-                }
-            })
+            Category: {
+                $in: [query.category]
+            }
+        })
             .skip(skip)
             .limit(query.limit)
             .exec()
@@ -188,5 +188,78 @@ exports.deleteArticle = (req, res, next) => {
     res.status(500).send({
         status: "error",
     })
+    next();
+}
+
+
+exports.SearchArticle = async (req, res, next) => {
+    try {
+        const tempsearchString = req.params.searchString;
+
+        const searchString = tempsearchString.replace(/\+/g, ' ');
+
+        console.log(searchString)
+
+
+        const data = await Article.find({
+            $or: [
+                { Title: { $regex: searchString, $options: 'i' } }, // Search by Title
+                { Category: { $in: [searchString] } } // Search by Category
+            ]
+        });
+
+
+        res.status(200).json({
+            status: "success",
+            data: data
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            msg: err
+        })
+    }
+    next();
+}
+
+
+exports.addComment = async (req, res, next) => {
+    try {
+        const id_article = req.params.id;
+
+        const find_Article = await Article.findById(id_article);
+
+        // If the article with the specified ID is not found, return an error response
+        if (!find_Article) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Article not found'
+            });
+        }
+
+        const { id_user, content } = req.body;
+
+        const newComment = {
+            id_user: id_user,
+            content: content
+        };
+
+
+        find_Article.comments.push(newComment);
+
+
+        const update = await Article.findByIdAndUpdate(id_article, find_Article, {
+            new: true
+        })
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
+        })
+    }
     next();
 }
