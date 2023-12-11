@@ -17,10 +17,11 @@ router
     .get(articleController.getCategory)
 
 router
-    .route('/top/getTop5Views')
+    .route('/top/:name')
     .get(articleController.getTop5Views)
 
-router 
+
+router
     .route('/page/pagination')
     .get(articleController.getPagination)
 

@@ -92,13 +92,39 @@ exports.updateArticle = async (req, res, next) => {
 
 exports.getTop5Views = async (req, res, next) => {
     try {
-        const data = await Article.find({
-            view: {
-                $exists: true
-            }
-        }).sort({
-            view: -1
-        }).limit(5);
+        const name = req.params.name;
+        let data = '';
+        const limit = req.query.limit || 12;
+        console.log(limit)
+        if (name == 'views') {
+            console.log("trueeee");
+            data = await Article.find({
+                    view: {
+                        $exists: true,
+                        $gt: 0
+                    }
+                })
+                .sort({
+                    view: -1
+                }).limit(limit);
+        } else if (name == 'likes') {
+            data = await Article.find({
+                likes: {
+                    $exists: true
+                }
+            }).sort({
+                likes: -1
+            }).limit(limit);
+        } else if (name == 'priority') {
+            data = await Article.find({
+                isPriority: true
+            }).limit(limit)
+        } else if (name == 'timer') {
+            console.log("111")
+            data = await Article.find().sort({
+                posted_time: -1
+            }).limit(limit)
+        }
         res.status(200).json({
             status: 'success',
             data: data
@@ -137,10 +163,10 @@ exports.getPagination = async (req, res, next) => {
     const skip = (query.page - 1) * query.limit
     try {
         const dt = await Article.find({
-            Category: {
-                $in: [query.category]
-            }
-        })
+                Category: {
+                    $in: [query.category]
+                }
+            })
             .skip(skip)
             .limit(query.limit)
             .exec()
@@ -148,7 +174,7 @@ exports.getPagination = async (req, res, next) => {
             status: 'success',
             data: dt
         })
-        
+
     } catch (err) {
         res.status(500).send({
             status: "error",
