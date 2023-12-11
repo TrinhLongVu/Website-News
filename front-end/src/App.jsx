@@ -8,6 +8,7 @@ import Error404 from "./Pages/Error-404/Error404";
 import { Routes, Route } from "react-router-dom";
 import Authentication from "./Pages/Authentication/Authentication";
 import MainLayout from "./Layouts/MainLayout";
+import Admin from "./pages/Admin/Admin"
 
 import ScrollTop from "./Components/ScrollTop/ScrollTop";
 function App() {
@@ -38,6 +39,7 @@ function App() {
             element={<Authentication authenType={"Register"} />}
           />
         </Route>
+        <Route path="/admin" element={<Admin/>}/>
       </Routes>
     </>
   );
