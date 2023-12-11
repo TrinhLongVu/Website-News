@@ -1,0 +1,152 @@
+{
+  "reader": [
+    {
+      "ID": "R000",
+      "Full_name": "Nguyen An",
+      "Email_address": "nguyena@gmail.com",
+      "Birthday": "12/3/2002",
+      "Gender": "male",
+      "ID_follow_writer": [
+        "W004",
+        "W005"
+      ],
+      "Saved_news": [
+        "A000",
+        "A001",
+        "A002"
+      ],
+      "Image_Avatar": "https://vivureviews.com/wp-content/uploads/2022/08/avatar-vo-danh-2.jpg"
+    },
+    {
+      "ID": "R001",
+      "Full_name": "Tran Bao",
+      "Email_address": "tranbao@gmail.com",
+      "Birthday": "15/6/1995",
+      "Gender": "male",
+      "ID_follow_writer": [
+        "W001",
+        "W002"
+      ],
+      "Saved_news": [
+        "A000",
+        "A001"
+      ],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-5.jpg"
+    },
+    {
+      "ID": "R002",
+      "Full_name": "Le Mai",
+      "Email_address": "lemai@gmail.com",
+      "Birthday": "8/10/1990",
+      "Gender": "female",
+      "ID_follow_writer": [
+        "W002",
+        "W004",
+        "W005"
+      ],
+      "Saved_news": [],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-7.jpg"
+    },
+    {
+      "ID": "R003",
+      "Full_name": "Hoang Minh",
+      "Email_address": "hoangminh@gmail.com",
+      "Birthday": "5/2/1988",
+      "Gender": "male",
+      "ID_follow_writer": [],
+      "Saved_news": [],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-6.jpg"
+    },
+    {
+      "ID": "R004",
+      "Full_name": "Phuong Thao",
+      "Email_address": "phuongthao@gmail.com",
+      "Birthday": "20/9/1993",
+      "Gender": "female",
+      "ID_follow_writer": [
+        "W002",
+        "W004"
+      ],
+      "Saved_news": [
+        "A006"
+      ],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-8.jpg"
+    },
+    {
+      "ID": "R005",
+      "Full_name": "Duc Huy",
+      "Email_address": "duchuy@gmail.com",
+      "Birthday": "7/7/1985",
+      "Gender": "male",
+      "ID_follow_writer": [
+        "W005",
+        "W007",
+        "W008",
+        "W009"
+      ],
+      "Saved_news": [
+        "A007"
+      ],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-10.jpg"
+    },
+    {
+      "ID": "R006",
+      "Full_name": "Quynh Anh",
+      "Email_address": "quynhanh@gmail.com",
+      "Birthday": "18/12/1998",
+      "Gender": "female",
+      "ID_follow_writer": [],
+      "Saved_news": [
+        "A008",
+        "A009"
+      ],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-9.jpg"
+    },
+    {
+      "ID": "R007",
+      "Full_name": "Tuan Anh",
+      "Email_address": "tuananh@gmail.com",
+      "Birthday": "3/1/1980",
+      "Gender": "male",
+      "ID_follow_writer": [],
+      "Saved_news": [
+        "A010",
+        "A011",
+        "A012"
+      ],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-11.jpg"
+    },
+    {
+      "ID": "R008",
+      "Full_name": "Huong Giang",
+      "Email_address": "huonggiang@gmail.com",
+      "Birthday": "25/5/1996",
+      "Gender": "female",
+      "ID_follow_writer": [],
+      "Saved_news": [
+        "A013",
+        "A014",
+        "A015"
+      ],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-12.jpg"
+    },
+    {
+      "ID": "R009",
+      "Full_name": "Viet Dung",
+      "Email_address": "vietdung@gmail.com",
+      "Birthday": "10/8/1983",
+      "Gender": "male",
+      "ID_follow_writer": [
+        "W002",
+        "W004",
+        "W009"
+      ],
+      "Saved_news": [
+        "A016",
+        "A017",
+        "A018"
+      ],
+      "Image_Avatar": "https://cdn.sforum.vn/sforum/wp-content/uploads/2023/10/avatar-facebook-mac-dinh-13.jpg"
+    }
+  ]
+}
