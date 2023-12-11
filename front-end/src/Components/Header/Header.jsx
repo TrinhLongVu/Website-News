@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
@@ -7,9 +7,12 @@ import {
   faUser,
   faRightFromBracket,
   faBookmark,
+  faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
+
+import { categoryList } from "../../Global";
 
 const Header = () => {
   const timeoutRef = useRef(null);
@@ -53,7 +56,7 @@ const Header = () => {
   });
 
   const following = {
-    username: "Simon",
+    username: "Simon Zacki Sa Murasaki",
     avatar: "https://i.pravatar.cc/300",
   };
   const following_list = [
@@ -65,16 +68,16 @@ const Header = () => {
   ];
 
   const userInfo = {
-    username: "Simon",
     avatar: "https://i.pravatar.cc/301",
   };
 
   let notiNum = 0;
+  const isAuthenticated = false;
   return (
     <header>
-      <a className="logo" href="#">
+      <Link to="/" className="logo">
         THE MEGA PAPERS
-      </a>
+      </Link>
       <div className="list-shower-container">
         <div className="list-shower">
           <div
@@ -82,7 +85,7 @@ const Header = () => {
             onMouseEnter={openCategoriesDropdown}
             onMouseLeave={closeCategoriesDropdown}
           >
-            <a href="">Categories</a>
+            <Link to="/categories">Categories</Link>
             <div className="dropdown-ico">
               <FontAwesomeIcon icon={faAngleDown} />
             </div>
@@ -93,14 +96,11 @@ const Header = () => {
               onMouseEnter={openCategoriesDropdown}
               onMouseLeave={closeCategoriesDropdown}
             >
-              <a href="">Culture</a>
-              <a href="">Food</a>
-              <a href="">Art</a>
-              <a href="">Technology</a>
-              <a href="">Fashion</a>
-              <a href="">Health</a>
-              <a href="">Sport</a>
-              <a href="">Movies</a>
+              {categoryList.map((category, index) => (
+                <Link to={category.link} key={index}>
+                  {category.name}
+                </Link>
+              ))}
             </div>
           )}
         </div>
@@ -129,7 +129,7 @@ const Header = () => {
                       className="following-avt"
                       style={{ backgroundImage: `url(${following.avatar})` }}
                     ></div>
-                    {following.username}
+                    <div className="following-name">{following.username}</div>
                   </a>
                 ))
               ) : (
@@ -145,40 +145,49 @@ const Header = () => {
           className="search-input"
           placeholder="Search Articles"
         />
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
+        <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
       </form>
-      <div className="noti">
-        <div className="noti-bell">
-          <FontAwesomeIcon icon={faBell} />
-        </div>
-        {notiNum > 0 && <div className="noti-num">{notiNum}</div>}
-      </div>
-      <div
-        className="avt-dropdown-btn"
-        style={{ backgroundImage: `url(${userInfo.avatar})` }}
-        onClick={showAvatarDropdown}
-      >
-        {showAvtDropdown && (
-          <div className="dropdown-menu" id="avt-dropdown">
-            <a href="">
-              <FontAwesomeIcon icon={faUser} className="profile-ico" />
-              Profile
-            </a>
-            <a href="">
-              <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
-              Saved
-            </a>
-            <hr />
-            <a href="">
-              <FontAwesomeIcon
-                icon={faRightFromBracket}
-                className="profile-ico"
-              />
-              Sign out
-            </a>
+      {isAuthenticated ? (
+        <>
+          <div className="noti">
+            <div className="noti-bell">
+              <FontAwesomeIcon icon={faBell} />
+            </div>
+            {notiNum > 0 && <div className="noti-num">{notiNum}</div>}
           </div>
-        )}
-      </div>
+          <div
+            className="avt-dropdown-btn"
+            style={{ backgroundImage: `url(${userInfo.avatar})` }}
+            onClick={showAvatarDropdown}
+          >
+            {showAvtDropdown && (
+              <div className="dropdown-menu" id="avt-dropdown">
+                <a href="">
+                  <FontAwesomeIcon icon={faUser} className="profile-ico" />
+                  Profile
+                </a>
+                <a href="">
+                  <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
+                  Saved
+                </a>
+                <hr />
+                <Link>
+                  <FontAwesomeIcon
+                    icon={faRightFromBracket}
+                    className="profile-ico"
+                  />
+                  Sign out
+                </Link>
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        <Link to="/authentication/login" className="head-login-btn">
+          LOGIN
+          <FontAwesomeIcon icon={faRightToBracket} className="head-login-ico" />
+        </Link>
+      )}
     </header>
   );
 };

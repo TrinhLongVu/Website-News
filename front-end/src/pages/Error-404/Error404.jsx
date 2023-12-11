@@ -1,14 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../../components/Header/Header";
-
 import "./error-404.css";
 
+import { Link, useNavigate } from "react-router-dom";
+
 const Error404 = () => {
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1); // This will go back to the last page visited
+  };
   return (
     <>
-      <Header />
       <div className="body-404">
         <div className="content-404">
           <div className="title-404">
@@ -20,12 +23,12 @@ const Error404 = () => {
           </div>
           <div className="explain-404">OOPS !!! SOMETHING WENT WRONG !!!</div>
           <div className="nav-btn">
-            <a href="" className="btn-404">
+            <Link to="#" className="btn-404" onClick={goBack}>
               Go Back
-            </a>
-            <a href="" className="btn-404">
+            </Link>
+            <Link to="/" className="btn-404">
               Go Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>

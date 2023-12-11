@@ -6,11 +6,11 @@ const ArticlePanel = ({ article }) => {
       <a
         href=""
         className="article-panel"
-        style={{ backgroundImage: `url(${article.thumbnail})` }}
+        style={{ backgroundImage: `url(${article.Image})` }}
       >
         <div className="article-panel-info">
-          <div className="article-panel-title">{article.title}</div>
-          <div className="article-panel-para">{article.content}</div>
+          <div className="article-panel-title">{article.Title}</div>
+          <div className="article-panel-para">{article.Detail}</div>
         </div>
       </a>
     </>

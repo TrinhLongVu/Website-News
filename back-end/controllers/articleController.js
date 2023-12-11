@@ -8,8 +8,7 @@ exports.getAllArticle = async (req, res, next) => {
             status: "success",
             data: data
         });
-    }
-    catch (err) {
+    } catch (err) {
         res.status(400).json({
             status: 'fail',
             msg: err
@@ -26,8 +25,7 @@ exports.getArticle = async (req, res, next) => {
             status: "success",
             data: data
         });
-    }
-    catch (err) {
+    } catch (err) {
         res.status(400).json({
             status: 'fail',
             msg: err
@@ -83,8 +81,7 @@ exports.updateArticle = async (req, res, next) => {
             status: 'success',
             data: update
         })
-    }
-    catch (err) {
+    } catch (err) {
         res.status(500).send({
             status: "error",
             msg: err
@@ -95,13 +92,44 @@ exports.updateArticle = async (req, res, next) => {
 
 exports.getTop5Views = async (req, res, next) => {
     try {
-        const data = await Article.find({ view: { $exists: true } }).sort({ view: -1 }).limit(5);
+        const name = req.params.name;
+        let data = '';
+        const limit = req.query.limit || 12;
+        console.log(limit)
+        if (name == 'views') {
+            console.log("trueeee");
+            data = await Article.find({
+                view: {
+                    $exists: true,
+                    $gt: 0
+                }
+            })
+                .sort({
+                    view: -1
+                }).limit(limit);
+        } else if (name == 'likes') {
+            data = await Article.find({
+                likes: {
+                    $exists: true
+                }
+            }).sort({
+                likes: -1
+            }).limit(limit);
+        } else if (name == 'priority') {
+            data = await Article.find({
+                isPriority: true
+            }).limit(limit)
+        } else if (name == 'timer') {
+            console.log("111")
+            data = await Article.find().sort({
+                posted_time: -1
+            }).limit(limit)
+        }
         res.status(200).json({
             status: 'success',
             data: data
         })
-    }
-    catch (err) {
+    } catch (err) {
         res.status(500).send({
             status: "error",
             msg: err
@@ -112,13 +140,42 @@ exports.getTop5Views = async (req, res, next) => {
 
 exports.getCategory = async (req, res, next) => {
     try {
-        const scienceArticles = await Article.find({ Category: { $in: [req.params.name] } }).exec();
+        const article = await Article.find({
+            Category: {
+                $in: [req.params.name]
+            }
+        }).exec();
         res.status(200).json({
             status: 'success',
-            data: scienceArticles
+            data: article
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
         })
     }
-    catch (err) {
+    next();
+}
+
+exports.getPagination = async (req, res, next) => {
+    const query = req.query
+    const skip = (query.page - 1) * query.limit
+    try {
+        const dt = await Article.find({
+            Category: {
+                $in: [query.category]
+            }
+        })
+            .skip(skip)
+            .limit(query.limit)
+            .exec()
+        res.status(200).json({
+            status: 'success',
+            data: dt
+        })
+
+    } catch (err) {
         res.status(500).send({
             status: "error",
             msg: err
@@ -131,5 +188,78 @@ exports.deleteArticle = (req, res, next) => {
     res.status(500).send({
         status: "error",
     })
+    next();
+}
+
+
+exports.SearchArticle = async (req, res, next) => {
+    try {
+        const tempsearchString = req.params.searchString;
+
+        const searchString = tempsearchString.replace(/\+/g, ' ');
+
+        console.log(searchString)
+
+
+        const data = await Article.find({
+            $or: [
+                { Title: { $regex: searchString, $options: 'i' } }, // Search by Title
+                { Category: { $in: [searchString] } } // Search by Category
+            ]
+        });
+
+
+        res.status(200).json({
+            status: "success",
+            data: data
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'fail',
+            msg: err
+        })
+    }
+    next();
+}
+
+
+exports.addComment = async (req, res, next) => {
+    try {
+        const id_article = req.params.id;
+
+        const find_Article = await Article.findById(id_article);
+
+        // If the article with the specified ID is not found, return an error response
+        if (!find_Article) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Article not found'
+            });
+        }
+
+        const { id_user, content } = req.body;
+
+        const newComment = {
+            id_user: id_user,
+            content: content
+        };
+
+
+        find_Article.comments.push(newComment);
+
+
+        const update = await Article.findByIdAndUpdate(id_article, find_Article, {
+            new: true
+        })
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
+        })
+    }
     next();
 }

@@ -1,6 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faEarth,
+  faTags,
+  faCircleInfo,
+  faNewspaper,
+} from "@fortawesome/free-solid-svg-icons";
 import "./footer.css";
+
+import { categoryList } from "../../Global";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const today = new Date();
@@ -8,75 +17,70 @@ const Footer = () => {
   return (
     <footer>
       <div className="foot-content">
-        <div className="row-content">
-          <div className="mega-about">
+        <div className="foot-row">
+          <div className="foot-left-section">
             <div className="foot-title">
-              <div className="foot-pre-bean"></div>
-              <h3>The Mega Papers</h3>
+              <div>
+                <FontAwesomeIcon icon={faCircleInfo} className="ico" /> The Mega
+                Papers
+              </div>
             </div>
-            <div className="mega-para">
+            <div className="foot-section-content" id="foot-mega-para">
               This is an innovative digital platform designed to revolutionize
               the way we consume and engage with news. Our Website creates a
               seamless online space where writers and readers can connect and
               interact around the news.
             </div>
           </div>
-          <div className="categories">
+          <div className="foot-right-section">
             <div className="foot-title">
-              <div className="foot-pre-bean"></div>
-              <h3>Categories</h3>
+              <div>
+                <FontAwesomeIcon icon={faTags} className="ico" /> Categories
+              </div>
             </div>
-            <ul className="foot-category-list">
-              <li>
-                <a href="">Culture</a>
-              </li>
-              <li>
-                <a href="">Fashion</a>
-              </li>
-              <li>
-                <a href="">Technology</a>
-              </li>
-              <li>
-                <a href="">Food</a>
-              </li>
-              <li>
-                <a href="">Health</a>
-              </li>
-              <li>
-                <a href="">Gaming</a>
-              </li>
-            </ul>
+            <div className="foot-section-content" id="foot-categories">
+              {categoryList.map((category, idx) => (
+                <Link to={category.link} key={idx}>
+                  {category.name}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="row-content">
-          <div className="newsletter">
+        <div className="foot-row">
+          <div className="foot-left-section">
             <div className="foot-title">
-              <div className="foot-pre-bean"></div>
-              <h3>Newsletters</h3>
+              <div>
+                <FontAwesomeIcon icon={faNewspaper} className="ico" />
+                Newsletter
+              </div>
             </div>
-            <form action="" className="mail-box">
-              <input
-                type="email"
-                className="mail-input"
-                placeholder="Enter Your Email..."
-              />
-              <FontAwesomeIcon icon={faEnvelope} />
-            </form>
+            <div className="foot-section-content">
+              <form action="" className="mail-box">
+                <input
+                  type="email"
+                  className="mail-input"
+                  placeholder="Enter Your Email..."
+                />
+                <FontAwesomeIcon icon={faEnvelope} />
+              </form>
+            </div>
           </div>
-          <div className="social">
+          <div className="foot-right-section">
             <div className="foot-title">
-              <div className="foot-pre-bean"></div>
-              <h3>Social Network</h3>
+              <div>
+                <FontAwesomeIcon icon={faEarth} className="ico" /> Social
+                Network
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="foot-banner">
         <div>
-          {" "}
           <a href="/policy">Privacy Policy | Terms & Conditions</a>
         </div>
-        <div>Copyright © The Mega Papers @ {today.getFullYear}</div>
+        <div>Copyright © The Mega Papers @ {today.getFullYear()}</div>
       </div>
     </footer>
   );

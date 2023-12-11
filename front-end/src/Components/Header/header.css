@@ -67,12 +67,18 @@ header {
     padding-left: 20px;
     font-size: 20px;
     height: 65px;
-    width: 450px;
+    width: 435px;
     border: none;
     background-color: #e1e1e1;
     border-radius: 15px;
     outline: none;
 }
+
+#search-ico {
+    margin-left: 10px;
+    font-size: 20px;
+}
+
 /* Notification */
 .noti {
     position: relative;
@@ -180,6 +186,14 @@ header {
     transition: all 0.15s ease;
 }
 
+.following-name {
+    width: 185px;
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .dropdown-menu a:first-child:hover {
     border-radius: 12px 12px 0 0;
 }
@@ -194,4 +208,30 @@ header {
 
 .profile-ico {
     margin-right: 10px;
+}
+
+.head-login-btn {
+    margin-left: 20px;
+    padding: 0 30px;
+    width: 150px;
+    height: 45px;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #068DA9;
+    text-decoration: none;
+    color: #068DA9;
+}
+
+.head-login-btn:hover {
+    color: #f8f8f8;
+    background-color: #068DA9;
+    border: none;
+}
+
+.head-login-ico {
+    margin-left: 10px;
 }
