@@ -16,10 +16,10 @@ const AdminUpgradeWriter = () => {
 
                 <div className="admin-navbar-content">
                     <div className="admin-navbar">
-                        <div className="admin-category">Priority</div>
-                        <div className="admin-category">Upgrade Writer</div>
-                        <div className="admin-category">Reported Account</div>
-                        <div className="admin-category">Article Statistics</div>
+                        <a href="/admin"><div className="admin-category">Priority</div></a>
+                        <a href="/admin/upgrade-writer"><div className="admin-category admin-category-selected">Upgrade Writer</div></a>
+                        <a href="/admin/reported-accounts"><div className="admin-category">Reported Account</div></a>
+                        <a href="/admin/article-statistics"><div className="admin-category">Article Statistics</div></a>
                     </div>
                     <div className="admin-content">
                         <div className="upgrade-writer-container">
@@ -48,7 +48,7 @@ const AdminUpgradeWriter = () => {
                                     <td><button className="upgrade-writer-accept-button">Accept</button></td>
                                     <td><button className="upgrade-writer-deny-button">Deny</button></td>
                                 </tr>
-                        
+
                             </table>
                         </div>
 

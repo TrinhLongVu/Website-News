@@ -16,10 +16,10 @@ const AdminReportedAccounts = () => {
 
                 <div className="admin-navbar-content">
                     <div className="admin-navbar">
-                        <div className="admin-category">Priority</div>
-                        <div className="admin-category">Upgrade Writer</div>
-                        <div className="admin-category">Reported Account</div>
-                        <div className="admin-category">Article Statistics</div>
+                        <a href="/admin"><div className="admin-category">Priority</div></a>
+                        <a href="/admin/upgrade-writer"><div className="admin-category">Upgrade Writer</div></a>
+                        <a href="/admin/reported-accounts"><div className="admin-category admin-category-selected">Reported Account</div></a>
+                        <a href="/admin/article-statistics"><div className="admin-category">Article Statistics</div></a>
                     </div>
                     <div className="admin-content">
                         <div className="reported-accounts-container">
@@ -48,7 +48,7 @@ const AdminReportedAccounts = () => {
                                     <td><button className="reported-accounts-accept-button">Ban</button></td>
                                     <td><button className="reported-accounts-deny-button">Ignore</button></td>
                                 </tr>
-                        
+
                             </table>
                         </div>
 
