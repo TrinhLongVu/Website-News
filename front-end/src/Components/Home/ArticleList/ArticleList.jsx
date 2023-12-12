@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./article-list.css";
 import { useEffect, useState } from "react";
 const ArticleList = () => {
@@ -16,7 +17,8 @@ const ArticleList = () => {
   return (
     <>
       <div className="article-list">
-        <div
+        <Link
+          to={`/article/${firstArticle._id}`}
           className="list-big-article"
           style={{ backgroundImage: `url(${firstArticle.Image})` }}
         >
@@ -24,10 +26,14 @@ const ArticleList = () => {
             <div className="list-big-article-title">{firstArticle.Title}</div>
             <div className="list-big-article-para">{firstArticle.Detail}</div>
           </div>
-        </div>
+        </Link>
         <div className="list-small-items">
           {restArticleList.map((article, index) => (
-            <div key={index} className="list-small-card">
+            <Link
+              to={`/article/${article._id}`}
+              key={index}
+              className="list-small-card"
+            >
               <div
                 className="list-small-card-img"
                 style={{ backgroundImage: `url(${article.Image})` }}
@@ -36,7 +42,7 @@ const ArticleList = () => {
                 <div className="list-small-card-title">{article.Title}</div>
                 <div className="list-small-card-para">{article.Detail}</div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

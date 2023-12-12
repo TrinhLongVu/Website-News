@@ -30,20 +30,23 @@ const WriteNew = () => {
     setSelectedCategory(categoryName);
     toggleList();
   };
+  const [articleTitle, setArticleTitle] = useState("");
   const [contentField, setContentField] = useState("");
   const [previewArticle, setPreviewArticle] = useState(null);
   const handleFieldChange = (event) => {
     setContentField(event.target.value);
   };
 
+  const [previewThumbnail, setPreviewThumbnail] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    setThumbnail(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setThumbnail(reader.result);
+        setPreviewThumbnail(reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -99,6 +102,14 @@ const WriteNew = () => {
     }
   };
 
+  const createNewArticle = async () => {
+    const formData = new FormData();
+    formData.append("title", articleTitle);
+    formData.append("content", contentField);
+    formData.append("category", selectedCategory);
+    formData.append("image", thumbnail);
+  };
+
   return (
     <>
       <div className="write-new">
@@ -110,6 +121,7 @@ const WriteNew = () => {
                 type="text"
                 placeholder="What is your article's title?"
                 className="write-new-input"
+                onChange={(e) => setArticleTitle(e.target.value)}
               />
             </div>
             <div className="write-new-info-side" id="write-new-category">
@@ -166,9 +178,9 @@ const WriteNew = () => {
           <div className="write-new-thumbnail">
             <div
               className="write-new-thumbnail-frame"
-              style={{ backgroundImage: `url(${thumbnail})` }}
+              style={{ backgroundImage: `url(${previewThumbnail})` }}
             >
-              {!thumbnail && (
+              {!previewThumbnail && (
                 <div className="write-new-thumbnail-text">
                   Add a thumbnail for your article
                 </div>
@@ -187,6 +199,7 @@ const WriteNew = () => {
             <div
               className="write-new-control-item"
               id="write-new-control-publish"
+              onClick={createNewArticle}
             >
               <FontAwesomeIcon
                 icon={faPaperPlane}

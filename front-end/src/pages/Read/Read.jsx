@@ -70,7 +70,7 @@ const Read = () => {
         setArticleCmts(json.data.comment);
         setArticleAuthor(json.data.ID_author);
       });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     fetch(
@@ -84,7 +84,7 @@ const Read = () => {
         );
         setRelatedArticles(updatedArray);
       });
-  }, [articleCategory]);
+  }, [articleCategory, id]);
 
   return (
     <>
