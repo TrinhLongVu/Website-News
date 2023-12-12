@@ -55,6 +55,7 @@ exports.createAllArticle = async (req, res, next) => {
     try {
         const filePath = `${__dirname}data\\article.json`.replace('controllers', '');
         const articles = JSON.parse(fs.readFileSync(filePath, 'utf-8')).article;
+        
         for (const article of articles) {
             article.posted_time = new Date();
             await Article.create(article);
@@ -90,7 +91,7 @@ exports.updateArticle = async (req, res, next) => {
     next();
 }
 
-exports.getTop5Views = async (req, res, next) => {
+exports.getTops = async (req, res, next) => {
     try {
         const name = req.params.name;
         let data = '';
@@ -120,7 +121,6 @@ exports.getTop5Views = async (req, res, next) => {
                 isPriority: true
             }).limit(limit)
         } else if (name == 'timer') {
-            console.log("111")
             data = await Article.find().sort({
                 posted_time: -1
             }).limit(limit)
@@ -165,7 +165,7 @@ exports.getPagination = async (req, res, next) => {
         const dt = await Article.find({
                 Category: {
                     $in: [query.category]
-                }
+            }
             })
             .skip(skip)
             .limit(query.limit)

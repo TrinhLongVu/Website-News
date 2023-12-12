@@ -2,6 +2,24 @@ const express = require('express');
 const router = express.Router();
 
 const articleController = require('../controllers/articleController')
+const uploadImage = (image) => {
+    return new Promise((resolve, reject) => {
+        cloudinary.uploader.upload(image, {
+            overwrite: true,
+            invalidate: true,
+            resource_type: "auto",
+        }, (error, result) => {
+            if (result && result.secure_url) {
+                console.log(result.secure_url);
+                return resolve(result.secure_url);
+            }
+            console.log(error.message);
+            return reject({
+                message: error.message
+            });
+        });
+    });
+};
 
 router
     .route('/')
@@ -18,8 +36,23 @@ router
 
 router
     .route('/top/:name')
-    .get(articleController.getTop5Views)
+    .get(articleController.getTops)
 
+router
+    .route('/upload/:id')
+    .post((req, res) => {
+        try {
+            uploadImage(req.body.image)
+                .then((url) => res.send(url))
+                .catch((err) => res.status(500).send(err));
+        } catch (error) {
+            console.error('Error uploading image:', error.message);
+            res.status(500).json({
+                success: false,
+                error: error.message
+            });
+        }
+    })
 
 router
     .route('/page/pagination')
