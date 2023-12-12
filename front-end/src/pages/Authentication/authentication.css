@@ -79,6 +79,10 @@
 
 .authen-route a {
     text-decoration: none;
+    color: #0766AD;
+}
+.authen-route a:hover {
+    color: #29ADB2;
 }
 
 /* Start: Login */

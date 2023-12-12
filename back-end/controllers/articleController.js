@@ -100,11 +100,11 @@ exports.getTops = async (req, res, next) => {
         if (name == 'views') {
             console.log("trueeee");
             data = await Article.find({
-                    view: {
-                        $exists: true,
-                        $gt: 0
-                    }
-                })
+                view: {
+                    $exists: true,
+                    $gt: 0
+                }
+            })
                 .sort({
                     view: -1
                 }).limit(limit);
@@ -165,7 +165,7 @@ exports.getPagination = async (req, res, next) => {
         const dt = await Article.find({
                 Category: {
                     $in: [query.category]
-            }
+                }
             })
             .skip(skip)
             .limit(query.limit)

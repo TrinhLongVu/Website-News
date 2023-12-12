@@ -3,7 +3,7 @@ footer {
     margin-top: 20px;
     margin-bottom: 20px;
     width: 1260px;
-    height: 480px;
+    height: 450px;
     border-radius: 20px;
     background-color: #f8f8f8;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -32,43 +32,43 @@ footer {
 }
 
 .foot-content {
-    padding: 45px 100px;
-}
-
-.foot-pre-bean {
-    margin-right: 5px;
-    width: 4px;
-    height: 10px;
-    border-radius: 12px;
-    background-color: #f81539;
+    padding: 45px 100px 0;
 }
 
 .foot-title {
     display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
-.row-content {
+.foot-title .ico {
+    margin: 0 5px;
+    color: red;
+}
+
+.foot-row {
     display: flex;
     margin-bottom: 10px;
 }
 
-.mega-about {
+.foot-left-section {
     width: 650px;
-    text-align: justify;
-    margin-bottom: 50px;
 }
 
-.mega-para {
+.foot-right-section {
+    width: 410px;
+}
+
+.foot-section-content {
+    margin: 10px 25px;
+}
+
+#foot-mega-para {
     width: 400px;
     font-size: 14px;
     color: #3e3232;
     opacity: 0.75;
-}
-
-.newsletter {
-    width: 650px;
+    text-align: justify;
 }
 
 .mail-box {
@@ -76,6 +76,7 @@ footer {
     width: 550px;
     background-color: white;
     border-radius: 12px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
 .mail-input {
@@ -89,19 +90,17 @@ footer {
     outline: none;
 }
 
-.foot-category-list {
-    margin-left: 25px;
-    list-style-type: none;
-    color: #3e3232;
-    opacity: 0.75;
+#foot-categories {
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.foot-category-list > li {
-    margin-bottom: 8px;
-}
-
-.foot-category-list > li > a {
+#foot-categories a {
     font-size: 12px;
     text-decoration: none;
-    color: inherit;
+    color: #3e3232;
+    opacity: 0.75;
+    line-height: 25px;
 }

@@ -17,9 +17,9 @@ const PORT = process.env.PORT || 3000;
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD).replace('<DATABASE_NAME>', process.env.DATABASE_NAME);
 
 mongoose.connect(DB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
     .then(() => console.log('Connected!'));
 
 app.listen(PORT, () => {

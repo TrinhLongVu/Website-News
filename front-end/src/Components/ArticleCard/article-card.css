@@ -3,23 +3,27 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 10px;
+    margin: 15px 7.5px;
     width: 300px;
     height: 390px;
     border-radius: 12px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    text-decoration: none;
+    color: inherit;
     cursor: pointer;
 }
 
-.article-thumbnail {
+.article-card-thumbnail {
     width: 280px;
     height: 190px;
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center center;
     border-radius: 12px;
 }
 
-.article-desc {
+.article-card-desc {
     width: 280px;
     height: 80px;
     display: flex;
@@ -27,14 +31,14 @@
     justify-content: space-between;
 }
 
-.article-title {
+.article-card-title {
     white-space: nowrap;
     width: 280px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.article-para {
+.article-card-para {
     width: 280px;
     font-size: 12px;
     color: #3e3232;
@@ -45,7 +49,7 @@
     overflow: hidden;
 }
 
-.article-author {
+.article-card-author {
     padding: 14px 15px;
     display: flex;
     justify-content: space-between;
@@ -56,7 +60,7 @@
     border-radius: 12px;
 }
 
-.author-avt {
+.card-author-avt {
     width: 45px;
     height: 45px;
     background-size: cover;
@@ -66,26 +70,27 @@
     border-radius: 12px;
 }
 
-.author-info {
+.card-author-info {
     width: 170px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.author-name {
+.card-author-name {
     width: 170px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.post-time {
+.card-post-time {
     font-size: 14px;
     color: #3e3232;
     opacity: 0.75;
 }
 
 .card-save-btn {
+    font-size: 20px;
     cursor: pointer;
 }

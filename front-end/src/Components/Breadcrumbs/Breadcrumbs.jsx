@@ -2,30 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import "./breadcrumbs.css";
 
-const Breadcrumbs = () => {
-  const crumbList = [
-    {
-      name: "Categories",
-      link: "/categories",
-    },
-    {
-      name: "About",
-      link: "/about",
-    },
-  ];
+import { Link } from "react-router-dom";
+
+const Breadcrumbs = ({ crumbList }) => {
   return (
     <>
-      <div class="breadcrumbs">
-        {crumbList.reverse().map((crumb, index) => (
-          <div key={index} className="crumb">
-            <a href={crumb.link}>{crumb.name}</a>
-          </div>
+      <div className="breadcrumbs">
+        {crumbList.reverse().map((crumb, idx) => (
+          <Link key={idx} to={crumb.link} className="crumb">
+            {crumb.name}
+          </Link>
         ))}
-        <div class="crumb">
-          <a href="/">
-            <FontAwesomeIcon icon={faHome} />
-          </a>
-        </div>
+        <Link to="/" className="crumb">
+          <FontAwesomeIcon icon={faHome} />
+        </Link>
       </div>
     </>
   );

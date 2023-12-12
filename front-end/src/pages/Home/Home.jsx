@@ -1,57 +1,58 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
   faTags,
   faMedal,
+  faHeart,
+  faNewspaper,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
-import CategoryList from "../../Components/Home/CategoryList/CategoryList";
+import CategorySlider from "../../Components/Home/CategorySlider/CategorySlider";
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
 import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
-
-import image from "../../assets/sport-tag.jpeg";
+import ArticlePanel from "../../Components/Home/ArticlePanel/ArticlePanel";
+import ArticleList from "../../Components/Home/ArticleList/ArticleList";
 
 import "./home.css";
-import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 const Home = () => {
-  const exampleArticle = {
-    thumbnail: image,
-    title: "Opening Day of the Boating Season so let's set sail",
-    content:
-      "The text-overflow property specifies how overflowed content that is not displayed should be signaled to the user. It can display a lot of contnet dmnakwdnj dan",
-    author: {
-      name: "James adnaklndnadkjn",
-      avatar: "https://picsum.photos/200/300",
-    },
-    time: "2 hours ago",
-  };
+  const [likedArticleList, setLikedArticleList] = useState([]);
 
-  const articleList = [
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-  ];
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/article/top/likes?limit=3")
+      .then((res) => res.json())
+      .then((json) => {
+        setLikedArticleList(json.data);
+      });
+  }, []);
+
+  const [popularArticleList, setPopularArticleList] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/article/top/views?limit=4")
+      .then((res) => res.json())
+      .then((json) => {
+        setPopularArticleList(json.data);
+      });
+  }, []);
 
   return (
     <>
-      <Header />
       <div className="home-section">
         <div className="home-section-banner">
           <h2>
             <FontAwesomeIcon icon={faTags} /> Categories
           </h2>
-          <a href="" className="show-all-btn">
+          <Link to="/categories" className="show-all-btn">
             Show all <FontAwesomeIcon icon={faChevronRight} />
-          </a>
+          </Link>
         </div>
         <div className="home-section-content">
-          <CategoryList />
+          <CategorySlider />
         </div>
       </div>
       <div className="home-section">
@@ -61,7 +62,24 @@ const Home = () => {
           </h2>
         </div>
         <div className="home-section-content">
-          <ArticleSlider articles={articleList} />
+          <ArticleSlider />
+        </div>
+      </div>
+      <div className="home-section">
+        <div className="home-section-banner">
+          <h2>
+            <FontAwesomeIcon icon={faHeart} /> Most Liked
+          </h2>
+          <Link to="/" className="show-all-btn">
+            Show all <FontAwesomeIcon icon={faChevronRight} />
+          </Link>
+        </div>
+        <div className="home-section-content">
+          <div className="article-container">
+            {likedArticleList.map((article, index) => (
+              <ArticlePanel key={index} article={article} />
+            ))}
+          </div>
         </div>
       </div>
       <div className="home-section">
@@ -69,20 +87,28 @@ const Home = () => {
           <h2>
             <FontAwesomeIcon icon={faMedal} /> Popular
           </h2>
-          <a href="" className="show-all-btn">
+          <Link to="/" className="show-all-btn">
             Show all <FontAwesomeIcon icon={faChevronRight} />
-          </a>
+          </Link>
         </div>
         <div className="home-section-content">
           <div className="article-container">
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
+            {popularArticleList.map((article, index) => (
+              <ArticleCard key={index} article={article} />
+            ))}
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="home-section">
+        <div className="home-section-banner">
+          <h2>
+            <FontAwesomeIcon icon={faNewspaper} /> New
+          </h2>
+        </div>
+        <div className="home-section-content">
+          <ArticleList />
+        </div>
+      </div>
     </>
   );
 };

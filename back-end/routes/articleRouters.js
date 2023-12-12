@@ -62,7 +62,12 @@ router
     .route('/:id')
     .get(articleController.getArticle)
     .patch(articleController.updateArticle)
-    .delete(articleController.deleteArticle);
+    .delete(articleController.deleteArticle)
+    .post(articleController.addComment)
+
+router
+    .route('/search/:searchString')  // Note: if searchString have multiple words, convert to "word1+word2+..." .concatnate words with a "+" sign, must not have "space"(" ") in searchString
+    .get(articleController.SearchArticle)
 
 
 module.exports = router;
