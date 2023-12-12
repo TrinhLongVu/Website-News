@@ -7,6 +7,7 @@ import { faBookmark as regularBookmark } from "@fortawesome/free-regular-svg-ico
 import { calcTime } from "../../Global";
 
 import "./article-card.css";
+import { Link } from "react-router-dom";
 
 const ArticleCard = ({ article }) => {
   const [isSaved, setSaved] = useState(false);
@@ -15,24 +16,12 @@ const ArticleCard = ({ article }) => {
     setSaved(!isSaved);
   };
 
-  const readArticle = () => {
-    if (!event.target.closest(".article-card-author")) {
-      window.location.href = "/";
-    }
-  };
-
-  const inspectAuthor = () => {
-    if (!event.target.closest(".card-save-btn")) {
-      window.location.href = "#";
-    }
-  };
-
   const userInfo = {
     avatar: "https://i.pravatar.cc/301",
   };
 
   return (
-    <div className="article-card" onClick={readArticle}>
+    <Link to={`/article/${article._id}`} className="article-card">
       <div
         className="article-card-thumbnail"
         style={{ backgroundImage: `url(${article.Image})` }}
@@ -41,7 +30,7 @@ const ArticleCard = ({ article }) => {
         <h4 className="article-card-title">{article.Title}</h4>
         <div className="article-card-para">{article.Detail}</div>
       </div>
-      <div className="article-card-author" onClick={inspectAuthor}>
+      <div className="article-card-author">
         <div
           className="card-author-avt"
           style={{ backgroundImage: `url(${userInfo.avatar})` }}
@@ -56,7 +45,7 @@ const ArticleCard = ({ article }) => {
           className="card-save-btn"
         />
       </div>
-    </div>
+    </Link>
   );
 };
 

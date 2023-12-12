@@ -131,6 +131,10 @@
 }
 
 .write-new-thumbnail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 10px;
     margin: 10px 0;
     width: 100%;
     height: 300px;
@@ -139,12 +143,63 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+.write-new-thumbnail-frame {
+    width: 100%;
+    height: 250px;
+    border-radius: 15px;
+    background-color: #ccd1d9;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    color: #3e3232;
+    opacity: 0.75;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.write-new-thumbnail-upload {
+    margin: 10px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    background-color: #29ADB2;
+    border-radius: 10px ;
+}
+
+.write-new-thumbnail-upload:hover {
+    background-color: #C5E898;
+    color: white;
+}
+
+.write-new-idea {
+    display: flex;
+    justify-content: end;
+}
+
+#write-new-give-idea {
+    width: 200px;
+}
+
+#write-new-give-idea:hover {
+    background-color: hsl(155.09deg 77.38% 43.33%);
+}
+
 .write-new-control {
     margin: 20px 0;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
+
 
 .write-new-control-item {
     display: flex;
@@ -156,6 +211,7 @@
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     cursor: pointer;
 }
+
 
 .write-new-control-item:hover {
     background-color: #1640D6;
