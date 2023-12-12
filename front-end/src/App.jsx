@@ -11,6 +11,7 @@ import Authentication from "./Pages/Authentication/Authentication";
 import MainLayout from "./Layouts/MainLayout";
 import Admin from "./pages/Admin/Admin";
 import AdminUpgradeWriter from "./pages/AdminUpgradeWriter/AdminUpgradeWriter"
+import AdminReportedAccounts from "./pages/AdminReportedAccounts/AdminReportedAccounts"
 
 import ScrollTop from "./Components/ScrollTop/ScrollTop";
 import Search from "./Pages/Search/Search";
@@ -46,6 +47,7 @@ function App() {
         </Route>
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/upgrade-writer" element={<AdminUpgradeWriter />} />
+        <Route path="/admin/reported-accounts" element={<AdminReportedAccounts />} />
       </Routes>
     </>
   );
