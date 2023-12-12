@@ -184,11 +184,41 @@ exports.getPagination = async (req, res, next) => {
     next();
 }
 
-exports.deleteArticle = (req, res, next) => {
-    res.status(500).send({
-        status: "error",
-    })
-    next();
+// exports.deleteArticle = (req, res, next) => {
+//     res.status(500).send({
+//         status: "error",
+//     })
+//     next();
+// }
+
+
+exports.deleteArticle = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        // Find the user by ID and delete it
+        const deletedArticle = await Article.deleteOne({ _id });
+        // const deletedUser = await Article.deleteMany();
+
+        if (!deletedArticle) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        res.status(201).json({
+            status: 'success',
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
 }
 
 
