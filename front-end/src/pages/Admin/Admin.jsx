@@ -30,9 +30,8 @@ const Admin = () => {
         <div className="admin-navbar-content">
           <div className="admin-navbar">
             <div className="admin-category">Priority</div>
-            <div className="admin-category">Ban User</div>
             <div className="admin-category">Upgrade Writer</div>
-            <div className="admin-category">Report Account</div>
+            <div className="admin-category">Reported Account</div>
             <div className="admin-category">Article Statistics</div>
           </div>
           <div className="admin-content">
