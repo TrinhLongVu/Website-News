@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import image from "../../assets/env-tag.jpeg";
 
 import { categoryList } from "../../Global";
 

@@ -73,6 +73,11 @@
     cursor: pointer;
 }
 
+.submit-btn:hover {
+    background-color: #F2CD5C;
+    color: white;
+}
+
 .authen-route {
     margin-top: 30px;
 }

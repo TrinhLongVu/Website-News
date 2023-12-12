@@ -103,11 +103,28 @@ const WriteNew = () => {
   };
 
   const createNewArticle = async () => {
-    const formData = new FormData();
+    let formData = new FormData();
     formData.append("title", articleTitle);
     formData.append("content", contentField);
     formData.append("category", selectedCategory);
     formData.append("image", thumbnail);
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/v1/article/upload/567",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        console.log("Post created successfully");
+      } else {
+        console.error("Failed to create post");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -186,7 +203,7 @@ const WriteNew = () => {
                 </div>
               )}
             </div>
-            <label for="file-upload" class="write-new-thumbnail-upload">
+            <label htmlFor="file-upload" className="write-new-thumbnail-upload">
               Choose file
             </label>
             <input type="file" id="file-upload" onChange={handleImageChange} />
