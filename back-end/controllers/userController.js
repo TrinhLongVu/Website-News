@@ -352,3 +352,18 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
     }
     next();
 }
+
+
+exports.Authentication = (req, res) => {
+    if (req.isAuthenticated()) {
+        res.json({
+            status: "success",
+            body: req.user
+        })
+    }
+    else {
+        res.json({
+            status: "failed",
+        })
+    }
+}
