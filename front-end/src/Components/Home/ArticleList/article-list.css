@@ -23,6 +23,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    text-decoration: none;
+    color: inherit;
 }
 
 .list-big-article-info {
@@ -76,6 +78,8 @@
     justify-content: space-between;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     z-index: 5;
+    text-decoration: none;
+    color: inherit;
 }
 
 .list-small-card-img {

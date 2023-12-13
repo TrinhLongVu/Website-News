@@ -79,29 +79,12 @@ header {
     font-size: 20px;
 }
 
-/* Notification */
-.noti {
-    position: relative;
-}
-
 .noti-bell {
     cursor: pointer;
     font-size: 35px;
     margin-left: 25px;
 }
 
-.noti-num {
-    position: absolute;
-    top: -3px;
-    right: -5px;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    text-align: center;
-    color: white;
-    background-color: red;
-}
-/*  */
 .avt-dropdown-btn {
     width: 64px;
     height: 64px;
@@ -234,4 +217,15 @@ header {
 
 .head-login-ico {
     margin-left: 10px;
+}
+
+#search-btn {
+    width: 50px;
+    height: 50px;
+    text-decoration: none;
+    color: inherit;
+}
+
+#search-btn:hover {
+    color: #068DA9;
 }

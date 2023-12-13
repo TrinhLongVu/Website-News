@@ -71,8 +71,9 @@ const Header = () => {
     avatar: "https://i.pravatar.cc/301",
   };
 
-  let notiNum = 0;
-  const isAuthenticated = false;
+  const [searchField, setSearchField] = useState("");
+
+  const isAuthenticated = true;
   return (
     <header>
       <Link to="/" className="logo">
@@ -139,21 +140,23 @@ const Header = () => {
           )}
         </div>
       </div>
-      <form action="" className="search-box">
+      <div className="search-box">
         <input
           type="text"
+          onChange={(e) => setSearchField(e.target.value)}
           className="search-input"
           placeholder="Search Articles"
         />
-        <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
-      </form>
+        <Link to={`/search/${searchField}`} id="search-btn">
+          <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
+        </Link>
+      </div>
       {isAuthenticated ? (
         <>
           <div className="noti">
             <div className="noti-bell">
               <FontAwesomeIcon icon={faBell} />
             </div>
-            {notiNum > 0 && <div className="noti-num">{notiNum}</div>}
           </div>
           <div
             className="avt-dropdown-btn"
@@ -162,10 +165,10 @@ const Header = () => {
           >
             {showAvtDropdown && (
               <div className="dropdown-menu" id="avt-dropdown">
-                <a href="">
+                <Link to="/info">
                   <FontAwesomeIcon icon={faUser} className="profile-ico" />
                   Profile
-                </a>
+                </Link>
                 <a href="">
                   <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
                   Saved

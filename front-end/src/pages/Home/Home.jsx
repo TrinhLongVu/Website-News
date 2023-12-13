@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
@@ -14,34 +17,28 @@ import ArticleSlider from "../../Components/Home/ArticleSlider/ArticleSlider";
 import ArticlePanel from "../../Components/Home/ArticlePanel/ArticlePanel";
 import ArticleList from "../../Components/Home/ArticleList/ArticleList";
 
-import image from "../../assets/social-tag.jpeg";
-
 import "./home.css";
 
-import { Link } from "react-router-dom";
 const Home = () => {
-  const exampleArticle = {
-    thumbnail: image,
-    title:
-      "Opening Day of the Boating Season so let's set sail to the big blue sea",
-    content:
-      "So, you finally went to your first boxing class and learned the basics of the sport. You also learned that it’s recommended to wrap your hands before putting on the gloves. But there are times when you just don’t feel like wrapping them and you wonder why you even need them. Well, this blog is going to explain the benefits of wrapping your hands.",
-    author: {
-      name: "James adnaklndnadkjn",
-      avatar: "https://picsum.photos/200/300",
-    },
-    time: "2 hours ago",
-  };
+  const [likedArticleList, setLikedArticleList] = useState([]);
 
-  const newArticleList = [
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-  ];
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/article/top/likes?limit=3")
+      .then((res) => res.json())
+      .then((json) => {
+        setLikedArticleList(json.data);
+      });
+  }, []);
+
+  const [popularArticleList, setPopularArticleList] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/article/top/views?limit=4")
+      .then((res) => res.json())
+      .then((json) => {
+        setPopularArticleList(json.data);
+      });
+  }, []);
 
   return (
     <>
@@ -79,9 +76,9 @@ const Home = () => {
         </div>
         <div className="home-section-content">
           <div className="article-container">
-            <ArticlePanel article={exampleArticle} />
-            <ArticlePanel article={exampleArticle} />
-            <ArticlePanel article={exampleArticle} />
+            {likedArticleList.map((article, index) => (
+              <ArticlePanel key={index} article={article} />
+            ))}
           </div>
         </div>
       </div>
@@ -96,10 +93,9 @@ const Home = () => {
         </div>
         <div className="home-section-content">
           <div className="article-container">
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
+            {popularArticleList.map((article, index) => (
+              <ArticleCard key={index} article={article} />
+            ))}
           </div>
         </div>
       </div>
@@ -110,7 +106,7 @@ const Home = () => {
           </h2>
         </div>
         <div className="home-section-content">
-          <ArticleList articles={newArticleList} />
+          <ArticleList />
         </div>
       </div>
     </>

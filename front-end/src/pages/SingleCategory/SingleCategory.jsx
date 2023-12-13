@@ -1,9 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import image from "../../assets/env-tag.jpeg";
 
 import { categoryList } from "../../Global";
 
@@ -43,35 +42,17 @@ const SingleCategory = () => {
     (category) => category.name === pageCategory
   );
 
-  const exampleArticle = {
-    thumbnail: image,
-    title:
-      "Opening Day of the Boating Season so let's set sail to the big blue sea",
-    content:
-      "So, you finally went to your first boxing class and learned the basics of the sport. You also learned that it's recommended to wrap your hands before putting on the gloves. But there are times when you just don't feel like wrapping them and you wonder why you even need them. Well, this blog is going to explain the benefits of wrapping your hands.",
-    author: {
-      name: "James adnaklndnadkjn",
-      avatar: "https://picsum.photos/200/300",
-    },
-    time: "2 hours ago",
-  };
+  const [articleList, setArticleList] = useState([]);
 
-  const exampleArticleList = [
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-    exampleArticle,
-  ];
+  useEffect(() => {
+    fetch(
+      `http://localhost:8000/api/v1/article/page/pagination?page=1&limit=12&category=${name}`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        setArticleList(json.data);
+      });
+  }, []);
 
   return (
     <>
@@ -90,7 +71,7 @@ const SingleCategory = () => {
           {bannerCategory.name}
         </div>
       )}
-      <ArticleShelf articles={exampleArticleList} />
+      <ArticleShelf articles={articleList} />
     </>
   );
 };

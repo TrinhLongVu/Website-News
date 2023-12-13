@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFloppyDisk,
+  faPen,
   faEye,
   faPaperPlane,
   faAngleDown,
@@ -30,10 +30,26 @@ const WriteNew = () => {
     setSelectedCategory(categoryName);
     toggleList();
   };
+  const [articleTitle, setArticleTitle] = useState("");
   const [contentField, setContentField] = useState("");
   const [previewArticle, setPreviewArticle] = useState(null);
   const handleFieldChange = (event) => {
     setContentField(event.target.value);
+  };
+
+  const [previewThumbnail, setPreviewThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setThumbnail(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewThumbnail(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handlePreview = () => {
@@ -54,11 +70,61 @@ const WriteNew = () => {
 
     const formattedTimestamp = `${timeString}, ${dateString.toUpperCase()}`;
     const newArticle = {
+      thumbnail: thumbnail,
       title: articleTitle,
       content: articleContent,
       time: formattedTimestamp,
     };
     setPreviewArticle(newArticle);
+  };
+
+  const giveIdea = async () => {
+    const ideaBody = {
+      category: selectedCategory,
+      ideas: contentField,
+    };
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/articleAI", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ideaBody),
+      });
+      const data = await response.json();
+      document.querySelector(".write-new-input").value =
+        data.data.article.title;
+      document.querySelector(".write-new-textarea").value =
+        data.data.article.introduction;
+      setContentField(data.data.article.introduction);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const createNewArticle = async () => {
+    let formData = new FormData();
+    formData.append("title", articleTitle);
+    formData.append("content", contentField);
+    formData.append("category", selectedCategory);
+    formData.append("image", thumbnail);
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/v1/article/upload/567",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        console.log("Post created successfully");
+      } else {
+        console.error("Failed to create post");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -72,6 +138,7 @@ const WriteNew = () => {
                 type="text"
                 placeholder="What is your article's title?"
                 className="write-new-input"
+                onChange={(e) => setArticleTitle(e.target.value)}
               />
             </div>
             <div className="write-new-info-side" id="write-new-category">
@@ -91,7 +158,6 @@ const WriteNew = () => {
                   <div className="write-new-select-list">
                     {categoryList.map((category, index) => (
                       <div
-                        to={category.link}
                         key={index}
                         onClick={() => handleCategoryClick(category.name)}
                       >
@@ -113,18 +179,36 @@ const WriteNew = () => {
               ></textarea>
             </div>
           </div>
+          <div className="write-new-idea">
+            <div
+              className="write-new-control-item"
+              id="write-new-give-idea"
+              onClick={giveIdea}
+            >
+              <FontAwesomeIcon icon={faPen} className="write-new-control-ico" />
+              Generate Paragraph
+            </div>
+          </div>
         </div>
         <div className="write-new-right">
           Thumbnail
-          <div className="write-new-thumbnail"></div>
-          <div className="write-new-control">
-            <div className="write-new-control-item">
-              <FontAwesomeIcon
-                icon={faFloppyDisk}
-                className="write-new-control-ico"
-              />
-              Draft
+          <div className="write-new-thumbnail">
+            <div
+              className="write-new-thumbnail-frame"
+              style={{ backgroundImage: `url(${previewThumbnail})` }}
+            >
+              {!previewThumbnail && (
+                <div className="write-new-thumbnail-text">
+                  Add a thumbnail for your article
+                </div>
+              )}
             </div>
+            <label htmlFor="file-upload" className="write-new-thumbnail-upload">
+              Choose file
+            </label>
+            <input type="file" id="file-upload" onChange={handleImageChange} />
+          </div>
+          <div className="write-new-control">
             <div className="write-new-control-item" onClick={handlePreview}>
               <FontAwesomeIcon icon={faEye} className="write-new-control-ico" />
               Preview
@@ -132,6 +216,7 @@ const WriteNew = () => {
             <div
               className="write-new-control-item"
               id="write-new-control-publish"
+              onClick={createNewArticle}
             >
               <FontAwesomeIcon
                 icon={faPaperPlane}

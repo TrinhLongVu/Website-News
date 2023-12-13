@@ -6,6 +6,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import "./article-slider.css";
 
 import { calcTime } from "../../../Global";
+import { Link } from "react-router-dom";
 
 const ArticleSlider = () => {
   const sliderRef = useRef(null);
@@ -42,7 +43,7 @@ const ArticleSlider = () => {
   const [articleList, setArticleList] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/article/top/getTop5Views")
+    fetch("http://localhost:8000/api/v1/article/top/priority?limit=5")
       .then((res) => res.json())
       .then((json) => {
         setArticleList(json.data);
@@ -53,7 +54,8 @@ const ArticleSlider = () => {
     <div className="article-slider-wrapper">
       <div className="article-slider" ref={sliderRef}>
         {articleList.map((article, idx) => (
-          <div
+          <Link
+            to={`/article/${article._id}`}
             key={idx}
             className="article-slider-item"
             style={{
@@ -63,7 +65,7 @@ const ArticleSlider = () => {
             <h2>{article.Title}</h2>
             <h4>{article.ID_author}</h4>
             <h5>{calcTime(article.posted_time)}</h5>
-          </div>
+          </Link>
         ))}
         <div className="article-slider-btn slider-left" onClick={scrollLeft}>
           <FontAwesomeIcon icon={faAngleLeft} />
