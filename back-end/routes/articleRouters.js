@@ -41,10 +41,13 @@ router
 router
     .route('/upload/:id')
     .post((req, res) => {
+        console.log("1111", req.body)
+        console.log(req)
         try {
-            uploadImage(req.body.image)
-                .then((url) => res.send(url))
-                .catch((err) => res.status(500).send(err));
+            res.status(200).send("ok")
+            // uploadImage(req.body.image)
+            //     .then((url) => res.send(url))
+            //     .catch((err) => res.status(500).send(err));
         } catch (error) {
             console.error('Error uploading image:', error.message);
             res.status(500).json({
