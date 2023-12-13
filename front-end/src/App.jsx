@@ -13,6 +13,7 @@ import Admin from "./pages/Admin/Admin";
 import AdminUpgradeWriter from "./pages/AdminUpgradeWriter/AdminUpgradeWriter";
 import AdminReportedAccounts from "./pages/AdminReportedAccounts/AdminReportedAccounts";
 import Saved from "./Pages/Saved/Saved";
+import AdminArticleStatistics from "./pages/AdminArticleStatistics/AdminArticleStatistics";
 
 import ScrollTop from "./Components/ScrollTop/ScrollTop";
 import Search from "./Pages/Search/Search";
@@ -55,6 +56,7 @@ function App() {
           path="/admin/reported-accounts"
           element={<AdminReportedAccounts />}
         />
+        <Route path="/admin/article-statistics" element={<AdminArticleStatistics />} />
       </Routes>
     </>
   );

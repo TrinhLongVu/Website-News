@@ -1,0 +1,154 @@
+.admin-container {
+    width: 1260px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+}
+
+.admin-header {
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 110px;
+    background-color: #1a4649;
+}
+
+.admin-logo {
+    width: 240px;
+    font-family: 'Baskerville';
+    font-style: italic;
+    font-size: xxx-large;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.admin-avt {
+    width: 64px;
+    height: 64px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    border: 1px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.admin-navbar-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: auto;
+}
+
+.admin-navbar {
+    width: 25%;
+    background-color: #2d4955;
+    color: white;
+}
+
+.admin-category {
+    font-size: 25px;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.admin-category:hover {
+    background-color: green;
+}
+
+.admin-category-selected {
+    background-color: darkgreen;
+}
+
+.admin-content {
+    width: 75%;
+    background-color: white;
+    color: black;
+    padding-top: 20px;
+    padding: 20px;
+}
+
+.article-statistics-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.article-statistics-row {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.article-statistics-col {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.article-statistics-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.article-statistics-card-body {
+    padding: 15px;
+}
+
+.article-statistics-text-xs {
+    font-size: 14px;
+}
+
+.article-statistics-text-success {
+    color: #28a745;
+}
+
+.article-statistics-text-uppercase {
+    text-transform: uppercase;
+}
+
+.article-statistics-mb-1 {
+    margin-bottom: 8px;
+}
+
+.article-statistics-h5 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.article-statistics-font-weight-bold {
+    font-weight: bold;
+}
+
+
+
+.article-statistics-button-container {
+    display: flex;
+    justify-content: end;
+}
+
+.article-statistics-button {
+    padding: 8px 16px;
+    margin: 4px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    background-color: #4caf50;
+    color: white;
+}
+
+.article-statistics-button:hover {
+    background-color: #007958;
+}
+
+.article-statistics-button.selected {
+    background-color: #007958;
+  }

@@ -31,7 +31,7 @@ const Admin = () => {
           <div className="admin-navbar">
             <a href="/admin"><div className="admin-category admin-category-selected">Priority</div></a>
             <a href="/admin/upgrade-writer"><div className="admin-category">Upgrade Writer</div></a>
-            <a href="/admin/reported-accounts"><div className="admin-category">Reported Account</div></a>
+            <a href="/admin/reported-accounts"><div className="admin-category">Reported Accounts</div></a>
             <a href="/admin/article-statistics"><div className="admin-category">Article Statistics</div></a>
           </div>
           <div className="admin-content">
