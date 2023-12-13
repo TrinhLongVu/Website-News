@@ -91,10 +91,7 @@ const Read = () => {
       <div className="read-page">
         <div className="read-page-left">
           <ArticleFrame publishArticle={readingArticle} />
-          <CommentSection
-            articleComments={articleCmts}
-            isAuthenticated={false}
-          />
+          <CommentSection articleComments={articleCmts} />
         </div>
         <div className="read-page-right">
           <a href="" className="read-author-box">

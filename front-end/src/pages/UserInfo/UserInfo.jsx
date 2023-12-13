@@ -1,10 +1,31 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./user-info.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 const UserInfo = () => {
+  const [infoObj, setInfoObj] = useState({});
+  const [userAvatar, setUserAvatar] = useState(null);
+  const [isWriter, setWriter] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/user/account/success", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.body) {
+          console.log(json.body);
+          setInfoObj(json.body);
+          setUserAvatar(json.body.Image_Avatar);
+          if (json.body.Role === "writer") {
+            setWriter(true);
+          }
+        }
+      });
+  }, []);
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState({
     username: "Simon",
@@ -36,8 +57,6 @@ const UserInfo = () => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
-
-  const [userAvatar, setUserAvatar] = useState(null);
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
@@ -95,7 +114,7 @@ const UserInfo = () => {
               type="text"
               name="username"
               id="username"
-              value={formData.username}
+              value={infoObj.FullName}
               readOnly={!isEditMode}
               onChange={handleChange}
             />
@@ -108,7 +127,7 @@ const UserInfo = () => {
               type="email"
               name="email"
               id="email"
-              value={formData.email}
+              value={infoObj.UserName}
               readOnly={!isEditMode}
               onChange={handleChange}
             />
@@ -152,7 +171,7 @@ const UserInfo = () => {
               name="gender"
               id="gender"
               placeholder="No data"
-              value={formData.gender}
+              value={infoObj.Gender}
               readOnly={!isEditMode}
               onChange={handleChange}
             />
@@ -166,7 +185,7 @@ const UserInfo = () => {
               name="phonenumber"
               id="phonenumber"
               placeholder="No data"
-              value={formData.phonenumber}
+              value={infoObj.PhoneNumber}
               readOnly={!isEditMode}
               onChange={handleChange}
             />
@@ -180,7 +199,7 @@ const UserInfo = () => {
               name="address"
               id="address"
               placeholder="No data"
-              value={formData.address}
+              value={infoObj.Address}
               readOnly={!isEditMode}
               onChange={handleChange}
             />

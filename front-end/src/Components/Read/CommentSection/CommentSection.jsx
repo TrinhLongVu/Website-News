@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,10 +10,26 @@ import {
 
 import "./cmt-section.css";
 
-const CommentSection = ({ articleComments, isAuthenticated }) => {
+const CommentSection = ({ articleComments }) => {
+  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [infoObj, setInfoObj] = useState({});
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/user/account/success", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.body) {
+          console.log(json.body);
+          setAuthenticated(true);
+          setInfoObj(json.body);
+        }
+      });
+  }, []);
+
   const [commentInput, setCommentInput] = useState("");
   const [comments, setComments] = useState(articleComments);
-
   const sendComment = (event) => {
     const cmtInput = document.querySelector(".cmt-input-field");
     cmtInput.style.height = "auto";
@@ -45,7 +61,10 @@ const CommentSection = ({ articleComments, isAuthenticated }) => {
         </div>
         {isAuthenticated ? (
           <div className="cmt-input-box">
-            <a href="#" className="cmt-avt"></a>
+            <div
+              className="cmt-avt"
+              style={{ backgroundImage: `url(${infoObj.Image_Avatar})` }}
+            ></div>
             <textarea
               className="cmt-input-field"
               placeholder="What do you think?"

@@ -23,6 +23,8 @@ app.use(session({
 // config middleware using req.body
 app.use(cors({
     origin: 'http://localhost:5173',
+    credentials: true,
+    allowedHeaders: ['Content-Type'],
 }))
 app.use(express.json())
 app.use(morgan('dev'))

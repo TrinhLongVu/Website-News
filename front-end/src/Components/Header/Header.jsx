@@ -68,25 +68,34 @@ const Header = () => {
     following,
   ];
 
-  const userInfo = {
-    avatar: "https://i.pravatar.cc/301",
-  };
-
   const [searchField, setSearchField] = useState("");
 
   const [authenticated, setAuthenticated] = useState(false);
 
+  const [userAvt, setUserAvt] = useState("");
+
+  const [isWriter, setWriter] = useState(false);
+
+  const [followingList, setFollowingList] = useState([]);
+
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/user/account/success")
+    fetch("http://localhost:8000/api/v1/user/account/success", {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
-          console.log(1);
+          setAuthenticated(true);
+          console.log(json.body);
+          setUserAvt(json.body.Image_Avatar);
+          if (json.body.Role === "writer") {
+            setWriter(true);
+          }
+          setFollowingList(json.body.ID_follow_writer);
         }
       });
   }, []);
 
-  const isWriter = true;
   return (
     <header>
       <Link to="/" className="logo">
@@ -136,14 +145,16 @@ const Header = () => {
               onMouseLeave={closeFollowingDropdown}
               id="following-dropdown"
             >
-              {following_list.length > 0 ? (
-                following_list.map((following, index) => (
+              {followingList.length > 0 ? (
+                followingList.map((following, index) => (
                   <a key={index} href="">
                     <div
                       className="following-avt"
-                      style={{ backgroundImage: `url(${following.avatar})` }}
+                      style={{
+                        backgroundImage: `url(https://i.pravatar.cc/300)`,
+                      }}
                     ></div>
-                    <div className="following-name">{following.username}</div>
+                    <div className="following-name">{following}</div>
                   </a>
                 ))
               ) : (
@@ -173,7 +184,7 @@ const Header = () => {
           </div>
           <div
             className="avt-dropdown-btn"
-            style={{ backgroundImage: `url(${userInfo.avatar})` }}
+            style={{ backgroundImage: `url(${userAvt})` }}
             onClick={showAvatarDropdown}
           >
             {showAvtDropdown && (
