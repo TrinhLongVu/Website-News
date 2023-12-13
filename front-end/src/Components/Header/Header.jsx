@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -74,7 +74,18 @@ const Header = () => {
 
   const [searchField, setSearchField] = useState("");
 
-  const isAuthenticated = true;
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/user/account/success")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.body) {
+          console.log(1);
+        }
+      });
+  }, []);
+
   const isWriter = true;
   return (
     <header>
@@ -153,7 +164,7 @@ const Header = () => {
           <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
         </Link>
       </div>
-      {isAuthenticated ? (
+      {authenticated ? (
         <>
           <div className="noti">
             <div className="noti-bell">
