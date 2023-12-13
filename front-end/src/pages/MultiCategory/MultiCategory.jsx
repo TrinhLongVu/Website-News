@@ -1,13 +1,15 @@
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
+import { categoryList } from "../../Global";
+
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import ArticleShelf from "../../Components/AricleShelf/ArticleShelf";
 
 import "./multi-category.css";
-import { useState, useEffect } from "react";
-import { categoryList } from "../../Global";
-import { Link } from "react-router-dom";
-import ArticleShelf from "../../Components/AricleShelf/ArticleShelf";
 
 const MultiCategory = () => {
   const routeList = [

@@ -29,11 +29,10 @@ const Admin = () => {
 
         <div className="admin-navbar-content">
           <div className="admin-navbar">
-            <div className="admin-category">Priority</div>
-            <div className="admin-category">Ban User</div>
-            <div className="admin-category">Upgrade Writer</div>
-            <div className="admin-category">Report Account</div>
-            <div className="admin-category">Article Statistics</div>
+            <a href="/admin"><div className="admin-category admin-category-selected">Priority</div></a>
+            <a href="/admin/upgrade-writer"><div className="admin-category">Upgrade Writer</div></a>
+            <a href="/admin/reported-accounts"><div className="admin-category">Reported Account</div></a>
+            <a href="/admin/article-statistics"><div className="admin-category">Article Statistics</div></a>
           </div>
           <div className="admin-content">
             <div className="priority-container">

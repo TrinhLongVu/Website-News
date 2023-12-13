@@ -10,9 +10,9 @@ import {
 
 import "./cmt-section.css";
 
-const CommentSection = ({ article, isAuthenticated }) => {
+const CommentSection = ({ articleComments, isAuthenticated }) => {
   const [commentInput, setCommentInput] = useState("");
-  const [comments, setComments] = useState(["hello"]);
+  const [comments, setComments] = useState(articleComments);
 
   const sendComment = (event) => {
     const cmtInput = document.querySelector(".cmt-input-field");

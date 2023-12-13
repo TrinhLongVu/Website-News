@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import "./article-panel.css";
 
 const ArticlePanel = ({ article }) => {
   return (
     <>
-      <a
-        href=""
+      <Link
+        to={`/article/${article._id}`}
         className="article-panel"
         style={{ backgroundImage: `url(${article.Image})` }}
       >
@@ -12,7 +13,7 @@ const ArticlePanel = ({ article }) => {
           <div className="article-panel-title">{article.Title}</div>
           <div className="article-panel-para">{article.Detail}</div>
         </div>
-      </a>
+      </Link>
     </>
   );
 };

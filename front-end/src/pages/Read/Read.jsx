@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,6 +21,7 @@ import CommentSection from "../../Components/Read/CommentSection/CommentSection"
 
 import "./read.css";
 const Read = () => {
+  const { id } = useParams();
   const exampleArticle = {
     thumbnail: image,
     title: "Opening Day of the Boating Season so let's set sail",
@@ -45,18 +47,60 @@ const Read = () => {
     setSaved(!isSaved);
   };
 
+  const [readingArticle, setReadingArticle] = useState({});
+  const [articleCmts, setArticleCmts] = useState([]);
+  const [articleAuthor, setArticleAuthor] = useState("");
+  const [articleCategory, setArticleCategory] = useState("");
+  const [relatedArticles, setRelatedArticles] = useState([]);
+
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/v1/article/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setArticleCategory(json.data.Category[0]);
+        const articleContent = json.data.Detail.split("\n");
+        const fetchedArticle = {
+          thumbnail: json.data.Image,
+          title: json.data.Title,
+          content: articleContent,
+          views: json.data.view,
+          time: json.data.posted_time,
+        };
+        setReadingArticle(fetchedArticle);
+        setArticleCmts(json.data.comment);
+        setArticleAuthor(json.data.ID_author);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:8000/api/v1/article/page/pagination?page=1&limit=3&category=${articleCategory}`
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        const fetchedArray = json.data;
+        const updatedArray = fetchedArray.filter(
+          (article) => article._id !== id
+        );
+        setRelatedArticles(updatedArray);
+      });
+  }, [articleCategory, id]);
+
   return (
     <>
       <div className="read-page">
         <div className="read-page-left">
-          <ArticleFrame />
-          <CommentSection isAuthenticated={false} />
+          <ArticleFrame publishArticle={readingArticle} />
+          <CommentSection
+            articleComments={articleCmts}
+            isAuthenticated={false}
+          />
         </div>
         <div className="read-page-right">
           <a href="" className="read-author-box">
             <div className="read-author-avt"></div>
             <div className="read-author-info">
-              <div className="read-author-name">Simon Gin</div>
+              <div className="read-author-name">{articleAuthor}</div>
               <div className="read-author-follow">18.6k Followers</div>
             </div>
           </a>
@@ -76,9 +120,9 @@ const Read = () => {
             Related Articles
           </div>
           <div className="related-article-container">
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
-            <ArticleCard article={exampleArticle} />
+            {relatedArticles.map((article, index) => (
+              <ArticleCard key={index} article={article} />
+            ))}
           </div>
         </div>
       </div>

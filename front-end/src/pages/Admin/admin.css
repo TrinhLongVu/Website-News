@@ -50,6 +50,15 @@
     color:white;
 }
 
+.admin-navbar a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.admin-navbar a:hover {
+    color: inherit;
+}
+
 .admin-category{
     font-size: 25px;
     border-top:1px solid white;
@@ -59,8 +68,13 @@
     text-align: center;
     cursor:pointer;
 }
+
 .admin-category:hover{
     background-color: green;
+}
+
+.admin-category-selected{
+    background-color: darkgreen;
 }
 
 .admin-content{

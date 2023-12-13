@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import Header from "../../Components/Header/Header";
-import Footer from "../../Components/Footer/Footer";
 import "./user-info.css";
 
 const UserInfo = () => {
@@ -15,10 +13,8 @@ const UserInfo = () => {
     gender: "",
     phonenumber: "",
     address: "",
-    // Add more fields as needed
   });
 
-  // Correctly import useRef from React
   const initialFormData = useRef({ ...formData });
 
   const handleEditClick = () => {
@@ -26,45 +22,64 @@ const UserInfo = () => {
   };
 
   const handleSaveClick = () => {
-    // Add logic to save the form data
     initialFormData.current = { ...formData };
     setIsEditMode(false);
   };
 
   const handleCancelClick = () => {
-    // Reset form data to initial values when canceling
     setFormData({ ...initialFormData.current });
     setIsEditMode(false);
   };
 
   const handleChange = (e) => {
-    // Update form data on input change
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const [userAvatar, setUserAvatar] = useState(null);
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUserAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
-      <Header />
-
-      <div className="avt-info">
+      <div className="info-avt-container">
         <div className="avt">
-          <div className="avatar-big"></div>
-          <a className="change-profile-pic-btn" href="#">
-            <FontAwesomeIcon icon={faEdit} /> Change Avatar
-          </a>
-          <a className="sign-out" href="#">
-            Sign Out
-          </a>
+          <div
+            className="avatar-big"
+            style={{ backgroundImage: `url(${userAvatar})` }}
+          ></div>
+          {isEditMode && (
+            <>
+              <label htmlFor="info--avt-upload" className="info--avt-change">
+                <FontAwesomeIcon icon={faEdit} id="info--avt-edit" />
+                Change Avatar
+              </label>
+              <input
+                type="file"
+                id="info--avt-upload"
+                onChange={handleAvatarChange}
+              />
+            </>
+          )}
         </div>
 
-        <form className="info">
+        <div className="info">
           {isEditMode ? (
-            <>
-              <div></div>
-            </>
+            <></>
           ) : (
-            <div className="action-btn change-info-btn" onClick={handleEditClick}>
+            <div
+              className="action-btn change-info-btn"
+              onClick={handleEditClick}
+            >
               Change Information
             </div>
           )}
@@ -172,10 +187,16 @@ const UserInfo = () => {
           {isEditMode ? (
             <>
               <div className="save-cancel-btn-container">
-                <button className="action-btn save-btn" onClick={handleSaveClick}>
+                <button
+                  className="action-btn save-btn"
+                  onClick={handleSaveClick}
+                >
                   Save
                 </button>
-                <button className="action-btn cancel-btn" onClick={handleCancelClick}>
+                <button
+                  className="action-btn cancel-btn"
+                  onClick={handleCancelClick}
+                >
                   Cancel
                 </button>
               </div>
@@ -183,10 +204,8 @@ const UserInfo = () => {
           ) : (
             <div></div>
           )}
-        </form>
+        </div>
       </div>
-
-      <Footer />
     </>
   );
 };
