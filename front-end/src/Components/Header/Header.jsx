@@ -8,6 +8,7 @@ import {
   faRightFromBracket,
   faBookmark,
   faRightToBracket,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
@@ -74,6 +75,7 @@ const Header = () => {
   const [searchField, setSearchField] = useState("");
 
   const isAuthenticated = true;
+  const isWriter = true;
   return (
     <header>
       <Link to="/" className="logo">
@@ -165,14 +167,20 @@ const Header = () => {
           >
             {showAvtDropdown && (
               <div className="dropdown-menu" id="avt-dropdown">
-                <Link to="/info">
+                <Link to="/user">
                   <FontAwesomeIcon icon={faUser} className="profile-ico" />
                   Profile
                 </Link>
-                <a href="">
+                <Link to="/user/saved">
                   <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
                   Saved
-                </a>
+                </Link>
+                {isWriter && (
+                  <Link to="/user/write">
+                    <FontAwesomeIcon icon={faPen} className="profile-ico" />
+                    Write
+                  </Link>
+                )}
                 <hr />
                 <Link>
                   <FontAwesomeIcon

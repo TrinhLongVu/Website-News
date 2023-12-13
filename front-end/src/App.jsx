@@ -10,8 +10,9 @@ import { Routes, Route } from "react-router-dom";
 import Authentication from "./Pages/Authentication/Authentication";
 import MainLayout from "./Layouts/MainLayout";
 import Admin from "./pages/Admin/Admin";
-import AdminUpgradeWriter from "./pages/AdminUpgradeWriter/AdminUpgradeWriter"
-import AdminReportedAccounts from "./pages/AdminReportedAccounts/AdminReportedAccounts"
+import AdminUpgradeWriter from "./pages/AdminUpgradeWriter/AdminUpgradeWriter";
+import AdminReportedAccounts from "./pages/AdminReportedAccounts/AdminReportedAccounts";
+import Saved from "./Pages/Saved/Saved";
 
 import ScrollTop from "./Components/ScrollTop/ScrollTop";
 import Search from "./Pages/Search/Search";
@@ -30,8 +31,11 @@ function App() {
           <Route path="/search/:word" element={<Search />} />
           <Route path="/about" element={<About />} />
           <Route path="/article/:id" element={<Read />} />
-          <Route path="/write" element={<Write />} />
-          <Route path="/info" element={<UserInfo />} />
+          <Route path="/user">
+            <Route index element={<UserInfo />} />
+            <Route path="/user/saved" element={<Saved />} />
+            <Route path="/user/write" element={<Write />} />
+          </Route>
           <Route path="*" element={<Error404 />} />
         </Route>
         {/* Authentication */}
@@ -47,7 +51,10 @@ function App() {
         </Route>
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/upgrade-writer" element={<AdminUpgradeWriter />} />
-        <Route path="/admin/reported-accounts" element={<AdminReportedAccounts />} />
+        <Route
+          path="/admin/reported-accounts"
+          element={<AdminReportedAccounts />}
+        />
       </Routes>
     </>
   );

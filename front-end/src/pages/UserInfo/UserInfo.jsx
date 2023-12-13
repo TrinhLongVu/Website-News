@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./user-info.css";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
 const UserInfo = () => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -51,6 +52,7 @@ const UserInfo = () => {
 
   return (
     <>
+      <Breadcrumbs crumbList={[{ name: "User Info", link: "/user" }]} />
       <div className="info-avt-container">
         <div className="avt">
           <div
