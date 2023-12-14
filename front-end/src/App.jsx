@@ -1,3 +1,7 @@
+import { Routes, Route } from "react-router-dom";
+import ScrollTop from "./Components/ScrollTop/ScrollTop";
+// Pages
+// Main
 import Home from "./Pages/Home/Home";
 import About from "./pages/About-Us/About";
 import MultiCategory from "./Pages/MultiCategory/MultiCategory";
@@ -6,17 +10,17 @@ import Read from "./Pages/Read/Read";
 import Write from "./Pages/Write/Write";
 import UserInfo from "./Pages/UserInfo/UserInfo";
 import Error404 from "./Pages/Error-404/Error404";
-import { Routes, Route } from "react-router-dom";
+import Search from "./Pages/Search/Search";
+import Saved from "./Pages/Saved/Saved";
+// Authentication
 import Authentication from "./Pages/Authentication/Authentication";
-import MainLayout from "./Layouts/MainLayout";
+// Admin
 import Admin from "./Pages/Admin/Admin";
 import AdminUpgradeWriter from "./pages/AdminUpgradeWriter/AdminUpgradeWriter";
 import AdminReportedAccounts from "./pages/AdminReportedAccounts/AdminReportedAccounts";
-import Saved from "./Pages/Saved/Saved";
 import AdminArticleStatistics from "./pages/AdminArticleStatistics/AdminArticleStatistics";
-
-import ScrollTop from "./Components/ScrollTop/ScrollTop";
-import Search from "./Pages/Search/Search";
+// Layouts
+import MainLayout from "./Layouts/MainLayout";
 import AdminLayout from "./Layouts/AdminLayout/AdminLayout";
 function App() {
   return (

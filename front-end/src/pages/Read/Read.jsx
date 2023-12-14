@@ -15,37 +15,13 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 
 import ArticleCard from "../../Components/ArticleCard/ArticleCard";
-import image from "../../assets/tech-tag.jpeg";
 import ArticleFrame from "../../Components/Read/ArticleFrame/ArticleFrame";
 import CommentSection from "../../Components/Read/CommentSection/CommentSection";
 
 import "./read.css";
+import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 const Read = () => {
   const { id } = useParams();
-  const exampleArticle = {
-    thumbnail: image,
-    title: "Opening Day of the Boating Season so let's set sail",
-    content:
-      "The text-overflow property specifies how overflowed content that is not displayed should be signaled to the user. It can display a lot of contnet dmnakwdnj dan",
-    author: {
-      name: "James adnaklndnadkjn",
-      avatar: "https://picsum.photos/200/300",
-    },
-    time: "2 hours ago",
-  };
-  const [isLiked, setLiked] = useState(false);
-  const [isFollowed, setFollow] = useState(false);
-  const [isSaved, setSaved] = useState(false);
-
-  const likeArticle = () => {
-    setLiked(!isLiked);
-  };
-  const followAuthor = () => {
-    setFollow(!isFollowed);
-  };
-  const saveArticle = () => {
-    setSaved(!isSaved);
-  };
 
   const [readingArticle, setReadingArticle] = useState({});
   const [articleCmts, setArticleCmts] = useState([]);
@@ -72,6 +48,35 @@ const Read = () => {
       });
   }, [id]);
 
+  const routeList = [
+    {
+      name: readingArticle.title,
+      link: "/article/" + id,
+    },
+    {
+      name: articleCategory.charAt(0).toUpperCase() + articleCategory.slice(1),
+      link: "/categories/" + articleCategory,
+    },
+    {
+      name: "Categories",
+      link: "/categories",
+    },
+  ];
+
+  const [isLiked, setLiked] = useState(false);
+  const [isFollowed, setFollow] = useState(false);
+  const [isSaved, setSaved] = useState(false);
+
+  const likeArticle = () => {
+    setLiked(!isLiked);
+  };
+  const followAuthor = () => {
+    setFollow(!isFollowed);
+  };
+  const saveArticle = () => {
+    setSaved(!isSaved);
+  };
+
   useEffect(() => {
     fetch(
       `http://localhost:8000/api/v1/article/page/pagination?page=1&limit=3&category=${articleCategory}`
@@ -88,6 +93,7 @@ const Read = () => {
 
   return (
     <>
+      <Breadcrumbs crumbList={routeList} />
       <div className="read-page">
         <div className="read-page-left">
           <ArticleFrame publishArticle={readingArticle} />

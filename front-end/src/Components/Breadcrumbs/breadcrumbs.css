@@ -53,6 +53,10 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     background-color: #EEF5FF;
+    max-width: 800px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .crumb:first-child:after {
