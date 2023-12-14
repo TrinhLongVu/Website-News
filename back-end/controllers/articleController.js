@@ -23,9 +23,11 @@ exports.getArticle = async (req, res, next) => {
         const id = req.params.id;
         let data =
             await Article.findById(id)
-        
+
         const user = await User.findById(data.ID_author);
-        let article = { ...data }._doc;
+        let article = {
+            ...data
+        }._doc;
         article.ID_author = user.FullName
         article.imageAuthor = user.Image_Avatar
         res.status(200).json({
@@ -135,7 +137,9 @@ exports.getTops = async (req, res, next) => {
         const result = await Promise.all(datas.map(async (data) => {
             const user = await User.findById(data.ID_author);
             // the cause is articles do not have attribute is imageAuthor then i must be parse them
-            let aritcle = { ...data }._doc;
+            let aritcle = {
+                ...data
+            }._doc;
             aritcle.ID_author = user.FullName
             aritcle.imageAuthor = user.Image_Avatar
             return aritcle
@@ -156,11 +160,19 @@ exports.getTops = async (req, res, next) => {
 
 exports.getCategory = async (req, res, next) => {
     try {
-        const article = await Article.find({
+        const data = await Article.find({
             Category: {
                 $in: [req.params.name]
             }
         }).exec();
+
+        const user = await User.findById(data.ID_author);
+        let article = {
+            ...data
+        }._doc;
+        article.ID_author = user.FullName
+        article.imageAuthor = user.Image_Avatar
+
         res.status(200).json({
             status: 'success',
             data: article
@@ -178,7 +190,7 @@ exports.getPagination = async (req, res, next) => {
     const query = req.query
     const skip = (query.page - 1) * query.limit
     try {
-        const dt = await Article.find({
+        const datas = await Article.find({
                 Category: {
                     $in: [query.category]
                 }
@@ -186,9 +198,21 @@ exports.getPagination = async (req, res, next) => {
             .skip(skip)
             .limit(query.limit)
             .exec()
+
+        const result = await Promise.all(datas.map(async (data) => {
+            const user = await User.findById(data.ID_author);
+            // the cause is articles do not have attribute is imageAuthor then i must be parse them
+            let aritcle = {
+                ...data
+            }._doc;
+            aritcle.ID_author = user.FullName
+            aritcle.imageAuthor = user.Image_Avatar
+            return aritcle
+        }))
+
         res.status(200).json({
             status: 'success',
-            data: dt
+            data: result
         })
 
     } catch (err) {
