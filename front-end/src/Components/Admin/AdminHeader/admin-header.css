@@ -1,0 +1,15 @@
+.admin-header {
+    width: 1260px;
+    height: 110px;
+    background-color: #1a4649;
+}
+
+.admin-logo {
+    width: 240px;
+    font-family: 'Baskerville';
+    font-style: italic;
+    font-size: xxx-large;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}

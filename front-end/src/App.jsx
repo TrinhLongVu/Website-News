@@ -9,7 +9,7 @@ import Error404 from "./Pages/Error-404/Error404";
 import { Routes, Route } from "react-router-dom";
 import Authentication from "./Pages/Authentication/Authentication";
 import MainLayout from "./Layouts/MainLayout";
-import Admin from "./pages/Admin/Admin";
+import Admin from "./Pages/Admin/Admin";
 import AdminUpgradeWriter from "./pages/AdminUpgradeWriter/AdminUpgradeWriter";
 import AdminReportedAccounts from "./pages/AdminReportedAccounts/AdminReportedAccounts";
 import Saved from "./Pages/Saved/Saved";
@@ -17,6 +17,7 @@ import AdminArticleStatistics from "./pages/AdminArticleStatistics/AdminArticleS
 
 import ScrollTop from "./Components/ScrollTop/ScrollTop";
 import Search from "./Pages/Search/Search";
+import AdminLayout from "./Layouts/AdminLayout/AdminLayout";
 function App() {
   return (
     <>
@@ -50,13 +51,21 @@ function App() {
             element={<Authentication authenType={"Register"} />}
           />
         </Route>
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/upgrade-writer" element={<AdminUpgradeWriter />} />
-        <Route
-          path="/admin/reported-accounts"
-          element={<AdminReportedAccounts />}
-        />
-        <Route path="/admin/article-statistics" element={<AdminArticleStatistics />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Admin />} />
+          <Route
+            path="/admin/upgrade-writer"
+            element={<AdminUpgradeWriter />}
+          />
+          <Route
+            path="/admin/reported-accounts"
+            element={<AdminReportedAccounts />}
+          />
+          <Route
+            path="/admin/article-statistics"
+            element={<AdminArticleStatistics />}
+          />
+        </Route>
       </Routes>
     </>
   );
