@@ -1,4 +1,5 @@
 const Article = require('../models/articleModel')
+const User = require('../models/userModel')
 const fs = require('fs');
 
 exports.getAllArticle = async (req, res, next) => {
@@ -20,10 +21,14 @@ exports.getAllArticle = async (req, res, next) => {
 exports.getArticle = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const data = await Article.findById(id);
+        const article =
+            await Article.findById(id)
+        
+        const user = await User.findById(article.ID_author);
+        article.ID_author = user.FullName
         res.status(200).json({
             status: "success",
-            data: data
+            data: article
         });
     } catch (err) {
         res.status(400).json({
@@ -55,7 +60,7 @@ exports.createAllArticle = async (req, res, next) => {
     try {
         const filePath = `${__dirname}data\\article.json`.replace('controllers', '');
         const articles = JSON.parse(fs.readFileSync(filePath, 'utf-8')).article;
-        
+
         for (const article of articles) {
             article.posted_time = new Date();
             await Article.create(article);
@@ -94,22 +99,21 @@ exports.updateArticle = async (req, res, next) => {
 exports.getTops = async (req, res, next) => {
     try {
         const name = req.params.name;
-        let data = '';
+        let datas = '';
         const limit = req.query.limit || 12;
         console.log(limit)
         if (name == 'views') {
-            console.log("trueeee");
-            data = await Article.find({
-                view: {
-                    $exists: true,
-                    $gt: 0
-                }
-            })
+            datas = await Article.find({
+                    view: {
+                        $exists: true,
+                        $gt: 0
+                    }
+                })
                 .sort({
                     view: -1
                 }).limit(limit);
         } else if (name == 'likes') {
-            data = await Article.find({
+            datas = await Article.find({
                 likes: {
                     $exists: true
                 }
@@ -117,17 +121,24 @@ exports.getTops = async (req, res, next) => {
                 likes: -1
             }).limit(limit);
         } else if (name == 'priority') {
-            data = await Article.find({
+            datas = await Article.find({
                 isPriority: true
             }).limit(limit)
         } else if (name == 'timer') {
-            data = await Article.find().sort({
+            datas = await Article.find().sort({
                 posted_time: -1
             }).limit(limit)
         }
+        // console.log(datas)/
+        const result = await Promise.all(datas.map(async (data) => {
+            const user = await User.findById(data.ID_author);
+            data.ID_author = user.FullName
+            return data
+        }))
+
         res.status(200).json({
             status: 'success',
-            data: data
+            data: result
         })
     } catch (err) {
         res.status(500).send({
@@ -163,10 +174,10 @@ exports.getPagination = async (req, res, next) => {
     const skip = (query.page - 1) * query.limit
     try {
         const dt = await Article.find({
-            Category: {
-                $in: [query.category]
-            }
-        })
+                Category: {
+                    $in: [query.category]
+                }
+            })
             .skip(skip)
             .limit(query.limit)
             .exec()
@@ -198,7 +209,9 @@ exports.deleteArticle = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        const deletedArticle = await Article.deleteOne({ _id });
+        const deletedArticle = await Article.deleteOne({
+            _id
+        });
         // const deletedUser = await Article.deleteMany();
 
         if (!deletedArticle) {
@@ -232,9 +245,17 @@ exports.SearchArticle = async (req, res, next) => {
 
 
         const data = await Article.find({
-            $or: [
-                { Title: { $regex: searchString, $options: 'i' } }, // Search by Title
-                { Category: { $in: [searchString] } } // Search by Category
+            $or: [{
+                    Title: {
+                        $regex: searchString,
+                        $options: 'i'
+                    }
+                }, // Search by Title
+                {
+                    Category: {
+                        $in: [searchString]
+                    }
+                } // Search by Category
             ]
         });
 
@@ -267,7 +288,10 @@ exports.addComment = async (req, res, next) => {
             });
         }
 
-        const { id_user, content } = req.body;
+        const {
+            id_user,
+            content
+        } = req.body;
 
         const newComment = {
             id_user: id_user,
