@@ -11,7 +11,8 @@ import Write from "./Pages/Write/Write";
 import UserInfo from "./Pages/UserInfo/UserInfo";
 import Error404 from "./Pages/Error-404/Error404";
 import Search from "./Pages/Search/Search";
-import Saved from "./Pages/Saved/Saved";
+import Saved from "./Pages/WriterUser/Saved";
+import Written from "./Pages/WriterUser/Written";
 // Authentication
 import Authentication from "./Pages/Authentication/Authentication";
 // Admin
@@ -41,6 +42,7 @@ function App() {
             <Route index element={<UserInfo />} />
             <Route path="/user/saved" element={<Saved />} />
             <Route path="/user/write" element={<Write />} />
+            <Route path="/user/written" element={<Written />} />
           </Route>
           <Route path="*" element={<Error404 />} />
         </Route>

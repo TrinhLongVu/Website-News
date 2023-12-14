@@ -16,10 +16,6 @@ const ArticleCard = ({ article }) => {
     setSaved(!isSaved);
   };
 
-  const userInfo = {
-    avatar: "https://i.pravatar.cc/301",
-  };
-
   return (
     <Link to={`/article/${article._id}`} className="article-card">
       <div
@@ -33,7 +29,7 @@ const ArticleCard = ({ article }) => {
       <div className="article-card-author">
         <div
           className="card-author-avt"
-          style={{ backgroundImage: `url(${userInfo.avatar})` }}
+          style={{ backgroundImage: `url(${article.imageAuthor})` }}
         ></div>
         <div className="card-author-info">
           <h3 className="card-author-name">{article.ID_author}</h3>

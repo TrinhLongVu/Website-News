@@ -9,6 +9,7 @@ import {
   faBookmark,
   faRightToBracket,
   faPen,
+  faNewspaper,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
@@ -198,10 +199,19 @@ const Header = () => {
                   Saved
                 </Link>
                 {isWriter && (
-                  <Link to="/user/write">
-                    <FontAwesomeIcon icon={faPen} className="profile-ico" />
-                    Write
-                  </Link>
+                  <>
+                    <Link to="/user/write">
+                      <FontAwesomeIcon icon={faPen} className="profile-ico" />
+                      Write
+                    </Link>
+                    <Link to="/user/written">
+                      <FontAwesomeIcon
+                        icon={faNewspaper}
+                        className="profile-ico"
+                      />
+                      Written
+                    </Link>
+                  </>
                 )}
                 <hr />
                 <Link>
