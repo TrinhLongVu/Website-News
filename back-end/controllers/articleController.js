@@ -21,11 +21,13 @@ exports.getAllArticle = async (req, res, next) => {
 exports.getArticle = async (req, res, next) => {
     try {
         const id = req.params.id;
-        const article =
+        let data =
             await Article.findById(id)
         
-        const user = await User.findById(article.ID_author);
+        const user = await User.findById(data.ID_author);
+        let article = { ...data }._doc;
         article.ID_author = user.FullName
+        article.imageAuthor = user.Image_Avatar
         res.status(200).json({
             status: "success",
             data: article
@@ -132,8 +134,11 @@ exports.getTops = async (req, res, next) => {
         // console.log(datas)/
         const result = await Promise.all(datas.map(async (data) => {
             const user = await User.findById(data.ID_author);
-            data.ID_author = user.FullName
-            return data
+            // the cause is articles do not have attribute is imageAuthor then i must be parse them
+            let aritcle = { ...data }._doc;
+            aritcle.ID_author = user.FullName
+            aritcle.imageAuthor = user.Image_Avatar
+            return aritcle
         }))
 
         res.status(200).json({
