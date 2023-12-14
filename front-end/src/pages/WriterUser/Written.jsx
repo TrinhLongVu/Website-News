@@ -20,7 +20,7 @@ const Written = () => {
   return (
     <>
       <Breadcrumbs
-        crumbList={[{ name: "Your Written Articles", link: "/user/written" }]}
+        crumbList={[{ name: "Written Articles", link: "/user/written" }]}
       />
       {articleList.length !== 0 ? (
         <>{articleList && <ArticleShelf articles={articleList} />}</>
@@ -28,8 +28,8 @@ const Written = () => {
         <>
           <div className="no-res-msg-box">
             <FontAwesomeIcon icon={faNewspaper} className="msg-icon" />
-            <div>Looks like you haven't saved any articles yet!</div>
-            <div>Let's find your favorite by reading some of them!!!</div>
+            <div>Looks like you haven't written any articles yet!</div>
+            <div>Let's write your first articles for the platform!!!</div>
           </div>
         </>
       )}

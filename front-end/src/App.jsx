@@ -11,6 +11,8 @@ import Write from "./Pages/Write/Write";
 import UserInfo from "./Pages/UserInfo/UserInfo";
 import Error404 from "./Pages/Error-404/Error404";
 import Search from "./Pages/Search/Search";
+import Writer from "./Pages/Writer/Writer";
+// WriterUser
 import Saved from "./Pages/WriterUser/Saved";
 import Written from "./Pages/WriterUser/Written";
 // Authentication
@@ -38,6 +40,7 @@ function App() {
           <Route path="/search/:word" element={<Search />} />
           <Route path="/about" element={<About />} />
           <Route path="/article/:id" element={<Read />} />
+          <Route path="/writer" element={<Writer />} />
           <Route path="/user">
             <Route index element={<UserInfo />} />
             <Route path="/user/saved" element={<Saved />} />
