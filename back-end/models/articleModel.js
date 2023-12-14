@@ -15,6 +15,8 @@ const articleSchema = new Schema({
     },
     ID_author: {
         type: String,
+        // type: Schema.Types.ObjectId,
+        // ref: 'user',
         require: [true, 'A article must have a author']
     },
     posted_time: {

@@ -8,7 +8,7 @@ module.exports = passport => {
     })
 
     passport.deserializeUser(async (user, done) => {
-        const userLogin = await User.findOne({UserName: user});
+        const userLogin = await User.findOne({ UserName: user });
         if (user) {
             return done(null, userLogin)
         }
