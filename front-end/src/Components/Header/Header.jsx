@@ -87,11 +87,11 @@ const Header = () => {
       .then((json) => {
         if (json.body) {
           setAuthenticated(true);
-          console.log(json.body);
           setUserAvt(json.body.Image_Avatar);
           if (json.body.Role === "writer") {
             setWriter(true);
           }
+          console.log(json.body);
           setFollowingList(json.body.ID_follow_writer);
         }
       });

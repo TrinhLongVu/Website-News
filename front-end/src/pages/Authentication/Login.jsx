@@ -46,6 +46,12 @@ const Login = () => {
       console.error(error);
     }
   };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      login();
+    }
+  };
   return (
     <>
       <div action="/api/v1/user/account/Login" method="POST">
@@ -56,6 +62,7 @@ const Login = () => {
             className="input-field"
             id="login-name"
             placeholder="Email Address"
+            onKeyDown={handleKeyPress}
           />
         </div>
         <div className="input-box">
@@ -65,6 +72,7 @@ const Login = () => {
             className="input-field"
             id="login-password"
             placeholder="Password"
+            onKeyDown={handleKeyPress}
           />
         </div>
         <div className="forgot-pwd">

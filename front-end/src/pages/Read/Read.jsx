@@ -24,8 +24,6 @@ const Read = () => {
   const { id } = useParams();
 
   const [readingArticle, setReadingArticle] = useState({});
-  const [articleCmts, setArticleCmts] = useState([]);
-  const [articleAuthor, setArticleAuthor] = useState("");
   const [articleCategory, setArticleCategory] = useState("");
   const [relatedArticles, setRelatedArticles] = useState([]);
 
@@ -36,6 +34,8 @@ const Read = () => {
         setArticleCategory(json.data.Category[0]);
         const articleContent = json.data.Detail.split("\n");
         const fetchedArticle = {
+          author: json.data.ID_author,
+          authorAvt: json.data.imageAuthor,
           thumbnail: json.data.Image,
           title: json.data.Title,
           content: articleContent,
@@ -43,8 +43,6 @@ const Read = () => {
           time: json.data.posted_time,
         };
         setReadingArticle(fetchedArticle);
-        setArticleCmts(json.data.comment);
-        setArticleAuthor(json.data.ID_author);
       });
   }, [id]);
 
@@ -97,13 +95,16 @@ const Read = () => {
       <div className="read-page">
         <div className="read-page-left">
           <ArticleFrame publishArticle={readingArticle} />
-          <CommentSection articleComments={articleCmts} />
+          <CommentSection articleId={id} />
         </div>
         <div className="read-page-right">
           <a href="" className="read-author-box">
-            <div className="read-author-avt"></div>
+            <div
+              className="read-author-avt"
+              style={{ backgroundImage: `url(${readingArticle.authorAvt})` }}
+            ></div>
             <div className="read-author-info">
-              <div className="read-author-name">{articleAuthor}</div>
+              <div className="read-author-name">{readingArticle.author}</div>
               <div className="read-author-follow">18.6k Followers</div>
             </div>
           </a>

@@ -10,9 +10,19 @@ import {
 
 import "./cmt-section.css";
 
-const CommentSection = ({ articleComments }) => {
+const CommentSection = ({ articleId }) => {
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [infoObj, setInfoObj] = useState({});
+  const [comments, setComments] = useState([]);
+  const [commentInput, setCommentInput] = useState("");
+  const [sentCmt, setSentCmt] = useState(false);
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/v1/article/${articleId}`)
+      .then((res) => res.json())
+      .then((json) => {
+        setComments(json.data.comments);
+      });
+  }, [sentCmt]);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
@@ -21,21 +31,40 @@ const CommentSection = ({ articleComments }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
-          console.log(json.body);
           setAuthenticated(true);
           setInfoObj(json.body);
         }
       });
   }, []);
 
-  const [commentInput, setCommentInput] = useState("");
-  const [comments, setComments] = useState(articleComments);
-  const sendComment = (event) => {
+  const sendComment = async (event) => {
+    const cmtContent = document.querySelector(".cmt-input-field").value;
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/article/${articleId}`,
+        {
+          credentials: "include",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id_user: infoObj._id,
+            content: cmtContent,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.data) {
+        setSentCmt(!sentCmt);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     const cmtInput = document.querySelector(".cmt-input-field");
     cmtInput.style.height = "auto";
     cmtInput.style.width = "90%";
     if (commentInput.trim() !== "") {
-      setComments((prevComments) => [...prevComments, commentInput]);
       setCommentInput("");
     }
   };
@@ -93,7 +122,7 @@ const CommentSection = ({ articleComments }) => {
             <div>Please login to share your thoughts about this article!!!</div>
           </div>
         )}
-        <hr class="cmt-hr" />
+        <hr className="cmt-hr" />
         {comments.length === 0 ? (
           <div className="msg-box">
             <FontAwesomeIcon icon={faCommentSlash} className="msg-icon" />
@@ -104,10 +133,13 @@ const CommentSection = ({ articleComments }) => {
           comments.map((comment, idx) => (
             <div key={idx} className="other-cmt-box">
               <div className="other-cmt-info">
-                <div className="cmt-avt"></div>
-                <h3 className="user-name">Simon Gin</h3>
+                <div
+                  className="cmt-avt"
+                  style={{ backgroundImage: `url(${comment.image})` }}
+                ></div>
+                <h3 className="user-name">{comment.username}</h3>
               </div>
-              <div className="other-cmt-content">{comment}</div>
+              <div className="other-cmt-content">{comment.content}</div>
             </div>
           ))
         )}
