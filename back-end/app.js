@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const articleRouter = require('./routes/articleRouters.js')
 const userRouter = require('./routes/userRouters.js')
 const articleAIRouter = require('./routes/articleAIRouter.js')
+const authentication = require('./routes/authentication.js')
 const passport = require('passport')
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
@@ -20,12 +21,12 @@ app.use(session({
     },
 }))
 
-// config middleware using req.body
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true,
     allowedHeaders: ['Content-Type'],
 }))
+// config middleware using req.body
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(passport.initialize());
@@ -37,5 +38,6 @@ p(passport)
 app.use('/api/v1/article', articleRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/articleAI', articleAIRouter);
+app.use('/api/v1/user', authentication)
 
 module.exports = app;

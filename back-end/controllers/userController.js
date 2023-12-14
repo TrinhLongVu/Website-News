@@ -179,8 +179,8 @@ exports.deleteUser = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        const deletedUser = await User.deleteOne({ _id });
-        // const deletedUser = await User.deleteMany();
+        // const deletedUser = await User.deleteOne({ _id });
+        const deletedUser = await User.deleteMany();
 
         if (!deletedUser) {
             // If the user with the specified ID is not found, return an error response
@@ -351,19 +351,4 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
         })
     }
     next();
-}
-
-
-exports.Authentication = (req, res) => {
-    if (req.isAuthenticated()) {
-        res.json({
-            status: "success",
-            body: req.user
-        })
-    }
-    else {
-        res.json({
-            status: "failed",
-        })
-    }
 }

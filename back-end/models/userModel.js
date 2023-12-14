@@ -19,7 +19,10 @@ const userSchema = new Schema({
         type: String,
         default: 'No Name'
     },
-
+    type: {
+        type: String,
+        default: 'local'
+    },
     Birthday: {
         type: Date
     },
