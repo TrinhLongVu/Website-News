@@ -10,10 +10,10 @@ const uploadImage = (image) => {
             resource_type: "auto",
         }, (error, result) => {
             if (result && result.secure_url) {
-                console.log(result.secure_url);
+                // console.log(result.secure_url);
                 return resolve(result.secure_url);
             }
-            console.log(error.message);
+            // console.log(error.message);
             return reject({
                 message: error.message
             });
@@ -41,8 +41,8 @@ router
 router
     .route('/upload/:id')
     .post((req, res) => {
-        console.log("1111", req.body)
-        console.log(req)
+        // console.log("1111", req.body)
+        // console.log(req)
         try {
             res.status(200).send("ok")
             // uploadImage(req.body.image)
@@ -71,6 +71,5 @@ router
 router
     .route('/search/:searchString')  // Note: if searchString have multiple words, convert to "word1+word2+..." .concatnate words with a "+" sign, must not have "space"(" ") in searchString
     .get(articleController.SearchArticle)
-
 
 module.exports = router;

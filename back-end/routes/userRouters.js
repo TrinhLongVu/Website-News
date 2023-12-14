@@ -4,6 +4,7 @@ const router = express.Router();
 const passport = require('passport')
 
 const userController = require('../controllers/userController')
+// const abc = require('../controllers/authenticationController')
 
 router
     .route('/')
@@ -19,16 +20,6 @@ router
     .get(userController.getUser)
     .patch(userController.updateUser)
     .delete(userController.deleteUser);
-
-router
-    .route('/account/success')
-    .get(userController.Authentication);
-router
-    .route('/account/Login')
-    .post(passport.authenticate('local', {
-        successRedirect: '/api/v1/user/account/success',
-        failureRedirect: '/api/v1/user/account/success'
-    }))
 
 router
     .route('/pages/:id') // :id of writer
