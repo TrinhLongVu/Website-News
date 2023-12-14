@@ -23,13 +23,20 @@ exports.getArticle = async (req, res, next) => {
         const id = req.params.id;
         let data =
             await Article.findById(id)
-
+        
         const user = await User.findById(data.ID_author);
         let article = {
             ...data
         }._doc;
         article.ID_author = user.FullName
         article.imageAuthor = user.Image_Avatar
+
+        for (const comment of article.comments) {
+            const user = await User.findById(comment.id_user)
+            comment.username = user.FullName
+            comment.image = user.Image_Avatar;
+        }
+
         res.status(200).json({
             status: "success",
             data: article
@@ -224,13 +231,6 @@ exports.getPagination = async (req, res, next) => {
     next();
 }
 
-// exports.deleteArticle = (req, res, next) => {
-//     res.status(500).send({
-//         status: "error",
-//     })
-//     next();
-// }
-
 
 exports.deleteArticle = async (req, res, next) => {
     try {
@@ -306,21 +306,21 @@ exports.SearchArticle = async (req, res, next) => {
 exports.addComment = async (req, res, next) => {
     try {
         const id_article = req.params.id;
+        const {
+            id_user,
+            content
+        } = req.body;
 
-        const find_Article = await Article.findById(id_article);
+        const articles = await Article.findById(id_article);
 
         // If the article with the specified ID is not found, return an error response
-        if (!find_Article) {
+        if (!articles) {
             return res.status(404).json({
                 status: 'fail',
                 message: 'Article not found'
             });
         }
 
-        const {
-            id_user,
-            content
-        } = req.body;
 
         const newComment = {
             id_user: id_user,
@@ -328,10 +328,10 @@ exports.addComment = async (req, res, next) => {
         };
 
 
-        find_Article.comments.push(newComment);
+        articles.comments.push(newComment);
 
 
-        const update = await Article.findByIdAndUpdate(id_article, find_Article, {
+        const update = await Article.findByIdAndUpdate(id_article, articles, {
             new: true
         })
         res.status(201).json({
