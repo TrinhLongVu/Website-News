@@ -46,8 +46,7 @@ const ArticleSlider = () => {
     fetch("http://localhost:8000/api/v1/article/top/priority?limit=5")
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data);
-        // setArticleList(json.data);
+        setArticleList(json.data);
       });
   }, []);
 

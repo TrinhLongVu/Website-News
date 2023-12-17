@@ -71,14 +71,14 @@
 }
 
 .card-author-info {
-    width: 170px;
+    width: 190px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .card-author-name {
-    width: 170px;
+    width: 190px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -88,9 +88,4 @@
     font-size: 14px;
     color: #3e3232;
     opacity: 0.75;
-}
-
-.card-save-btn {
-    font-size: 20px;
-    cursor: pointer;
 }

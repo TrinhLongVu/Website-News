@@ -4,6 +4,8 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./user-info.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 
+import { format } from "date-fns";
+
 const UserInfo = () => {
   const [infoObj, setInfoObj] = useState({});
   const [userAvatar, setUserAvatar] = useState(null);
@@ -16,7 +18,9 @@ const UserInfo = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
-          console.log(json.body);
+          const dateObj = new Date(json.body.Birthday);
+          const formattedDate = format(dateObj, "yyyy-MM-dd");
+          json.body.Birthday = formattedDate;
           setInfoObj(json.body);
           setUserAvatar(json.body.Image_Avatar);
           if (json.body.Role === "writer") {
@@ -27,35 +31,17 @@ const UserInfo = () => {
   }, []);
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const [formData, setFormData] = useState({
-    username: "Simon",
-    email: "sg@gmail.com",
-    bio: "Hi everyone, this is the bio of my account",
-    birthday: "",
-    gender: "",
-    phonenumber: "",
-    address: "",
-  });
-
-  const initialFormData = useRef({ ...formData });
 
   const handleEditClick = () => {
     setIsEditMode(true);
   };
 
   const handleSaveClick = () => {
-    initialFormData.current = { ...formData };
     setIsEditMode(false);
   };
 
   const handleCancelClick = () => {
-    setFormData({ ...initialFormData.current });
     setIsEditMode(false);
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleAvatarChange = (e) => {
@@ -71,7 +57,7 @@ const UserInfo = () => {
 
   return (
     <>
-      <Breadcrumbs crumbList={[{ name: "User Info", link: "/user" }]} />
+      <Breadcrumbs crumbList={[{ name: "User Information", link: "/user" }]} />
       <div className="info-avt-container">
         <div className="avt">
           <div
@@ -108,7 +94,7 @@ const UserInfo = () => {
           <h1 className="account-title">Account Information</h1>
 
           <div className="info-field">
-            <h3 className="title-input">Username</h3>
+            <h3 className="title-input">Full Name</h3>
             <input
               className="info-inp"
               type="text"
@@ -116,7 +102,6 @@ const UserInfo = () => {
               id="username"
               value={infoObj.FullName}
               readOnly={!isEditMode}
-              onChange={handleChange}
             />
           </div>
 
@@ -129,22 +114,7 @@ const UserInfo = () => {
               id="email"
               value={infoObj.UserName}
               readOnly={!isEditMode}
-              onChange={handleChange}
             />
-          </div>
-
-          <div className="info-field">
-            <h3 className="title-input">Bio</h3>
-            <textarea
-              className="bio-inp"
-              name="bio"
-              id="bio"
-              value={formData.bio}
-              readOnly={!isEditMode}
-              cols="30"
-              rows="10"
-              onChange={handleChange}
-            ></textarea>
           </div>
 
           <h1 className="personal-title">Personal Information</h1>
@@ -156,10 +126,9 @@ const UserInfo = () => {
               type="date"
               name="birthday"
               id="birthday"
+              value={infoObj.Birthday}
               placeholder="No data"
-              value={formData.birthday}
               readOnly={!isEditMode}
-              onChange={handleChange}
             />
           </div>
 
@@ -173,7 +142,6 @@ const UserInfo = () => {
               placeholder="No data"
               value={infoObj.Gender}
               readOnly={!isEditMode}
-              onChange={handleChange}
             />
           </div>
 
@@ -187,7 +155,6 @@ const UserInfo = () => {
               placeholder="No data"
               value={infoObj.PhoneNumber}
               readOnly={!isEditMode}
-              onChange={handleChange}
             />
           </div>
 
@@ -201,7 +168,6 @@ const UserInfo = () => {
               placeholder="No data"
               value={infoObj.Address}
               readOnly={!isEditMode}
-              onChange={handleChange}
             />
           </div>
 
