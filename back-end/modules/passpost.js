@@ -3,8 +3,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/userModel')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const dotenv = require('dotenv')
+const path = require('path');
 dotenv.config({
-    path: `${__dirname}\\..\\config.env`
+    path: path.join(__dirname, '..', 'config.env')
 });
 
 module.exports = passport => {
