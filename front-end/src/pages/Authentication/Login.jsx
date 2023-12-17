@@ -52,6 +52,7 @@ const Login = () => {
       login();
     }
   };
+
   return (
     <>
       <div action="/api/v1/user/account/Login" method="POST">
@@ -94,7 +95,10 @@ const Login = () => {
       <p>
         <span>or login with</span>
       </p>
-      <button className="gg-login"></button>
+      <Link
+        to="http://localhost:8000/api/v1/user/account/Login/auth/google"
+        className="gg-login"
+      ></Link>
     </>
   );
 };
