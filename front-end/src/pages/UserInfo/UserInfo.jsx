@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./user-info.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-
+import { useNavigate } from "react-router-dom";
 import { format } from "date-fns";
 
 const UserInfo = () => {
   const [infoObj, setInfoObj] = useState({});
   const [userAvatar, setUserAvatar] = useState(null);
-  const [isWriter, setWriter] = useState(false);
-
+  const [isEditMode, setIsEditMode] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
       credentials: "include",
@@ -18,29 +18,23 @@ const UserInfo = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
-          const dateObj = new Date(json.body.Birthday);
-          const formattedDate = format(dateObj, "yyyy-MM-dd");
-          json.body.Birthday = formattedDate;
+          if (json.body.Birthday) {
+            const dateObj = new Date(json.body.Birthday);
+            const formattedDate = format(dateObj, "yyyy-MM-dd");
+            json.body.Birthday = formattedDate;
+          }
           setInfoObj(json.body);
           setUserAvatar(json.body.Image_Avatar);
           if (json.body.Role === "writer") {
             setWriter(true);
           }
+        } else {
+          navigate("/");
         }
       });
-  }, []);
+  }, [isEditMode]);
 
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const handleEditClick = () => {
-    setIsEditMode(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditMode(false);
-  };
-
-  const handleCancelClick = () => {
+  const saveInfoChanges = () => {
     setIsEditMode(false);
   };
 
@@ -59,7 +53,7 @@ const UserInfo = () => {
     <>
       <Breadcrumbs crumbList={[{ name: "User Information", link: "/user" }]} />
       <div className="info-avt-container">
-        <div className="avt">
+        <div className="info--avt">
           <div
             className="avatar-big"
             style={{ backgroundImage: `url(${userAvatar})` }}
@@ -80,19 +74,6 @@ const UserInfo = () => {
         </div>
 
         <div className="info">
-          {isEditMode ? (
-            <></>
-          ) : (
-            <div
-              className="action-btn change-info-btn"
-              onClick={handleEditClick}
-            >
-              Change Information
-            </div>
-          )}
-
-          <h1 className="account-title">Account Information</h1>
-
           <div className="info-field">
             <h3 className="title-input">Full Name</h3>
             <input
@@ -100,25 +81,11 @@ const UserInfo = () => {
               type="text"
               name="username"
               id="username"
+              placeholder="No data"
               value={infoObj.FullName}
               readOnly={!isEditMode}
             />
           </div>
-
-          <div className="info-field">
-            <h3 className="title-input">Email</h3>
-            <input
-              className="info-inp"
-              type="email"
-              name="email"
-              id="email"
-              value={infoObj.UserName}
-              readOnly={!isEditMode}
-            />
-          </div>
-
-          <h1 className="personal-title">Personal Information</h1>
-
           <div className="info-field">
             <h3 className="title-input">Birthday</h3>
             <input
@@ -170,27 +137,39 @@ const UserInfo = () => {
               readOnly={!isEditMode}
             />
           </div>
-
-          {isEditMode ? (
-            <>
-              <div className="save-cancel-btn-container">
-                <button
-                  className="action-btn save-btn"
-                  onClick={handleSaveClick}
-                >
-                  Save
-                </button>
-                <button
-                  className="action-btn cancel-btn"
-                  onClick={handleCancelClick}
-                >
-                  Cancel
-                </button>
+          <div className="info-action-row">
+            <div className="info-action-btn-container">
+              <div className="info-action-btn" id="info-upgrade-btn">
+                Upgrade to Writer
               </div>
-            </>
-          ) : (
-            <div></div>
-          )}
+            </div>
+            <div className="info-action-btn-container">
+              {isEditMode ? (
+                <>
+                  <div
+                    className="info-action-btn"
+                    id="info-save-btn"
+                    onClick={saveInfoChanges}
+                  >
+                    Save
+                  </div>
+                  <div
+                    className="info-action-btn"
+                    onClick={setIsEditMode.bind(null, false)}
+                  >
+                    Cancel
+                  </div>
+                </>
+              ) : (
+                <div
+                  className="info-action-btn"
+                  onClick={setIsEditMode.bind(null, true)}
+                >
+                  Change Information
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
