@@ -17,12 +17,8 @@ module.exports = passport => {
     })
 
     passport.deserializeUser(async (user, done) => {
-        if (user.type === 'google') {
-            const userLogin = await User.findOne({
-                type: user.type
-            });
-            return done(null, userLogin);
-        } else if (user.type === 'local') {
+        console.log(user);
+        if (user.type === 'local') {
             const userLogin = await User.findOne({
                 UserName: user.name
             });
@@ -31,7 +27,10 @@ module.exports = passport => {
             }
             return done('invalid');
         } else {
-            return done('invalid');
+            const userLogin = await User.findOne({
+                type: user.type
+            });
+            return done(null, userLogin);
         }
     });
     

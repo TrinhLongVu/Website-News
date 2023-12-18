@@ -131,7 +131,7 @@ const Write = () => {
     formData.append("ID_author", userInfo._id);
     formData.append("image", thumbnail);
     try {
-      const response = await fetch("http://localhost:8000/upload/cloud", {
+      const response = await fetch("http://localhost:8000/api/v1/article", {
         method: "POST",
         body: formData,
       });
