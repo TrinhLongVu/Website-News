@@ -17,21 +17,24 @@ module.exports = passport => {
     })
 
     passport.deserializeUser(async (user, done) => {
-        console.log(user)
-        if (user.type != 'local') {
+        if (user.type === 'google') {
             const userLogin = await User.findOne({
                 type: user.type
-            })
+            });
             return done(null, userLogin);
+        } else if (user.type === 'local') {
+            const userLogin = await User.findOne({
+                UserName: user.name
+            });
+            if (userLogin) {
+                return done(null, userLogin);
+            }
+            return done('invalid');
+        } else {
+            return done('invalid');
         }
-        const userLogin = await User.findOne({
-            UserName: user.UserName
-        });
-        if (userLogin) {
-            return done(null, userLogin)
-        }
-        return done('invalid')
-    })
+    });
+    
 
     // username and password get from body
     passport.use(new LocalStrategy(async (username, Password, done) => {
@@ -58,6 +61,7 @@ module.exports = passport => {
             callbackURL: "http://localhost:8000/api/v1/user/account/gg/callback"
         },
         async (accessToken, refreshToken, profile, done) => {
+            console.log("google.....")
             const user = await User.findOne({
                 type: profile.id
             })
