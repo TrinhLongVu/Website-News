@@ -40,7 +40,7 @@ function App() {
           <Route path="/search/:word" element={<Search />} />
           <Route path="/about" element={<About />} />
           <Route path="/article/:id" element={<Read />} />
-          <Route path="/writer" element={<Writer />} />
+          <Route path="/writer/:id" element={<Writer />} />
           <Route path="/user">
             <Route index element={<UserInfo />} />
             <Route path="/user/saved" element={<Saved />} />

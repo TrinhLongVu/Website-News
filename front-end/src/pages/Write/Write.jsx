@@ -27,7 +27,7 @@ const Write = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json.body && json.body.Role === "Writer") {
+        if (json.body && json.body.Role === "writer") {
           setUserInfo(json.body);
         } else {
           navigate("/");
@@ -125,18 +125,16 @@ const Write = () => {
 
   const createNewArticle = async () => {
     let formData = new FormData();
-    formData.append("title", articleTitle);
-    formData.append("content", contentField);
-    formData.append("category", selectedCategory);
+    formData.append("Title", articleTitle);
+    formData.append("Detail", contentField);
+    formData.append("Category", selectedCategory);
+    formData.append("ID_author", userInfo._id);
     formData.append("image", thumbnail);
     try {
-      const response = await fetch(
-        "http://localhost:8000/api/v1/article/upload/567",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("http://localhost:8000/upload/cloud", {
+        method: "POST",
+        body: formData,
+      });
 
       if (response.ok) {
         console.log("Post created successfully");

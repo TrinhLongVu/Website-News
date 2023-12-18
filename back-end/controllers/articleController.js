@@ -29,7 +29,7 @@ exports.getArticle = async (req, res, next) => {
         let article = {
             ...data
         }._doc;
-        article.ID_author = user.FullName
+        article.author_name = user.FullName
         article.imageAuthor = user.Image_Avatar
 
         for (const comment of article.comments) {
