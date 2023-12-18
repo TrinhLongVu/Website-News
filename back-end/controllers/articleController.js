@@ -71,9 +71,8 @@ exports.createAllArticle = async (req, res, next) => {
     try {
         const filePath = `${__dirname}data\\article.json`.replace('controllers', '');
         const articles = JSON.parse(fs.readFileSync(filePath, 'utf-8')).article;
-
+        
         for (const article of articles) {
-            article.posted_time = new Date();
             await Article.create(article);
         }
         res.status(201).json({
@@ -238,10 +237,10 @@ exports.deleteArticle = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        const deletedArticle = await Article.deleteOne({
-            _id
-        });
-        // const deletedUser = await Article.deleteMany();
+        // const deletedArticle = await Article.deleteOne({
+        //     _id
+        // });
+        const deletedUser = await Article.deleteMany();
 
         if (!deletedArticle) {
             // If the user with the specified ID is not found, return an error response
@@ -270,10 +269,7 @@ exports.SearchArticle = async (req, res, next) => {
 
         const searchString = tempsearchString.replace(/\+/g, ' ');
 
-        console.log(searchString)
-
-
-        const data = await Article.find({
+        const datas = await Article.find({
             $or: [{
                     Title: {
                         $regex: searchString,
@@ -288,10 +284,19 @@ exports.SearchArticle = async (req, res, next) => {
             ]
         });
 
+        const articles = await Promise.all(datas.map(async (data) => {
+            const user = await User.findById(data.ID_author);
+            let article = {
+                ...data
+            }._doc;
+            article.ID_author = user.FullName;
+            article.imageAuthor = user.Image_Avatar;
+            return article;
+        }));
 
         res.status(200).json({
             status: "success",
-            data: data
+            data: articles
         });
     } catch (err) {
         res.status(400).json({
