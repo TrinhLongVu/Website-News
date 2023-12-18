@@ -16,9 +16,7 @@ import { useNavigate } from "react-router-dom";
 const Write = () => {
   const [showList, setShowList] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-
   const [userInfo, setUserInfo] = useState(null);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,10 +52,6 @@ const Write = () => {
   const [articleTitle, setArticleTitle] = useState("");
   const [contentField, setContentField] = useState("");
   const [previewArticle, setPreviewArticle] = useState(null);
-  const handleFieldChange = (event) => {
-    setContentField(event.target.value);
-  };
-
   const [previewThumbnail, setPreviewThumbnail] = useState(null);
   const [thumbnail, setThumbnail] = useState(null);
 
@@ -91,7 +85,7 @@ const Write = () => {
 
     const formattedTimestamp = `${timeString}, ${dateString.toUpperCase()}`;
     const newArticle = {
-      thumbnail: thumbnail,
+      thumbnail: previewThumbnail,
       title: articleTitle,
       content: articleContent,
       time: formattedTimestamp,
@@ -123,11 +117,13 @@ const Write = () => {
     }
   };
 
+  const [isPublished, setPublished] = useState(true);
+
   const createNewArticle = async () => {
     let formData = new FormData();
     formData.append("Title", articleTitle);
     formData.append("Detail", contentField);
-    formData.append("Category", selectedCategory);
+    formData.append("Category", selectedCategory.toLowerCase());
     formData.append("ID_author", userInfo._id);
     formData.append("image", thumbnail);
     try {
@@ -137,7 +133,12 @@ const Write = () => {
       });
 
       if (response.ok) {
-        console.log("Post created successfully");
+        setPublished(true);
+        document.querySelector(".write-new-input").value = "";
+        document.querySelector(".write-new-textarea").value = "";
+        setSelectedCategory("");
+        setThumbnail(null);
+        setPreviewArticle(null);
       } else {
         console.error("Failed to create post");
       }
@@ -195,7 +196,7 @@ const Write = () => {
               <textarea
                 className="write-new-textarea"
                 placeholder="Write your article here..."
-                onChange={handleFieldChange}
+                onChange={(e) => setContentField(e.target.value)}
               ></textarea>
             </div>
           </div>
@@ -245,6 +246,9 @@ const Write = () => {
               Publish
             </div>
           </div>
+          {isPublished && (
+            <div className="published-msg">Published Successfully</div>
+          )}
         </div>
       </div>
       {previewArticle && (

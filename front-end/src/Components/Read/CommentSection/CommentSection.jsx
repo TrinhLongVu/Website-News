@@ -21,7 +21,7 @@ const CommentSection = ({ articleId }) => {
       .then((json) => {
         setComments(json.data.comments);
       });
-  }, [sentCmt]);
+  }, [sentCmt, articleId]);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
