@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -31,10 +31,12 @@ const Read = () => {
     fetch(`http://localhost:8000/api/v1/article/${id}`)
       .then((res) => res.json())
       .then((json) => {
+        console.log(json.data);
         setArticleCategory(json.data.Category[0]);
         const articleContent = json.data.Detail.split("\n");
         const fetchedArticle = {
-          author: json.data.ID_author,
+          authorName: json.data.author_name,
+          authorID: json.data.ID_author,
           authorAvt: json.data.imageAuthor,
           thumbnail: json.data.Image,
           title: json.data.Title,
@@ -103,10 +105,15 @@ const Read = () => {
               className="read-author-avt"
               style={{ backgroundImage: `url(${readingArticle.authorAvt})` }}
             ></div>
-            <div className="read-author-info">
-              <div className="read-author-name">{readingArticle.author}</div>
+            <Link
+              to={`/writer/${readingArticle.authorID}`}
+              className="read-author-info"
+            >
+              <div className="read-author-name">
+                {readingArticle.authorName}
+              </div>
               <div className="read-author-follow">18.6k Followers</div>
-            </div>
+            </Link>
           </a>
           <div className="read-btn-box">
             <div className="btn-like" onClick={likeArticle}>
