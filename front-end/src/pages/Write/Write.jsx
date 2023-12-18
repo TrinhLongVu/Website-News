@@ -7,14 +7,34 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { categoryList } from "../../Global";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./write.css";
 import ArticleFrame from "../../Components/Read/ArticleFrame/ArticleFrame";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import { useNavigate } from "react-router-dom";
 
 const Write = () => {
   const [showList, setShowList] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const [userInfo, setUserInfo] = useState(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/user/account/success", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.body && json.body.Role === "Writer") {
+          setUserInfo(json.body);
+        } else {
+          navigate("/");
+        }
+      });
+  }, []);
+
   const toggleList = () => {
     setShowList(!showList);
     if (!showList) {

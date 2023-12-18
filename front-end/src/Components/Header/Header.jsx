@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
@@ -17,6 +17,7 @@ import "./header.css";
 import { categoryList } from "../../Global";
 
 const Header = () => {
+  const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
   const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false);
@@ -82,6 +83,7 @@ const Header = () => {
       .then((json) => {
         if (json.message === "Logout successful") {
           setUserInfo(null);
+          navigate("/");
         }
       });
   };
