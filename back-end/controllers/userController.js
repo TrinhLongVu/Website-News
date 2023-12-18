@@ -1,5 +1,6 @@
 const fs = require('fs');
 const User = require('../models/userModel')
+const Article = require('../models/articleModel')
 
 //=========================== FUNCTION =========================================================================
 function checkIfElementExists(element, array) {
@@ -351,4 +352,21 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
         })
     }
     next();
+}
+
+
+exports.getArticlesWritten = async (req, res) => {
+    try {
+        const ID_author = req.params.id;
+        const data = await Article.find({ ID_author });
+        res.status(201).json({
+            status: 'success',
+            data: data
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
 }

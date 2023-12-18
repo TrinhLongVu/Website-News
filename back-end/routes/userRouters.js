@@ -24,7 +24,10 @@ router
 router
     .route('/pages/:id') // :id of writer
     .get(userController.getWriter)
-    .patch(userController.Follow_Or_UnFollow_Writer) // To Follow or Unfollow a writer (:id is writer's id, User's id is in response body) 
+    .patch(userController.Follow_Or_UnFollow_Writer) // To Follow or Unfollow a writer (:id is writer's id, User's id is in response body)
 
+router
+    .route('/article/:id')
+    .get(userController.getArticlesWritten)
 
 module.exports = router;
