@@ -11,8 +11,7 @@ import {
 import "./cmt-section.css";
 
 const CommentSection = ({ articleId }) => {
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const [infoObj, setInfoObj] = useState({});
+  const [userInfo, setUserInfo] = useState(null);
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
   const [sentCmt, setSentCmt] = useState(false);
@@ -31,8 +30,7 @@ const CommentSection = ({ articleId }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
-          setAuthenticated(true);
-          setInfoObj(json.body);
+          setUserInfo(json.body);
         }
       });
   }, []);
@@ -49,7 +47,7 @@ const CommentSection = ({ articleId }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id_user: infoObj._id,
+            id_user: userInfo._id,
             content: cmtContent,
           }),
         }
@@ -88,17 +86,16 @@ const CommentSection = ({ articleId }) => {
           <FontAwesomeIcon icon={faComments} id="cmt-icon" />
           {comments.length > 0 && comments.length} Comments
         </div>
-        {isAuthenticated ? (
+        {userInfo ? (
           <div className="cmt-input-box">
             <div
               className="cmt-avt"
-              style={{ backgroundImage: `url(${infoObj.Image_Avatar})` }}
+              style={{ backgroundImage: `url(${userInfo.Image_Avatar})` }}
             ></div>
             <textarea
               className="cmt-input-field"
               placeholder="What do you think?"
               value={commentInput}
-              readOnly={!isAuthenticated}
               onChange={(e) => {
                 setCommentInput(e.target.value);
                 autoResize(e);

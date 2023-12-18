@@ -57,27 +57,8 @@ const Header = () => {
     }
   });
 
-  const following = {
-    username: "Simon Zacki Sa Murasaki",
-    avatar: "https://i.pravatar.cc/300",
-  };
-  const following_list = [
-    following,
-    following,
-    following,
-    following,
-    following,
-  ];
-
   const [searchField, setSearchField] = useState("");
-
-  const [authenticated, setAuthenticated] = useState(false);
-
-  const [userAvt, setUserAvt] = useState("");
-
-  const [isWriter, setWriter] = useState(false);
-
-  const [followingList, setFollowingList] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
@@ -86,13 +67,9 @@ const Header = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
-          setAuthenticated(true);
-          setUserAvt(json.body.Image_Avatar);
-          if (json.body.Role === "writer") {
-            setWriter(true);
-          }
-          console.log(json.body);
-          setFollowingList(json.body.ID_follow_writer);
+          setUserInfo(json.body);
+        } else {
+          setUserInfo(null);
         }
       });
   }, []);
@@ -146,8 +123,12 @@ const Header = () => {
               onMouseLeave={closeFollowingDropdown}
               id="following-dropdown"
             >
-              {followingList.length > 0 ? (
-                followingList.map((following, index) => (
+              {!userInfo ? (
+                <div id="no-following">You haven't logged in yet!!!</div>
+              ) : userInfo.ID_follow_writer.length === 0 ? (
+                <div id="no-following">You haven't following any author</div>
+              ) : (
+                userInfo.ID_follow_writer.map((following, index) => (
                   <a key={index} href="">
                     <div
                       className="following-avt"
@@ -158,8 +139,6 @@ const Header = () => {
                     <div className="following-name">{following}</div>
                   </a>
                 ))
-              ) : (
-                <div id="no-following">You haven't following any author</div>
               )}
             </div>
           )}
@@ -176,7 +155,7 @@ const Header = () => {
           <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
         </Link>
       </div>
-      {authenticated ? (
+      {userInfo ? (
         <>
           <div className="noti">
             <div className="noti-bell">
@@ -185,7 +164,7 @@ const Header = () => {
           </div>
           <div
             className="avt-dropdown-btn"
-            style={{ backgroundImage: `url(${userAvt})` }}
+            style={{ backgroundImage: `url(${userInfo.Image_Avatar})` }}
             onClick={showAvatarDropdown}
           >
             {showAvtDropdown && (
@@ -198,7 +177,7 @@ const Header = () => {
                   <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
                   Saved
                 </Link>
-                {isWriter && (
+                {userInfo.Role === "writer" && (
                   <>
                     <Link to="/user/write">
                       <FontAwesomeIcon icon={faPen} className="profile-ico" />
