@@ -52,6 +52,10 @@ const userSchema = new Schema({
     },
     ID_user_follow: {
         type: Array
+    },
+    pending: {
+        type: String,
+        default: "false"
     }
 })
 // The same create table in sql server and table have name which is lowercase."article" 

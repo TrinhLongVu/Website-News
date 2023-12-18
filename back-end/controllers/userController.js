@@ -370,3 +370,37 @@ exports.getArticlesWritten = async (req, res) => {
         })
     }
 }
+
+exports.upgrade = async (req, res) => {
+    try {
+        const id_Reader = req.params.id;
+        const result = await User.updateMany(
+            { _id: id_Reader },
+            { $addToSet: { pending: true } }
+        );
+        res.status(201).json({
+            status: 'success',
+            data: result
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+exports.getPending = async (req, res) => {
+    try {
+        const pendingUsers = await User.find({ pending: { $in: ['true'] } });
+        res.status(201).json({
+            status: 'success',
+            data: pendingUsers
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}

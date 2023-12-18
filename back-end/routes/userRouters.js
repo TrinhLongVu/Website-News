@@ -30,4 +30,12 @@ router
     .route('/article/:id')
     .get(userController.getArticlesWritten)
 
+router
+    .route('/upgrade/writer/:id')
+    .patch(userController.upgrade)
+
+router
+    .route('/pending/getAll')
+    .get(userController.getPending)
+
 module.exports = router;
