@@ -35,4 +35,8 @@ router
     .route('/search/:searchString')  // Note: if searchString have multiple words, convert to "word1+word2+..." .concatnate words with a "+" sign, must not have "space"(" ") in searchString
     .get(articleController.SearchArticle)
 
+router
+    .route('/set/priority')
+    .patch(articleController.setPriority)
+
 module.exports = router;

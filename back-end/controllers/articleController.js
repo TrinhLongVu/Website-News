@@ -374,3 +374,26 @@ exports.addComment = async (req, res, next) => {
     }
     next();
 }
+
+exports.setPriority = async (req, res) => {
+    try {
+        const idPriorityArticles = req.body.id.split(",");
+        console.log(idPriorityArticles)
+        await Article.updateMany(
+            {},
+            { $set: { isPriority: false } }
+        );
+        await Article.updateMany(
+            { _id: { $in: idPriorityArticles } },
+            { $set: { isPriority: true } }
+        );
+        res.status(200).json({
+            status: "success"
+        })
+    }
+    catch (err) {
+        res.status(403).json({
+            status: "fail"
+        })
+    }
+}
