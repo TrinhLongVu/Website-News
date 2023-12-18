@@ -74,6 +74,18 @@ const Header = () => {
       });
   }, []);
 
+  const logOut = () => {
+    fetch("http://localhost:8000/api/v1/user/account/logout", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.message === "Logout successful") {
+          setUserInfo(null);
+        }
+      });
+  };
+
   return (
     <header>
       <Link to="/" className="logo">
@@ -193,7 +205,7 @@ const Header = () => {
                   </>
                 )}
                 <hr />
-                <Link>
+                <Link onClick={logOut}>
                   <FontAwesomeIcon
                     icon={faRightFromBracket}
                     className="profile-ico"
