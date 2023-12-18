@@ -55,14 +55,14 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/articleAI', articleAIRouter);
 app.use('/api/v1/user', authentication)
 
-app.post("/upload/cloud", async(req, res) => {
-    const file = req.files.image;
-    const result = await cloudinary.uploader.upload(file.tempFilePath, {
-        public_id: `${Date.now()}`,
-        resource_type: "auto",
-        folder: "images"
-    })
+// app.post("/upload/cloud", async(req, res) => {
+//     const file = req.files.image;
+//     const result = await cloudinary.uploader.upload(file.tempFilePath, {
+//         public_id: `${Date.now()}`,
+//         resource_type: "auto",
+//         folder: "images"
+//     })
 
-    res.json(result)
-})
+//     res.json(result)
+// })
 module.exports = app;

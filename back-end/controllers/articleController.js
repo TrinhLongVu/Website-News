@@ -1,5 +1,6 @@
 const Article = require('../models/articleModel')
 const User = require('../models/userModel')
+const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
 exports.getAllArticle = async (req, res, next) => {
@@ -52,11 +53,28 @@ exports.getArticle = async (req, res, next) => {
 
 exports.createArticle = async (req, res, next) => {
     try {
-        const newArticle = await Article.create(req.body);
+        const { Title, Detail, Category, ID_author } = req.body;
+        const file = req.files.image;
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+            public_id: `${Date.now()}`,
+            resource_type: "auto",
+            folder: "images"
+        })
+
+        const article = {
+            "Title": Title,
+            "Detail": Detail,
+            "Category": [Category],
+            "posted_time": new Date(),
+            "ID_author": ID_author,
+            "Image": result.url
+        }
+        await Article.create(article);
+
         res.status(201).json({
             status: 'success',
             data: {
-                article: newArticle
+                article: article
             }
         })
     } catch (err) {
@@ -249,7 +267,6 @@ exports.deleteArticle = async (req, res, next) => {
                 msg: 'User not found.',
             });
         }
-
 
         res.status(201).json({
             status: 'success',
