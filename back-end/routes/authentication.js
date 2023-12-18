@@ -14,7 +14,7 @@ router
     .get(passport.authenticate('google', {
         scope: ['profile']
     }))
-    
+
 router
     .route('/account/gg/callback')
     .get(passport.authenticate('google', {
@@ -28,5 +28,9 @@ router
         successRedirect: '/api/v1/user/account/success',
         failureRedirect: '/api/v1/user/account/success'
     }))
+
+router
+    .route('/account/logout')
+    .get(userController.logout)
 
 module.exports = router;
