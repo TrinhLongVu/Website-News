@@ -24,7 +24,7 @@ exports.getArticle = async (req, res, next) => {
         const id = req.params.id;
         let data =
             await Article.findById(id)
-        
+
         const user = await User.findById(data.ID_author);
         let article = {
             ...data
@@ -53,7 +53,12 @@ exports.getArticle = async (req, res, next) => {
 
 exports.createArticle = async (req, res, next) => {
     try {
-        const { Title, Detail, Category, ID_author } = req.body;
+        const {
+            Title,
+            Detail,
+            Category,
+            ID_author
+        } = req.body;
         const file = req.files.image;
         const result = await cloudinary.uploader.upload(file.tempFilePath, {
             public_id: `${Date.now()}`,
@@ -62,13 +67,14 @@ exports.createArticle = async (req, res, next) => {
         })
 
         const article = {
-            "Title": Title,
-            "Detail": Detail,
-            "Category": [Category],
-            "posted_time": new Date(),
-            "ID_author": ID_author,
-            "Image": result.url
+            Title: Title,
+            Detail: Detail,
+            Category: [Category],
+            posted_time: new Date(),
+            ID_author: ID_author,
+            Image: result.url
         }
+
         await Article.create(article);
 
         res.status(201).json({
@@ -89,7 +95,7 @@ exports.createAllArticle = async (req, res, next) => {
     try {
         const filePath = `${__dirname}data\\article.json`.replace('controllers', '');
         const articles = JSON.parse(fs.readFileSync(filePath, 'utf-8')).article;
-        
+
         for (const article of articles) {
             await Article.create(article);
         }
