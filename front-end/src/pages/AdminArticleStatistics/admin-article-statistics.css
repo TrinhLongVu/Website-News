@@ -1,0 +1,50 @@
+.article-statistics-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.article-statistics-row {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.article-statistics-col {
+    flex: 1;
+    margin-right: 15px;
+}
+
+.article-statistics-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.article-statistics-card-body {
+    padding: 15px;
+}
+
+.article-statistics-text-xs {
+    font-size: 14px;
+}
+
+.article-statistics-text-success {
+    color: #28a745;
+}
+
+.article-statistics-text-uppercase {
+    text-transform: uppercase;
+}
+
+.article-statistics-mb-1 {
+    margin-bottom: 8px;
+}
+
+.article-statistics-h5 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.article-statistics-font-weight-bold {
+    font-weight: bold;
+}

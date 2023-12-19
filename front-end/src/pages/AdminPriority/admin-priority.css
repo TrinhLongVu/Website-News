@@ -1,0 +1,78 @@
+.priority-container{
+    width: 100%;
+    display:flex;
+    justify-content: space-around;
+}
+
+.priority-container-side {
+    width: 45%;
+}
+
+.priority-scroll-left{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    height:700px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    text-decoration: none;
+    color: inherit;
+    border:solid 1px black
+}
+
+.priority-scroll-right{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    height:700px;
+    /* width:50%; */
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    text-decoration: none;
+    color: inherit;
+    border:solid 1px black
+}
+
+.priority-title{
+    font-size: 25px;
+}
+
+
+
+
+.admin-save-cancel-btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end; /* Align buttons to the right */
+    margin-top: 10px; /* Add margin for spacing */
+}
+
+.admin-action-btn {
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0 3px; /* Adjust margin for spacing between buttons */
+}
+
+.admin-save-btn,.admin-cancel-btn {
+    margin:auto 3px;
+    color: #ff7b7b;
+    background-color: #ffffff;
+    border: 2px solid #ff7b7b;
+}
+
+.admin-save-btn:hover,.admin-cancel-btn:hover {
+    background-color: #ff7b7b;
+    color: #ffffff;
+}
+

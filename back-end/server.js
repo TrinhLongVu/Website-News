@@ -1,13 +1,6 @@
 const app = require('./app')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
-const cloudinary = require('cloudinary');
-
-cloudinary.config({
-    cloud_name: 'dupsdtrvy',
-    api_key: '943628789833962',
-    api_secret: 'xsn2ONslaeDRYZS3ojFuxG74fA0'
-});
 
 dotenv.config({
     path: './config.env'

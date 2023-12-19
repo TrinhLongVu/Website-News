@@ -1,0 +1,28 @@
+.admin-navbar {
+    width: 25%;
+    height: 89vh;
+    background-color: #2d4955;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-nav {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    color: inherit;
+    text-decoration: none;
+    background-color: #2d4955;
+}
+
+.admin-nav:hover {
+    color: inherit;
+    background-color: green;
+}
+
+.active-admin-nav {
+    background-color: green;
+}

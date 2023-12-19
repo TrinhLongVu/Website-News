@@ -33,6 +33,7 @@
     width: 64px;
     height: 64px;
     border-radius: 32px;
+    background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     border: 1px solid black;

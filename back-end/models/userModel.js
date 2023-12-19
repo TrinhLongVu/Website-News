@@ -19,7 +19,10 @@ const userSchema = new Schema({
         type: String,
         default: 'No Name'
     },
-
+    type: {
+        type: String,
+        default: 'local'
+    },
     Birthday: {
         type: Date
     },
@@ -49,6 +52,10 @@ const userSchema = new Schema({
     },
     ID_user_follow: {
         type: Array
+    },
+    pending: {
+        type: String,
+        default: "false"
     }
 })
 // The same create table in sql server and table have name which is lowercase."article" 

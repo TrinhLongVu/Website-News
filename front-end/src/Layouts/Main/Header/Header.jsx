@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleDown,
@@ -8,13 +8,16 @@ import {
   faRightFromBracket,
   faBookmark,
   faRightToBracket,
+  faPen,
+  faNewspaper,
 } from "@fortawesome/free-solid-svg-icons";
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
 
-import { categoryList } from "../../Global";
+import { categoryList } from "../../../Global";
 
 const Header = () => {
+  const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
   const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false);
@@ -55,25 +58,45 @@ const Header = () => {
     }
   });
 
-  const following = {
-    username: "Simon Zacki Sa Murasaki",
-    avatar: "https://i.pravatar.cc/300",
-  };
-  const following_list = [
-    following,
-    following,
-    following,
-    following,
-    following,
-  ];
-
-  const userInfo = {
-    avatar: "https://i.pravatar.cc/301",
-  };
-
   const [searchField, setSearchField] = useState("");
+  const [userInfo, setUserInfo] = useState({});
 
-  const isAuthenticated = true;
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/user/account/success", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.body) {
+          if (json.body.Role === "admin") {
+            navigate("/admin");
+          }
+          setUserInfo(json.body);
+        } else {
+          setUserInfo(null);
+        }
+      });
+  }, []);
+
+  const logOut = () => {
+    fetch("http://localhost:8000/api/v1/user/account/logout", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.message === "Logout successful") {
+          setUserInfo(null);
+          navigate("/");
+        }
+      });
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      navigate(`/search/${searchField}`);
+    }
+  };
+
   return (
     <header>
       <Link to="/" className="logo">
@@ -123,18 +146,22 @@ const Header = () => {
               onMouseLeave={closeFollowingDropdown}
               id="following-dropdown"
             >
-              {following_list.length > 0 ? (
-                following_list.map((following, index) => (
-                  <a key={index} href="">
+              {!userInfo ? (
+                <div id="no-following">You haven't logged in yet!!!</div>
+              ) : userInfo.ID_follow_writer.length === 0 ? (
+                <div id="no-following">You haven't following any author</div>
+              ) : (
+                userInfo.following.map((follow, index) => (
+                  <Link key={index} to={`/writer/${follow.id}`}>
                     <div
                       className="following-avt"
-                      style={{ backgroundImage: `url(${following.avatar})` }}
+                      style={{
+                        backgroundImage: `url(${follow.image})`,
+                      }}
                     ></div>
-                    <div className="following-name">{following.username}</div>
-                  </a>
+                    <div className="following-name">{follow.name}</div>
+                  </Link>
                 ))
-              ) : (
-                <div id="no-following">You haven't following any author</div>
               )}
             </div>
           )}
@@ -146,12 +173,13 @@ const Header = () => {
           onChange={(e) => setSearchField(e.target.value)}
           className="search-input"
           placeholder="Search Articles"
+          onKeyDown={handleKeyPress}
         />
         <Link to={`/search/${searchField}`} id="search-btn">
           <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
         </Link>
       </div>
-      {isAuthenticated ? (
+      {userInfo ? (
         <>
           <div className="noti">
             <div className="noti-bell">
@@ -160,21 +188,36 @@ const Header = () => {
           </div>
           <div
             className="avt-dropdown-btn"
-            style={{ backgroundImage: `url(${userInfo.avatar})` }}
+            style={{ backgroundImage: `url(${userInfo.Image_Avatar})` }}
             onClick={showAvatarDropdown}
           >
             {showAvtDropdown && (
               <div className="dropdown-menu" id="avt-dropdown">
-                <Link to="/info">
+                <Link to="/user">
                   <FontAwesomeIcon icon={faUser} className="profile-ico" />
                   Profile
                 </Link>
-                <a href="">
+                <Link to="/user/saved">
                   <FontAwesomeIcon icon={faBookmark} className="profile-ico" />
                   Saved
-                </a>
+                </Link>
+                {userInfo.Role === "writer" && (
+                  <>
+                    <Link to="/user/write">
+                      <FontAwesomeIcon icon={faPen} className="profile-ico" />
+                      Write
+                    </Link>
+                    <Link to="/user/written">
+                      <FontAwesomeIcon
+                        icon={faNewspaper}
+                        className="profile-ico"
+                      />
+                      Written
+                    </Link>
+                  </>
+                )}
                 <hr />
-                <Link>
+                <Link onClick={logOut}>
                   <FontAwesomeIcon
                     icon={faRightFromBracket}
                     className="profile-ico"

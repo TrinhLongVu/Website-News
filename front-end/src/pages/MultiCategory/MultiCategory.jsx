@@ -31,9 +31,7 @@ const MultiCategory = () => {
           const json = await response.json();
           return json.data;
         });
-
         const fetchedArticleList = await Promise.all(fetchPromises);
-        console.log(fetchedArticleList);
         setCategoriesArticleList(fetchedArticleList);
       } catch (error) {
         console.error("Error fetching data:", error);

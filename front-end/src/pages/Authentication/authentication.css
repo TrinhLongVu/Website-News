@@ -127,6 +127,13 @@ p span {
     cursor: pointer;
 }
 
+.auth-error-msg {
+    color: red;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
 /* End: Login */
 
 /* Start: Register */

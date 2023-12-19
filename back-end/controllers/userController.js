@@ -1,5 +1,6 @@
 const fs = require('fs');
 const User = require('../models/userModel')
+const Article = require('../models/articleModel')
 
 //=========================== FUNCTION =========================================================================
 function checkIfElementExists(element, array) {
@@ -179,8 +180,8 @@ exports.deleteUser = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        const deletedUser = await User.deleteOne({ _id });
-        // const deletedUser = await User.deleteMany();
+        // const deletedUser = await User.deleteOne({ _id });
+        const deletedUser = await User.deleteMany();
 
         if (!deletedUser) {
             // If the user with the specified ID is not found, return an error response
@@ -354,16 +355,52 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
 }
 
 
-exports.Authentication = (req, res) => {
-    if (req.isAuthenticated()) {
-        res.json({
-            status: "success",
-            body: req.user
+exports.getArticlesWritten = async (req, res) => {
+    try {
+        const ID_author = req.params.id;
+        const data = await Article.find({ ID_author });
+        res.status(201).json({
+            status: 'success',
+            data: data
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
         })
     }
-    else {
-        res.json({
-            status: "failed",
+}
+
+exports.upgrade = async (req, res) => {
+    try {
+        const id_Reader = req.params.id;
+        const result = await User.updateMany(
+            { _id: id_Reader },
+            { $addToSet: { pending: true } }
+        );
+        res.status(201).json({
+            status: 'success',
+            data: result
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+exports.getPending = async (req, res) => {
+    try {
+        const pendingUsers = await User.find({ pending: { $in: ['true'] } });
+        res.status(201).json({
+            status: 'success',
+            data: pendingUsers
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
         })
     }
 }
