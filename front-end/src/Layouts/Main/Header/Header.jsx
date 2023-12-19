@@ -68,6 +68,9 @@ const Header = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
+          if (json.body.Role === "admin") {
+            navigate("/admin");
+          }
           setUserInfo(json.body);
         } else {
           setUserInfo(null);
@@ -86,6 +89,12 @@ const Header = () => {
           navigate("/");
         }
       });
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      navigate(`/search/${searchField}`);
+    }
   };
 
   return (
@@ -164,6 +173,7 @@ const Header = () => {
           onChange={(e) => setSearchField(e.target.value)}
           className="search-input"
           placeholder="Search Articles"
+          onKeyDown={handleKeyPress}
         />
         <Link to={`/search/${searchField}`} id="search-btn">
           <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
