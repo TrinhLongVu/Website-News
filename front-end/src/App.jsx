@@ -18,20 +18,20 @@ import Written from "./Pages/WriterUser/Written";
 // Authentication
 import Authentication from "./Pages/Authentication/Authentication";
 // Admin
-import Admin from "./Pages/Admin/Admin";
+import AdminPriority from "./Pages/AdminPriority/AdminPriority";
 import AdminUpgradeWriter from "./pages/AdminUpgradeWriter/AdminUpgradeWriter";
 import AdminReportedAccounts from "./pages/AdminReportedAccounts/AdminReportedAccounts";
 import AdminArticleStatistics from "./pages/AdminArticleStatistics/AdminArticleStatistics";
 // Layouts
-import MainLayout from "./Layouts/MainLayout";
-import AdminLayout from "./Layouts/AdminLayout/AdminLayout";
+import Main from "./Layouts/Main/Main";
+import Admin from "./Layouts/Admin/Admin";
 function App() {
   return (
     <>
       <ScrollTop />
       <Routes>
         {/* Main */}
-        <Route path="/" element={<MainLayout />}>
+        <Route path="/" element={<Main />}>
           <Route index element={<Home />} />
           <Route path="/categories">
             <Route index element={<MultiCategory />} />
@@ -60,8 +60,9 @@ function App() {
             element={<Authentication authenType={"Register"} />}
           />
         </Route>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Admin />} />
+        {/* Admin */}
+        <Route path="/admin" element={<Admin />}>
+          <Route path="/admin/priority" element={<AdminPriority />} />
           <Route
             path="/admin/upgrade-writer"
             element={<AdminUpgradeWriter />}

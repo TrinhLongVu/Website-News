@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import AdminHeader from "../../Components/Admin/AdminHeader/AdminHeader";
-import AdminNavbar from "../../Components/Admin/AdminNavbar/AdminNavbar";
+import AdminHeader from "./AdminHeader/AdminHeader";
+import AdminNavbar from "./AdminNavbar/AdminNavbar";
 const AdminLayout = () => {
   const bodyStyle = {
     display: "flex",

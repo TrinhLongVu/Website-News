@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./admin.css";
+import "./admin-priority.css";
 import AdminArticle from "../../Components/Admin/AdminArticle/AdminArticle";
 
-const Admin = () => {
+const AdminPriority = () => {
   const [articleList, setArticleList] = useState([]);
   const [topArticles, setTopArticles] = useState([]);
   const [originalArticleList, setOriginalArticleList] = useState([]);
@@ -12,7 +12,10 @@ const Admin = () => {
     fetch("http://localhost:8000/api/v1/article/")
       .then((res) => res.json())
       .then((json) => {
-        const mappedArticles = json.data.map((article, idx) => ({ ...article, idx }));
+        const mappedArticles = json.data.map((article, idx) => ({
+          ...article,
+          idx,
+        }));
         setArticleList(mappedArticles);
         setOriginalArticleList([...mappedArticles]);
       });
@@ -84,9 +87,11 @@ const Admin = () => {
           <div className="priority-title">Top articles</div>
           <div className="priority-scroll-right">
             {topArticles.map((article) => (
-              <div key={article.idx}
+              <div
+                key={article.idx}
                 draggable
-                onDragStart={(e) => handleDragStart(e, article, "topArticles")}>
+                onDragStart={(e) => handleDragStart(e, article, "topArticles")}
+              >
                 <AdminArticle article={article} />
               </div>
             ))}
@@ -111,4 +116,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminPriority;

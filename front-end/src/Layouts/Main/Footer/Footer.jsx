@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./footer.css";
 
-import { categoryList } from "../../Global";
+import { categoryList } from "../../../Global";
 import { Link } from "react-router-dom";
 
 const Footer = () => {

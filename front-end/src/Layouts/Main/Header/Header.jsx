@@ -14,7 +14,7 @@ import {
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
 
-import { categoryList } from "../../Global";
+import { categoryList } from "../../../Global";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -142,16 +142,16 @@ const Header = () => {
               ) : userInfo.ID_follow_writer.length === 0 ? (
                 <div id="no-following">You haven't following any author</div>
               ) : (
-                userInfo.ID_follow_writer.map((following, index) => (
-                  <a key={index} href="">
+                userInfo.following.map((follow, index) => (
+                  <Link key={index} to={`/writer/${follow.id}`}>
                     <div
                       className="following-avt"
                       style={{
-                        backgroundImage: `url(https://i.pravatar.cc/300)`,
+                        backgroundImage: `url(${follow.image})`,
                       }}
                     ></div>
-                    <div className="following-name">{following}</div>
-                  </a>
+                    <div className="following-name">{follow.name}</div>
+                  </Link>
                 ))
               )}
             </div>

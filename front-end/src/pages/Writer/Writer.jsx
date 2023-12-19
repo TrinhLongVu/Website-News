@@ -22,10 +22,10 @@ const Writer = () => {
         <div className="writer-banner-info">
           <div
             className="writer-banner-avt"
-            style={{ backgroundImage: `url(${writerInfo.Image_Avatar})` }}
+            style={{ backgroundImage: `url(${writerInfo?.Image_Avatar})` }}
           ></div>
           <div className="writer-banner-detail">
-            <div className="writer-banner-name">{writerInfo.FullName}</div>
+            <div className="writer-banner-name">{writerInfo?.FullName}</div>
             <div className="writer-banner-follow-num">1863 Followers</div>
           </div>
         </div>

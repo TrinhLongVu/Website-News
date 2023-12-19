@@ -133,21 +133,21 @@ const Read = () => {
           <CommentSection articleId={id} />
         </div>
         <div className="read-page-right">
-          <a href="" className="read-author-box">
+          <Link
+            to={`/writer/${readingArticle.authorID}`}
+            className="read-author-box"
+          >
             <div
               className="read-author-avt"
               style={{ backgroundImage: `url(${readingArticle.authorAvt})` }}
             ></div>
-            <Link
-              to={`/writer/${readingArticle.authorID}`}
-              className="read-author-info"
-            >
+            <div className="read-author-info">
               <div className="read-author-name">
                 {readingArticle.authorName}
               </div>
               <div className="read-author-follow">18.6k Followers</div>
-            </Link>
-          </a>
+            </div>
+          </Link>
           <div className="read-btn-box">
             <div className="btn-like" onClick={likeArticle}>
               <FontAwesomeIcon icon={isLiked ? faIsLiked : faLike} />

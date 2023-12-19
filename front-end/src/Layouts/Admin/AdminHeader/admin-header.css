@@ -1,0 +1,45 @@
+.admin-header {
+    padding: 0 40px;
+    width: 1260px;
+    height: 110px;
+    background-color: #1a4649;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-logo {
+    width: 240px;
+    font-family: 'Baskerville';
+    font-style: italic;
+    font-size: xxx-large;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.admin-head-logout-btn {
+    margin-left: 20px;
+    padding: 0 30px;
+    width: 180px;
+    height: 45px;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #068DA9;
+    text-decoration: none;
+    color: #068DA9;
+}
+
+.admin-head-logout-btn:hover {
+    color: #f8f8f8;
+    background-color: #068DA9;
+    border: none;
+}
+
+.head-login-ico {
+    margin-left: 10px;
+}
