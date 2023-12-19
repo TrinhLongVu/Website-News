@@ -55,7 +55,7 @@ const Login = () => {
 
   return (
     <>
-      <div action="/api/v1/user/account/Login" method="POST">
+      <div>
         <div className="input-box">
           <FontAwesomeIcon icon={faEnvelope} className="field-ico" />
           <input

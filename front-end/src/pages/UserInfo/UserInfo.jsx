@@ -48,11 +48,11 @@ const UserInfo = () => {
 
   const formatDate = (date) => {
     const parts = date.split("-");
-    const transformedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    const transformedDate = `${parts[1]}/${parts[2]}/${parts[0]}`;
     return transformedDate;
   };
 
-  const saveInfoChanges = () => {
+  const saveInfoChanges = async () => {
     let formData = new FormData();
     formData.append("fullname", fullName);
     formData.append("gender", gender);
@@ -60,7 +60,23 @@ const UserInfo = () => {
     formData.append("address", address);
     formData.append("birthday", formatDate(birthday));
     formData.append("image", changeAvt);
-    setIsEditMode(false);
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/user/${infoObj._id}`,
+        {
+          method: "PATCH",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        setIsEditMode(false);
+      } else {
+        console.error("Failed to update");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const handleAvatarChange = (e) => {
