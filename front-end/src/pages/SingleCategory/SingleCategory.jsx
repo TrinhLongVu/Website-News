@@ -52,7 +52,7 @@ const SingleCategory = () => {
       .then((json) => {
         setArticleList(json.data);
       });
-  }, []);
+  }, [name]);
 
   return (
     <>
