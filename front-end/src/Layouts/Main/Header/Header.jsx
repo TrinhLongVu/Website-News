@@ -14,7 +14,7 @@ import {
 import { faBell } from "@fortawesome/free-regular-svg-icons";
 import "./header.css";
 
-import { categoryList } from "../../Global";
+import { categoryList } from "../../../Global";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -68,6 +68,9 @@ const Header = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.body) {
+          if (json.body.Role === "admin") {
+            navigate("/admin");
+          }
           setUserInfo(json.body);
         } else {
           setUserInfo(null);
@@ -86,6 +89,12 @@ const Header = () => {
           navigate("/");
         }
       });
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      navigate(`/search/${searchField}`);
+    }
   };
 
   return (
@@ -142,16 +151,16 @@ const Header = () => {
               ) : userInfo.ID_follow_writer.length === 0 ? (
                 <div id="no-following">You haven't following any author</div>
               ) : (
-                userInfo.ID_follow_writer.map((following, index) => (
-                  <a key={index} href="">
+                userInfo.following.map((follow, index) => (
+                  <Link key={index} to={`/writer/${follow.id}`}>
                     <div
                       className="following-avt"
                       style={{
-                        backgroundImage: `url(https://i.pravatar.cc/300)`,
+                        backgroundImage: `url(${follow.image})`,
                       }}
                     ></div>
-                    <div className="following-name">{following}</div>
-                  </a>
+                    <div className="following-name">{follow.name}</div>
+                  </Link>
                 ))
               )}
             </div>
@@ -164,6 +173,7 @@ const Header = () => {
           onChange={(e) => setSearchField(e.target.value)}
           className="search-input"
           placeholder="Search Articles"
+          onKeyDown={handleKeyPress}
         />
         <Link to={`/search/${searchField}`} id="search-btn">
           <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />

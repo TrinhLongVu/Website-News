@@ -48,30 +48,3 @@
 .article-statistics-font-weight-bold {
     font-weight: bold;
 }
-
-
-
-.article-statistics-button-container {
-    display: flex;
-    justify-content: end;
-}
-
-.article-statistics-button {
-    padding: 8px 16px;
-    margin: 4px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: background-color 0.3s;
-    background-color: #4caf50;
-    color: white;
-}
-
-.article-statistics-button:hover {
-    background-color: #007958;
-}
-
-.article-statistics-button.selected {
-    background-color: #007958;
-  }

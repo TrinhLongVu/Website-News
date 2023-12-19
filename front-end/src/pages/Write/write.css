@@ -234,3 +234,13 @@ input[type="file"] {
 .write-new-preview-frame {
     width: 940px;
 }
+
+.published-msg {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: #8ADAB2;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}

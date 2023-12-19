@@ -26,12 +26,25 @@ const Read = () => {
   const [readingArticle, setReadingArticle] = useState({});
   const [articleCategory, setArticleCategory] = useState("");
   const [relatedArticles, setRelatedArticles] = useState([]);
+  const [isFollowed, setFollow] = useState(false);
+
+  const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
+    fetch("http://localhost:8000/api/v1/user/account/success", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.body) {
+          setUserInfo(json.body);
+        } else {
+          setUserInfo(null);
+        }
+      });
     fetch(`http://localhost:8000/api/v1/article/${id}`)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data);
         setArticleCategory(json.data.Category[0]);
         const articleContent = json.data.Detail.split("\n");
         const fetchedArticle = {
@@ -64,14 +77,34 @@ const Read = () => {
   ];
 
   const [isLiked, setLiked] = useState(false);
-  const [isFollowed, setFollow] = useState(false);
+
   const [isSaved, setSaved] = useState(false);
 
   const likeArticle = () => {
     setLiked(!isLiked);
   };
-  const followAuthor = () => {
-    setFollow(!isFollowed);
+  const followAuthor = async () => {
+    const sentBody = {
+      _id: userInfo._id,
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/user/pages/${readingArticle.authorID}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sentBody),
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        setFollow(!isFollowed);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
   const saveArticle = () => {
     setSaved(!isSaved);
@@ -100,21 +133,21 @@ const Read = () => {
           <CommentSection articleId={id} />
         </div>
         <div className="read-page-right">
-          <a href="" className="read-author-box">
+          <Link
+            to={`/writer/${readingArticle.authorID}`}
+            className="read-author-box"
+          >
             <div
               className="read-author-avt"
               style={{ backgroundImage: `url(${readingArticle.authorAvt})` }}
             ></div>
-            <Link
-              to={`/writer/${readingArticle.authorID}`}
-              className="read-author-info"
-            >
+            <div className="read-author-info">
               <div className="read-author-name">
                 {readingArticle.authorName}
               </div>
               <div className="read-author-follow">18.6k Followers</div>
-            </Link>
-          </a>
+            </div>
+          </Link>
           <div className="read-btn-box">
             <div className="btn-like" onClick={likeArticle}>
               <FontAwesomeIcon icon={isLiked ? faIsLiked : faLike} />

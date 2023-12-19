@@ -22,3 +22,7 @@
     color: inherit;
     background-color: green;
 }
+
+.active-admin-nav {
+    background-color: green;
+}

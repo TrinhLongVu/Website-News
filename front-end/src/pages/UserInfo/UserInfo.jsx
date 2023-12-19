@@ -8,8 +8,8 @@ import { format } from "date-fns";
 
 const UserInfo = () => {
   const [infoObj, setInfoObj] = useState({});
-  const [userAvatar, setUserAvatar] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isPending, setPending] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
@@ -23,16 +23,27 @@ const UserInfo = () => {
             const formattedDate = format(dateObj, "yyyy-MM-dd");
             json.body.Birthday = formattedDate;
           }
-          setInfoObj(json.body);
-          setUserAvatar(json.body.Image_Avatar);
-          if (json.body.Role === "writer") {
-            setWriter(true);
+          if (json.body.pending) {
+            if (json.body.pending === "false") {
+              setPending(false);
+            }
           }
+          setInfoObj(json.body);
         } else {
           navigate("/");
         }
       });
-  }, [isEditMode]);
+  }, [isEditMode, isPending]);
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/api/v1/user/pending/getAll", {
+  //     credentials: "include",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       console.log(json);
+  //     });
+  // }, []);
 
   const saveInfoChanges = () => {
     setIsEditMode(false);
@@ -43,10 +54,23 @@ const UserInfo = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUserAvatar(reader.result);
+        setInfoObj({ ...infoObj, Image_Avatar: reader.result });
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const upgradeToWriter = () => {
+    fetch("http://localhost:8000/api/v1/user/upgrade/writer/" + infoObj._id, {
+      method: "PATCH",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === "success") {
+          setPending(true);
+        }
+      });
   };
 
   return (
@@ -56,7 +80,7 @@ const UserInfo = () => {
         <div className="info--avt">
           <div
             className="avatar-big"
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            style={{ backgroundImage: `url(${infoObj.Image_Avatar})` }}
           ></div>
           {isEditMode && (
             <>
@@ -138,11 +162,25 @@ const UserInfo = () => {
             />
           </div>
           <div className="info-action-row">
-            <div className="info-action-btn-container">
-              <div className="info-action-btn" id="info-upgrade-btn">
-                Upgrade to Writer
+            {infoObj.Role === "reader" && !isPending ? (
+              <div className="info-action-btn-container">
+                <div
+                  className="info-action-btn"
+                  id="info-upgrade-btn"
+                  onClick={upgradeToWriter}
+                >
+                  Upgrade to Writer
+                </div>
               </div>
-            </div>
+            ) : infoObj.Role === "reader" && isPending ? (
+              <div className="info-action-btn-container">
+                <div className="info-action-btn" id="info-upgrade-btn">
+                  Waiting to be approved
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <div className="info-action-btn-container">
               {isEditMode ? (
                 <>

@@ -1,22 +1,40 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import "./admin-article-statistics.css";
 
 const AdminArticleStatistics = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState("month");
+  const [statistics, setStatistics] = useState({});
 
-  // State to store data for different time periods
-  const dataByMonth = {
-    totalUsers: 3210,
-    totalViews: 32321,
-    totalPublished: 123,
+  const fetchData = async () => {
+    try {
+      const [usersResponse, articlesResponse] = await Promise.all([
+        fetch("http://localhost:8000/api/v1/user/", { credentials: "include" }),
+        fetch("http://localhost:8000/api/v1/article/", {
+          credentials: "include",
+        }),
+      ]);
+
+      const [usersJson, articlesJson] = await Promise.all([
+        usersResponse.json(),
+        articlesResponse.json(),
+      ]);
+      const totalViewsFromArticles = articlesJson.data.reduce(
+        (accumulator, article) => accumulator + parseInt(article.view, 10),
+        0
+      );
+      const fetchStatistics = {
+        totalUsers: usersJson.data.length,
+        totalViews: totalViewsFromArticles,
+        totalPublished: articlesJson.data.length,
+      };
+      setStatistics(fetchStatistics);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const dataByYear = {
-    totalUsers: 5432,
-    totalViews: 51232,
-    totalPublished: 345,
-  };
-  const selectedData = selectedPeriod === "month" ? dataByMonth : dataByYear;
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -29,7 +47,7 @@ const AdminArticleStatistics = () => {
                   Total Users
                 </div>
                 <div className="article-statistics-h5 article-statistics-font-weight-bold">
-                  {selectedData.totalUsers}
+                  {statistics.totalUsers}
                 </div>
               </div>
             </div>
@@ -41,7 +59,7 @@ const AdminArticleStatistics = () => {
                   Total Views
                 </div>
                 <div className="article-statistics-h5 article-statistics-font-weight-bold">
-                  {selectedData.totalViews}
+                  {statistics.totalViews}
                 </div>
               </div>
             </div>
@@ -53,29 +71,11 @@ const AdminArticleStatistics = () => {
                   Total Article Published
                 </div>
                 <div className="article-statistics-h5 article-statistics-font-weight-bold">
-                  {selectedData.totalPublished}
+                  {statistics.totalPublished}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="article-statistics-button-container">
-          <button
-            className={`article-statistics-button ${
-              selectedPeriod === "month" ? "selected" : ""
-            }`}
-            onClick={() => setSelectedPeriod("month")}
-          >
-            By Month
-          </button>
-          <button
-            className={`article-statistics-button ${
-              selectedPeriod === "year" ? "selected" : ""
-            }`}
-            onClick={() => setSelectedPeriod("year")}
-          >
-            By Year
-          </button>
         </div>
       </div>
     </>
