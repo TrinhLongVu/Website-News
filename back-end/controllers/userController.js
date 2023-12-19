@@ -49,6 +49,17 @@ exports.createUser = async (req, res, next) => {
         }
 
 
+        //===========check len Password > 6 ==========================
+        if (Password.length < 6) {
+            return res.status(400).json({
+                status: "fail",
+                msg: "Password must be at least 6 characters long",
+            });
+        }
+
+
+
+
         //===========check confirm Password==========================
 
         if (Password != ConfirmPassword) {
