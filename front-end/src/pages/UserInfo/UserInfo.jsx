@@ -59,7 +59,7 @@ const UserInfo = () => {
     formData.append("phone", phone);
     formData.append("address", address);
     formData.append("birthday", formatDate(birthday));
-    formData.append("avt", changeAvt);
+    formData.append("image", changeAvt);
     setIsEditMode(false);
   };
 
