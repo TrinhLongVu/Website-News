@@ -427,7 +427,7 @@ exports.upgrade = async (req, res) => {
         const result = await User.updateMany({
             _id: id_Reader
         }, {
-            $addToSet: {
+            $set: {
                 pending: true
             }
         });
@@ -446,9 +446,7 @@ exports.upgrade = async (req, res) => {
 exports.getPending = async (req, res) => {
     try {
         const pendingUsers = await User.find({
-            pending: {
-                $in: ['true']
-            }
+            pending: 'true'
         });
         res.status(201).json({
             status: 'success',
