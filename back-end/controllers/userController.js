@@ -221,7 +221,8 @@ exports.update_Reader_To_Writer = async (req, res, next) => {
         }
 
 
-        finduser.pending = [];
+
+        finduser.pending = "false";
         finduser.Role = "writer";
 
 
@@ -428,10 +429,13 @@ exports.getArticlesWritten = async (req, res) => {
 exports.upgrade = async (req, res) => {
     try {
         const id_Reader = req.params.id;
-        const result = await User.updateMany(
-            { _id: id_Reader },
-            { $addToSet: { pending: true } }
-        );
+        const result = await User.updateMany({
+            _id: id_Reader
+        }, {
+            $set: {
+                pending: true
+            }
+        });
         res.status(201).json({
             status: 'success',
             data: result
