@@ -1,6 +1,7 @@
 const fs = require('fs');
 const User = require('../models/userModel')
 const Article = require('../models/articleModel')
+const cloudinary = require('cloudinary').v2;
 
 //=========================== FUNCTION =========================================================================
 function checkIfElementExists(element, array) {
@@ -28,10 +29,16 @@ exports.createUser = async (req, res, next) => {
 
     try {
         //===========check username (email) available==========================
-        const { UserName, Password, ConfirmPassword } = req.body;
+        const {
+            UserName,
+            Password,
+            ConfirmPassword
+        } = req.body;
 
         // check username is Taken
-        const isTaken = await User.findOne({ UserName });
+        const isTaken = await User.findOne({
+            UserName
+        });
 
         // If username is Taken, return fail
         if (isTaken) {
@@ -83,11 +90,15 @@ exports.createAllUser = async (req, res, next) => {
 
         //=================================================================================
         for (const user of users) {
-            const { UserName } = user;
+            const {
+                UserName
+            } = user;
 
             try {
                 // Check if username is taken
-                const isTaken = await User.findOne({ UserName });
+                const isTaken = await User.findOne({
+                    UserName
+                });
 
                 // If username is taken, log a message and continue to the next iteration
                 if (isTaken) {
@@ -149,8 +160,32 @@ exports.updateUser = async (req, res, next) => {
     try {
 
         const _id = req.params.id;
+        const {
+            fullname,
+            gender,
+            phone,
+            address,
+            birthday
+        } = req.body
 
-        const update = await User.findByIdAndUpdate(_id, req.body, {
+        const file = req.files.image;
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+            public_id: `${Date.now()}`,
+            resource_type: "auto",
+            folder: "images"
+        })
+
+        const user = {
+            FullName: fullname,
+            Gender: gender,
+            PhoneNumber: phone,
+            Address: address,
+            ID_author: ID_author,
+            Birthday: birthday,
+            Image_Avatar: result.url
+        }
+
+        const update = await User.findByIdAndUpdate(_id, user, {
             new: true
         });
 
@@ -366,8 +401,7 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
                 return element !== _id_user;
             });
 
-        }
-        else {
+        } else {
             //  'Have not followed' => following
             //========================== PUSH ID =========================================
 
@@ -398,7 +432,10 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
 
         res.status(201).json({
             status: 'success',
-            data: { update_user, update_writer }
+            data: {
+                update_user,
+                update_writer
+            }
         })
     } catch (err) {
         res.status(400).json({
@@ -409,14 +446,27 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
     next();
 }
 
-
 exports.getArticlesWritten = async (req, res) => {
     try {
         const ID_author = req.params.id;
-        const data = await Article.find({ ID_author });
+        const datas = await Article.find({
+            ID_author
+        });
+
+        const result = await Promise.all(datas.map(async (data) => {
+            const user = await User.findById(data.ID_author);
+            // the cause is articles do not have attribute is imageAuthor then i must be parse them
+            let aritcle = {
+                ...data
+            }._doc;
+            aritcle.fullname = user.FullName
+            aritcle.imageAuthor = user.Image_Avatar
+            return aritcle
+        }))
+
         res.status(201).json({
             status: 'success',
-            data: data
+            data: result
         })
     } catch (err) {
         res.status(400).json({
@@ -514,7 +564,9 @@ exports.getSaveArticle = async (req, res, next) => {
 
 exports.getPending = async (req, res) => {
     try {
-        const pendingUsers = await User.find({ pending: { $in: ['true'] } });
+        const pendingUsers = await User.find({
+            pending: 'true'
+        });
         res.status(201).json({
             status: 'success',
             data: pendingUsers
@@ -525,9 +577,6 @@ exports.getPending = async (req, res) => {
             msg: err
         })
     }
-}
-
-
 exports.Save_Or_Unsave_Article = async (req, res, next) => {
     try {
 

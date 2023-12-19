@@ -8,8 +8,14 @@ import { format } from "date-fns";
 
 const UserInfo = () => {
   const [infoObj, setInfoObj] = useState({});
-  const [userAvatar, setUserAvatar] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isPending, setPending] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [changeAvt, setChangeAvt] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
@@ -22,31 +28,64 @@ const UserInfo = () => {
             const dateObj = new Date(json.body.Birthday);
             const formattedDate = format(dateObj, "yyyy-MM-dd");
             json.body.Birthday = formattedDate;
+            setBirthday(json.body.Birthday);
           }
+          if (json.body.pending) {
+            if (json.body.pending === "false") {
+              setPending(false);
+            }
+          }
+          setFullName(json.body.FullName);
+          setGender(json.body.Gender);
+          setPhone(json.body.PhoneNumber);
+          setAddress(json.body.Address);
           setInfoObj(json.body);
-          setUserAvatar(json.body.Image_Avatar);
-          if (json.body.Role === "writer") {
-            setWriter(true);
-          }
         } else {
           navigate("/");
         }
       });
-  }, [isEditMode]);
+  }, [isEditMode, isPending]);
+
+  const formatDate = (date) => {
+    const parts = date.split("-");
+    const transformedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+    return transformedDate;
+  };
 
   const saveInfoChanges = () => {
+    let formData = new FormData();
+    formData.append("fullname", fullName);
+    formData.append("gender", gender);
+    formData.append("phone", phone);
+    formData.append("address", address);
+    formData.append("birthday", formatDate(birthday));
+    formData.append("image", changeAvt);
     setIsEditMode(false);
   };
 
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
+    setChangeAvt(file);
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setUserAvatar(reader.result);
+        setInfoObj({ ...infoObj, Image_Avatar: reader.result });
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const upgradeToWriter = () => {
+    fetch("http://localhost:8000/api/v1/user/upgrade/writer/" + infoObj._id, {
+      method: "PATCH",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === "success") {
+          setPending(true);
+        }
+      });
   };
 
   return (
@@ -56,7 +95,7 @@ const UserInfo = () => {
         <div className="info--avt">
           <div
             className="avatar-big"
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            style={{ backgroundImage: `url(${infoObj.Image_Avatar})` }}
           ></div>
           {isEditMode && (
             <>
@@ -79,10 +118,9 @@ const UserInfo = () => {
             <input
               className="info-inp"
               type="text"
-              name="username"
-              id="username"
-              placeholder="No data"
-              value={infoObj.FullName}
+              placeholder="Unknown"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               readOnly={!isEditMode}
             />
           </div>
@@ -91,10 +129,9 @@ const UserInfo = () => {
             <input
               className="info-inp"
               type="date"
-              name="birthday"
-              id="birthday"
-              value={infoObj.Birthday}
-              placeholder="No data"
+              value={birthday}
+              placeholder="Unknown"
+              onChange={(e) => setBirthday(e.target.value)}
               readOnly={!isEditMode}
             />
           </div>
@@ -104,10 +141,10 @@ const UserInfo = () => {
             <input
               className="info-inp"
               type="text"
-              name="gender"
               id="gender"
-              placeholder="No data"
-              value={infoObj.Gender}
+              placeholder="Unknown"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
               readOnly={!isEditMode}
             />
           </div>
@@ -116,33 +153,45 @@ const UserInfo = () => {
             <h3 className="title-input">Phone number</h3>
             <input
               className="info-inp"
-              type="tel"
-              name="phonenumber"
-              id="phonenumber"
-              placeholder="No data"
-              value={infoObj.PhoneNumber}
+              type="text"
+              placeholder="Unknown"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               readOnly={!isEditMode}
             />
           </div>
-
           <div className="info-field">
             <h3 className="title-input">Address</h3>
             <input
               className="info-inp"
               type="text"
-              name="address"
-              id="address"
-              placeholder="No data"
-              value={infoObj.Address}
+              placeholder="Unknown"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               readOnly={!isEditMode}
             />
           </div>
+
           <div className="info-action-row">
-            <div className="info-action-btn-container">
-              <div className="info-action-btn" id="info-upgrade-btn">
-                Upgrade to Writer
+            {infoObj.Role === "reader" && !isPending ? (
+              <div className="info-action-btn-container">
+                <div
+                  className="info-action-btn"
+                  id="info-upgrade-btn"
+                  onClick={upgradeToWriter}
+                >
+                  Upgrade to Writer
+                </div>
               </div>
-            </div>
+            ) : infoObj.Role === "reader" && isPending ? (
+              <div className="info-action-btn-container">
+                <div className="info-action-btn" id="info-upgrade-btn">
+                  Waiting to be approved
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <div className="info-action-btn-container">
               {isEditMode ? (
                 <>
