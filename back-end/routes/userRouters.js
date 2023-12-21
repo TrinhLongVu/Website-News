@@ -1,10 +1,8 @@
 const express = require('express')
 
 const router = express.Router();
-const passport = require('passport')
 
 const userController = require('../controllers/userController')
-// const abc = require('../controllers/authenticationController')
 
 router
     .route('/')
@@ -30,6 +28,7 @@ router
     .route('/article/:id')
     .get(userController.getArticlesWritten)
 
+
 router
     .route('/upgrade/writer/:id')
     .patch(userController.upgrade)
@@ -37,5 +36,18 @@ router
 router
     .route('/pending/getAll')
     .get(userController.getPending)
+
+router
+    .route('/getsavearticle/:id') // :id of user
+    .get(userController.getSaveArticle)
+
+router
+    .route('/save/:id') // :id of article
+    .patch(userController.Save_Or_Unsave_Article)
+
+router
+    .route('/updateReaderToWriter/:id') // :id of reader
+    .patch(userController.update_Reader_To_Writer)
+
 
 module.exports = router;

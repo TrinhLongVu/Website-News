@@ -185,12 +185,13 @@ exports.updateUser = async (req, res, next) => {
         }
 
         const user = {
-            FullName: a.fullname,
-            Gender: a.gender,
-            PhoneNumber: a.phone,
-            Address: a.address,
-            Birthday: a.birthday,
-            Image_Avatar: 'http://res.cloudinary.com/dupsdtrvy/image/upload/v1702975343/images/1702975340068.jpg'
+            FullName: fullname,
+            Gender: gender,
+            PhoneNumber: phone,
+            Address: address,
+            ID_author: ID_author,
+            Birthday: birthday,
+            Image_Avatar: result.url
         }
 
         const update = await User.findByIdAndUpdate(_id, user, {
@@ -223,8 +224,8 @@ exports.deleteUser = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        // const deletedUser = await User.deleteOne({ _id });
-        const deletedUser = await User.deleteMany();
+        const deletedUser = await User.deleteOne({ _id });
+        // const deletedUser = await User.deleteMany();
 
         if (!deletedUser) {
             // If the user with the specified ID is not found, return an error response
@@ -244,6 +245,55 @@ exports.deleteUser = async (req, res, next) => {
             msg: err
         })
     }
+}
+
+
+exports.update_Reader_To_Writer = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        // Find the user by ID 
+        const finduser = await User.findById(_id);
+
+        if (!finduser) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+
+        finduser.pending = "false";
+        finduser.Role = "writer";
+
+
+
+
+        const update = await User.findByIdAndUpdate(_id, finduser, {
+            new: true
+        });
+
+        if (!update) {
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Update fail.',
+            });
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: finduser
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+    next();
 }
 
 
@@ -286,11 +336,17 @@ exports.getWriter = async (req, res, next) => {
         }
 
 
+        //== get Article of writer
+        const ID_author = find_user_writer._id;
+        const Article_of_writer = await Article.find({ ID_author });
+
 
         res.status(201).json({
             status: 'success',
             statusFollow: statusFollow,
-            data: find_user_writer
+            data: find_user_writer,
+            Article_of_writer: Article_of_writer
+
         })
     } catch (err) {
         res.status(400).json({
@@ -451,6 +507,70 @@ exports.upgrade = async (req, res) => {
     }
 }
 
+//===============================    SAVE ARTICLE     =====================================================
+
+
+exports.getSaveArticle = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        console.log(_id);
+
+        // Find the user by ID 
+        const finduser = await User.findById(_id);
+
+
+
+        if (!finduser) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        const save_Article = finduser.Saved_news;
+        console.log(save_Article);
+
+        // Array to store the results
+        let savedArticles = [];
+
+
+        // Loop through saved article IDs and retrieve each article
+        for (const articleId of save_Article) {
+
+            const article = await Article.findById(articleId);
+
+            if (article) {
+                // Retrieve author information
+                const author = await User.findById(article.ID_author);
+
+                // Modify article data
+                let modifiedArticle = { ...article }._doc;
+                modifiedArticle.author_name = author.FullName;
+                modifiedArticle.imageAuthor = author.Image_Avatar;
+
+                // Add the modified article to the results array
+                savedArticles.push(modifiedArticle);
+            }
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: finduser,
+            list_saved_Articles: savedArticles
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+
 exports.getPending = async (req, res) => {
     try {
         const pendingUsers = await User.find({
@@ -466,4 +586,87 @@ exports.getPending = async (req, res) => {
             msg: err
         })
     }
+}
+exports.Save_Or_Unsave_Article = async (req, res, next) => {
+    try {
+
+        const _id_article = req.params.id;
+
+
+        //====================find writer====================
+        // Find the user by ID 
+        const find_article = await Article.findById(_id_article);
+
+        if (!find_article) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Article not found.',
+            });
+        }
+
+        //====================find user====================
+        const _id_user = req.body._id;
+        // Find the user by ID 
+        const find_user_user = await User.findById(_id_user);
+
+        console.log(_id_article)
+
+        if (!find_user_user) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        if (checkIfElementExists(_id_article, find_user_user.Saved_news)) {
+            //   Saved => Unsave
+            //========================== Delete ID =========================================
+
+            find_user_user.Saved_news = find_user_user.Saved_news.filter(function (element) {
+                return element !== _id_article;
+            });
+
+        }
+        else {
+            //  'Have not saved' => Saving
+            //========================== PUSH ID =========================================
+
+            find_user_user.Saved_news.push(_id_article);
+        }
+
+        //========================== UPDATE WRITE AND USER=========================================
+
+
+        const update_user = await User.findByIdAndUpdate(_id_user, find_user_user, {
+            new: true
+        })
+
+
+        //=========================================================================
+
+
+        if (!update_user) {
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Save fail.',
+            });
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: { update_user }
+
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+
+    next();
+
 }

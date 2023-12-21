@@ -5,21 +5,15 @@ import AdminArticle from "../../Components/Admin/AdminArticle/AdminArticle";
 const AdminPriority = () => {
   const [articleList, setArticleList] = useState([]);
   const [topArticles, setTopArticles] = useState([]);
-  const [originalArticleList, setOriginalArticleList] = useState([]);
-  const [originalTopArticles, setOriginalTopArticles] = useState([]);
+  const [change, setChange] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/article/")
       .then((res) => res.json())
       .then((json) => {
-        const mappedArticles = json.data.map((article, idx) => ({
-          ...article,
-          idx,
-        }));
-        setArticleList(mappedArticles);
-        setOriginalArticleList([...mappedArticles]);
+        setArticleList(json.data);
       });
-  }, []);
+  }, [change]);
 
   const handleDragStart = (e, article, target) => {
     e.dataTransfer.setData("article", JSON.stringify(article));
@@ -34,28 +28,52 @@ const AdminPriority = () => {
     const draggedArticle = JSON.parse(e.dataTransfer.getData("article"));
 
     if (target === "topArticles") {
-      const newArticleList = articleList.filter(
-        (article) => article.idx !== draggedArticle.idx
+      setArticleList((prevArticleList) =>
+        prevArticleList.filter((article) => article._id !== draggedArticle._id)
       );
-      setArticleList(newArticleList);
-      setTopArticles([...topArticles, draggedArticle]);
+      setTopArticles((prevTopArticles) => [...prevTopArticles, draggedArticle]);
     } else if (target === "articleList") {
-      const newTopArticles = topArticles.filter(
-        (article) => article.idx !== draggedArticle.idx
+      setTopArticles((prevTopArticles) =>
+        prevTopArticles.filter((article) => article._id !== draggedArticle._id)
       );
-      setTopArticles(newTopArticles);
-      setArticleList([...articleList, draggedArticle]);
+      setArticleList((prevArticleList) => [...prevArticleList, draggedArticle]);
     }
   };
 
-  const handleSaveClick = () => {
-    setOriginalArticleList([...articleList]);
-    setOriginalTopArticles([...topArticles]);
+  const handleSaveClick = async () => {
+    let idStr = "";
+    topArticles.forEach((article, index) => {
+      idStr += article._id;
+      if (index < topArticles.length - 1) {
+        idStr += ",";
+      }
+    });
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/v1/article/set/priority",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: idStr,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        setChange(!change);
+        setTopArticles([]);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const handleCancelClick = () => {
-    setArticleList([...originalArticleList]);
-    setTopArticles([...originalTopArticles]);
+    setTopArticles([]);
+    setChange(!change);
   };
 
   return (
