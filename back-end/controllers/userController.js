@@ -168,21 +168,29 @@ exports.updateUser = async (req, res, next) => {
             birthday
         } = req.body
 
-        const file = req.files.image;
-        const result = await cloudinary.uploader.upload(file.tempFilePath, {
-            public_id: `${Date.now()}`,
-            resource_type: "auto",
-            folder: "images"
-        })
+        // const file = req.files.image;
+        // const result = await cloudinary.uploader.upload(file.tempFilePath, {
+        //     public_id: `${Date.now()}`,
+        //     resource_type: "auto",
+        //     folder: "images"
+        // })
+
+
+        const a = {
+            fullname: 'Vo Viet Nam',
+            gender: 'male',
+            phone: '0777177327',
+            address: '134/11 Nguyen Chi Thanh, Phuong 5, Quan 10, TP Ho Chi Minh',
+            birthday: '08/10/1981'
+        }
 
         const user = {
-            FullName: fullname,
-            Gender: gender,
-            PhoneNumber: phone,
-            Address: address,
-            ID_author: ID_author,
-            Birthday: birthday,
-            Image_Avatar: result.url
+            FullName: a.fullname,
+            Gender: a.gender,
+            PhoneNumber: a.phone,
+            Address: a.address,
+            Birthday: a.birthday,
+            Image_Avatar: 'http://res.cloudinary.com/dupsdtrvy/image/upload/v1702975343/images/1702975340068.jpg'
         }
 
         const update = await User.findByIdAndUpdate(_id, user, {
