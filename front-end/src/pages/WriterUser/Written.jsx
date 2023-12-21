@@ -8,15 +8,24 @@ import ArticleShelf from "../../Components/AricleShelf/ArticleShelf";
 import "./writer-user.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 const Written = () => {
+  const [userInfo, setUserInfo] = useState({});
   const [articleList, setArticleList] = useState([]);
 
-  //   useEffect(() => {
-  //     fetch("http://localhost:8000/api/v1/article/search/" + word)
-  //       .then((res) => res.json())
-  //       .then((json) => {
-  //         setArticleList(json.data);
-  //       });
-  //   }, []);
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/user/account/success", {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setUserInfo(json.body);
+      });
+    fetch(`http://localhost:8000/api/v1/user/article/${userInfo._id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json.data);
+        setArticleList(json.data);
+      });
+  }, []);
   return (
     <>
       <Breadcrumbs

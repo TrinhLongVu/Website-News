@@ -1,6 +1,7 @@
 const fs = require('fs');
 const User = require('../models/userModel')
 const Article = require('../models/articleModel')
+const cloudinary = require('cloudinary').v2;
 
 //=========================== FUNCTION =========================================================================
 function checkIfElementExists(element, array) {
@@ -28,10 +29,16 @@ exports.createUser = async (req, res, next) => {
 
     try {
         //===========check username (email) available==========================
-        const { UserName, Password, ConfirmPassword } = req.body;
+        const {
+            UserName,
+            Password,
+            ConfirmPassword
+        } = req.body;
 
         // check username is Taken
-        const isTaken = await User.findOne({ UserName });
+        const isTaken = await User.findOne({
+            UserName
+        });
 
         // If username is Taken, return fail
         if (isTaken) {
@@ -40,6 +47,17 @@ exports.createUser = async (req, res, next) => {
                 msg: "Username is already taken",
             });
         }
+
+
+        //===========check len Password > 6 ==========================
+        if (Password.length < 6) {
+            return res.status(400).json({
+                status: "fail",
+                msg: "Password must be at least 6 characters long",
+            });
+        }
+
+
 
 
         //===========check confirm Password==========================
@@ -83,11 +101,15 @@ exports.createAllUser = async (req, res, next) => {
 
         //=================================================================================
         for (const user of users) {
-            const { UserName } = user;
+            const {
+                UserName
+            } = user;
 
             try {
                 // Check if username is taken
-                const isTaken = await User.findOne({ UserName });
+                const isTaken = await User.findOne({
+                    UserName
+                });
 
                 // If username is taken, log a message and continue to the next iteration
                 if (isTaken) {
@@ -149,8 +171,31 @@ exports.updateUser = async (req, res, next) => {
     try {
 
         const _id = req.params.id;
+        const {
+            fullname,
+            gender,
+            phone,
+            address,
+            birthday
+        } = req.body
 
-        const update = await User.findByIdAndUpdate(_id, req.body, {
+        const file = req.files.image;
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+            public_id: `${Date.now()}`,
+            resource_type: "auto",
+            folder: "images"
+        })
+
+        const user = {
+            FullName: fullname,
+            Gender: gender,
+            PhoneNumber: phone,
+            Address: address,
+            Birthday: birthday,
+            Image_Avatar: result.url
+        }
+
+        const update = await User.findByIdAndUpdate(_id, user, {
             new: true
         });
 
@@ -180,8 +225,8 @@ exports.deleteUser = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        // const deletedUser = await User.deleteOne({ _id });
-        const deletedUser = await User.deleteMany();
+        const deletedUser = await User.deleteOne({ _id });
+        // const deletedUser = await User.deleteMany();
 
         if (!deletedUser) {
             // If the user with the specified ID is not found, return an error response
@@ -201,6 +246,55 @@ exports.deleteUser = async (req, res, next) => {
             msg: err
         })
     }
+}
+
+
+exports.update_Reader_To_Writer = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        // Find the user by ID 
+        const finduser = await User.findById(_id);
+
+        if (!finduser) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+
+        finduser.pending = "false";
+        finduser.Role = "writer";
+
+
+
+
+        const update = await User.findByIdAndUpdate(_id, finduser, {
+            new: true
+        });
+
+        if (!update) {
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Update fail.',
+            });
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: finduser
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+    next();
 }
 
 
@@ -243,11 +337,17 @@ exports.getWriter = async (req, res, next) => {
         }
 
 
+        //== get Article of writer
+        const ID_author = find_user_writer._id;
+        const Article_of_writer = await Article.find({ ID_author });
+
 
         res.status(201).json({
             status: 'success',
             statusFollow: statusFollow,
-            data: find_user_writer
+            data: find_user_writer,
+            Article_of_writer: Article_of_writer
+
         })
     } catch (err) {
         res.status(400).json({
@@ -311,8 +411,7 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
                 return element !== _id_user;
             });
 
-        }
-        else {
+        } else {
             //  'Have not followed' => following
             //========================== PUSH ID =========================================
 
@@ -343,7 +442,10 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
 
         res.status(201).json({
             status: 'success',
-            data: { update_user, update_writer }
+            data: {
+                update_user,
+                update_writer
+            }
         })
     } catch (err) {
         res.status(400).json({
@@ -354,30 +456,24 @@ exports.Follow_Or_UnFollow_Writer = async (req, res, next) => {
     next();
 }
 
-
 exports.getArticlesWritten = async (req, res) => {
     try {
         const ID_author = req.params.id;
-        const data = await Article.find({ ID_author });
-        res.status(201).json({
-            status: 'success',
-            data: data
-        })
-    } catch (err) {
-        res.status(400).json({
-            status: "fail",
-            msg: err
-        })
-    }
-}
+        const datas = await Article.find({
+            ID_author
+        });
 
-exports.upgrade = async (req, res) => {
-    try {
-        const id_Reader = req.params.id;
-        const result = await User.updateMany(
-            { _id: id_Reader },
-            { $addToSet: { pending: true } }
-        );
+        const result = await Promise.all(datas.map(async (data) => {
+            const user = await User.findById(data.ID_author);
+            // the cause is articles do not have attribute is imageAuthor then i must be parse them
+            let aritcle = {
+                ...data
+            }._doc;
+            aritcle.fullname = user.FullName
+            aritcle.imageAuthor = user.Image_Avatar
+            return aritcle
+        }))
+
         res.status(201).json({
             status: 'success',
             data: result
@@ -390,9 +486,94 @@ exports.upgrade = async (req, res) => {
     }
 }
 
+exports.upgrade = async (req, res) => {
+    try {
+        const id_Reader = req.params.id;
+        const result = await User.updateMany({
+            _id: id_Reader
+        }, {
+            $set: {
+                pending: true
+            }
+        });
+        res.status(201).json({
+            status: 'success',
+            data: result
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+//===============================    SAVE ARTICLE     =====================================================
+
+
+exports.getSaveArticle = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+
+        // Find the user by ID 
+        const finduser = await User.findById(_id);
+
+
+        if (!finduser) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        const save_Article = finduser.Saved_news;
+
+        // Array to store the results
+        let savedArticles = [];
+
+
+        // Loop through saved article IDs and retrieve each article
+        for (const articleId of save_Article) {
+
+            const article = await Article.findById(articleId);
+
+            if (article) {
+                // Retrieve author information
+                const author = await User.findById(article.ID_author);
+
+                // Modify article data
+                let modifiedArticle = { ...article }._doc;
+                modifiedArticle.author_name = author.FullName;
+                modifiedArticle.imageAuthor = author.Image_Avatar;
+
+                // Add the modified article to the results array
+                savedArticles.push(modifiedArticle);
+            }
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: finduser,
+            list_saved_Articles: savedArticles
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+
 exports.getPending = async (req, res) => {
     try {
-        const pendingUsers = await User.find({ pending: { $in: ['true'] } });
+        const pendingUsers = await User.find({
+            pending: 'true'
+        });
         res.status(201).json({
             status: 'success',
             data: pendingUsers
@@ -404,3 +585,143 @@ exports.getPending = async (req, res) => {
         })
     }
 }
+exports.Save_Or_Unsave_Article = async (req, res, next) => {
+    try {
+
+        const _id_article = req.params.id;
+
+
+        //====================find writer====================
+        // Find the user by ID 
+        const find_article = await Article.findById(_id_article);
+
+        if (!find_article) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Article not found.',
+            });
+        }
+
+        //====================find user====================
+        const _id_user = req.body._id;
+        // Find the user by ID 
+        const find_user_user = await User.findById(_id_user);
+
+        console.log(_id_article)
+
+        if (!find_user_user) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        if (checkIfElementExists(_id_article, find_user_user.Saved_news)) {
+            //   Saved => Unsave
+            //========================== Delete ID =========================================
+
+            find_user_user.Saved_news = find_user_user.Saved_news.filter(function (element) {
+                return element !== _id_article;
+            });
+
+        }
+        else {
+            //  'Have not saved' => Saving
+            //========================== PUSH ID =========================================
+
+            find_user_user.Saved_news.push(_id_article);
+        }
+
+        //========================== UPDATE WRITE AND USER=========================================
+
+
+        const update_user = await User.findByIdAndUpdate(_id_user, find_user_user, {
+            new: true
+        })
+
+
+        //=========================================================================
+
+
+        if (!update_user) {
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Save fail.',
+            });
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: { update_user }
+
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+
+    next();
+
+}
+
+
+exports.getFollowing = async (req, res) => {
+    try {
+
+
+        const _id = req.params.id;
+        // Find the user by ID 
+        const finduser = await User.findById(_id);
+
+        if (!finduser) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+        const Arr_ID_follow_writer = finduser.ID_follow_writer;
+
+        // Array to store the results
+        let inforWriters = [];
+
+
+        // Loop through saved article IDs and retrieve each article
+        for (const IDwriter of Arr_ID_follow_writer) {
+
+            const writer = await User.findById(IDwriter);
+
+            if (writer) {
+
+                const inforWriter = {
+                    id_user: writer._id,
+                    FullName: writer.FullName,
+                    Image_Avatar: writer.Image_Avatar
+                };
+
+                // Add the modified article to the results array
+                inforWriters.push(inforWriter);
+            }
+        }
+
+
+
+
+        res.status(201).json({
+            status: 'success',
+            data: inforWriters
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+

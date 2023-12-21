@@ -25,6 +25,13 @@ exports.getArticle = async (req, res, next) => {
         let data =
             await Article.findById(id)
 
+        // == update view when get Article
+        data.view = data.view + 1;
+        await Article.findByIdAndUpdate(id, data, {
+            new: true
+        })
+        //============================================
+
         const user = await User.findById(data.ID_author);
         let article = {
             ...data
@@ -138,11 +145,11 @@ exports.getTops = async (req, res, next) => {
         console.log(limit)
         if (name == 'views') {
             datas = await Article.find({
-                    view: {
-                        $exists: true,
-                        $gt: 0
-                    }
-                })
+                view: {
+                    $exists: true,
+                    $gt: 0
+                }
+            })
                 .sort({
                     view: -1
                 }).limit(limit);
@@ -221,10 +228,10 @@ exports.getPagination = async (req, res, next) => {
     const skip = (query.page - 1) * query.limit
     try {
         const datas = await Article.find({
-                Category: {
-                    $in: [query.category]
-                }
-            })
+            Category: {
+                $in: [query.category]
+            }
+        })
             .skip(skip)
             .limit(query.limit)
             .exec()
@@ -294,16 +301,16 @@ exports.SearchArticle = async (req, res, next) => {
 
         const datas = await Article.find({
             $or: [{
-                    Title: {
-                        $regex: searchString,
-                        $options: 'i'
-                    }
-                }, // Search by Title
-                {
-                    Category: {
-                        $in: [searchString]
-                    }
-                } // Search by Category
+                Title: {
+                    $regex: searchString,
+                    $options: 'i'
+                }
+            }, // Search by Title
+            {
+                Category: {
+                    $in: [searchString]
+                }
+            } // Search by Category
             ]
         });
 
@@ -396,4 +403,38 @@ exports.setPriority = async (req, res) => {
             status: "fail"
         })
     }
+}
+
+
+exports.likeArtice = async (req, res, next) => {
+    try {
+        const id_article = req.params.id;
+        const articles = await Article.findById(id_article);
+
+        // If the article with the specified ID is not found, return an error response
+        if (!articles) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Article not found'
+            });
+        }
+
+        articles.likes = articles.likes + 1;
+
+
+
+        const update = await Article.findByIdAndUpdate(id_article, articles, {
+            new: true
+        })
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
+        })
+    }
+    next();
 }
