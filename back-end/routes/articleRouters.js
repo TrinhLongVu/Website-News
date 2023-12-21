@@ -39,4 +39,9 @@ router
     .route('/set/priority')
     .patch(articleController.setPriority)
 
+router
+    .route('/like/:id')
+    .post(articleController.likeArtice)
+
+
 module.exports = router;
