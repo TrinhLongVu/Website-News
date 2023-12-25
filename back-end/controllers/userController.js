@@ -191,7 +191,6 @@ exports.updateUser = async (req, res, next) => {
             Gender: gender,
             PhoneNumber: phone,
             Address: address,
-            ID_author: ID_author,
             Birthday: birthday,
             Image_Avatar: result.url
         }
