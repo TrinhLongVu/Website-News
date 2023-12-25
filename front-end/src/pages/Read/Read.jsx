@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useOutletContext, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,26 +22,13 @@ import "./read.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 const Read = () => {
   const { id } = useParams();
-
+  const { userInfo } = useOutletContext();
   const [readingArticle, setReadingArticle] = useState({});
   const [articleCategory, setArticleCategory] = useState("");
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [isFollowed, setFollow] = useState(false);
 
-  const [userInfo, setUserInfo] = useState(null);
-
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/user/account/success", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.body) {
-          setUserInfo(json.body);
-        } else {
-          setUserInfo(null);
-        }
-      });
     fetch(`http://localhost:8000/api/v1/article/${id}`)
       .then((res) => res.json())
       .then((json) => {

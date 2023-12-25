@@ -25,7 +25,7 @@ const MainLayout = () => {
   return (
     <>
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
-      <Outlet />
+      <Outlet context={{ userInfo, setUserInfo, userChange, changeUser }} />
       <Footer />
     </>
   );
