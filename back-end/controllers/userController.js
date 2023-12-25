@@ -49,6 +49,17 @@ exports.createUser = async (req, res, next) => {
         }
 
 
+        //===========check len Password > 6 ==========================
+        if (Password.length < 6) {
+            return res.status(400).json({
+                status: "fail",
+                msg: "Password must be at least 6 characters long",
+            });
+        }
+
+
+
+
         //===========check confirm Password==========================
 
         if (Password != ConfirmPassword) {
@@ -515,11 +526,9 @@ exports.getSaveArticle = async (req, res, next) => {
 
         const _id = req.params.id;
 
-        console.log(_id);
 
         // Find the user by ID 
         const finduser = await User.findById(_id);
-
 
 
         if (!finduser) {
@@ -532,7 +541,6 @@ exports.getSaveArticle = async (req, res, next) => {
 
 
         const save_Article = finduser.Saved_news;
-        console.log(save_Article);
 
         // Array to store the results
         let savedArticles = [];
@@ -669,4 +677,80 @@ exports.Save_Or_Unsave_Article = async (req, res, next) => {
 
     next();
 
+}
+
+
+exports.getFollowing = async (req, res) => {
+    try {
+
+
+        const _id = req.params.id;
+        // Find the user by ID 
+        const finduser = await User.findById(_id);
+
+        if (!finduser) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+        const Arr_ID_follow_writer = finduser.ID_follow_writer;
+
+        // Array to store the results
+        let inforWriters = [];
+
+
+        // Loop through saved article IDs and retrieve each article
+        for (const IDwriter of Arr_ID_follow_writer) {
+
+            const writer = await User.findById(IDwriter);
+
+            if (writer) {
+
+                const inforWriter = {
+                    id_user: writer._id,
+                    FullName: writer.FullName,
+                    Image_Avatar: writer.Image_Avatar
+                };
+
+                // Add the modified article to the results array
+                inforWriters.push(inforWriter);
+            }
+        }
+
+
+
+
+        res.status(201).json({
+            status: 'success',
+            data: inforWriters
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+exports.denyUpgrade = async (req, res) => {
+    try {
+        const _id = req.params.id;
+        const finduser = await User.findById(_id);
+        finduser.pending = "false";
+        const update = await User.findByIdAndUpdate(_id, finduser, {
+            new: true
+        });
+        res.status(201).json({
+            status: 'success',
+            data: finduser
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
 }

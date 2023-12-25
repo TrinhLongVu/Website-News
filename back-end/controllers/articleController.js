@@ -426,3 +426,37 @@ exports.setPriority = async (req, res) => {
         })
     }
 }
+
+
+exports.likeArtice = async (req, res, next) => {
+    try {
+        const id_article = req.params.id;
+        const articles = await Article.findById(id_article);
+
+        // If the article with the specified ID is not found, return an error response
+        if (!articles) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Article not found'
+            });
+        }
+
+        articles.likes = articles.likes + 1;
+
+
+
+        const update = await Article.findByIdAndUpdate(id_article, articles, {
+            new: true
+        })
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: "error",
+            msg: err
+        })
+    }
+    next();
+}
