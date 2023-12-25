@@ -179,21 +179,12 @@ exports.updateUser = async (req, res, next) => {
             birthday
         } = req.body
 
-        // const file = req.files.image;
-        // const result = await cloudinary.uploader.upload(file.tempFilePath, {
-        //     public_id: `${Date.now()}`,
-        //     resource_type: "auto",
-        //     folder: "images"
-        // })
-
-
-        const a = {
-            fullname: 'Vo Viet Nam',
-            gender: 'male',
-            phone: '0777177327',
-            address: '134/11 Nguyen Chi Thanh, Phuong 5, Quan 10, TP Ho Chi Minh',
-            birthday: '08/10/1981'
-        }
+        const file = req.files.image;
+        const result = await cloudinary.uploader.upload(file.tempFilePath, {
+            public_id: `${Date.now()}`,
+            resource_type: "auto",
+            folder: "images"
+        })
 
         const user = {
             FullName: fullname,
@@ -479,7 +470,7 @@ exports.getArticlesWritten = async (req, res) => {
             let aritcle = {
                 ...data
             }._doc;
-            aritcle.fullname = user.FullName
+            aritcle.ID_author = user.FullName
             aritcle.imageAuthor = user.Image_Avatar
             return aritcle
         }))

@@ -19,13 +19,16 @@ const Written = () => {
       .then((json) => {
         setUserInfo(json.body);
       });
+  }, []);
+
+  useEffect(() => {
     fetch(`http://localhost:8000/api/v1/user/article/${userInfo._id}`)
       .then((res) => res.json())
       .then((json) => {
         console.log(json.data);
         setArticleList(json.data);
       });
-  }, []);
+  }, [userInfo]);
   return (
     <>
       <Breadcrumbs
