@@ -36,7 +36,7 @@ exports.getArticle = async (req, res, next) => {
     try {
         const id = req.params.id;
         let data = await Article.findById(id)
-        
+
         data.view = data.view + 1;
         await Article.findByIdAndUpdate(id, data, {
             new: true
@@ -116,7 +116,7 @@ exports.createAllArticle = async (req, res, next) => {
         // use them in the 
         // const idwriter = ["657b1c5297b5b4de8aadced5","657b1c5297b5b4de8aadced8","657b1c5297b5b4de8aadcedb","657b1c5297b5b4de8aadcede","657b1c5397b5b4de8aadcee1","657b1c5397b5b4de8aadcee4","657b1c5397b5b4de8aadcee7","657b1c5397b5b4de8aadceea","657b1c5397b5b4de8aadceed","657b1c5397b5b4de8aadcef0","657b1c5397b5b4de8aadcef6"]
         // const idReader = ["657b1c5297b5b4de8aadced5","657b1c5297b5b4de8aadced8","657b1c5297b5b4de8aadcedb","657b1c5297b5b4de8aadcede","657b1c5397b5b4de8aadcee1","657b1c5397b5b4de8aadcee4","657b1c5397b5b4de8aadcee7","657b1c5397b5b4de8aadceea","657b1c5397b5b4de8aadceed","657b1c5397b5b4de8aadcef0","657b1c5397b5b4de8aadcef3","657b1c5397b5b4de8aadcef6","657b1c5497b5b4de8aadcef9","657b1c5497b5b4de8aadcefc","657b1c5497b5b4de8aadceff","657b1c5497b5b4de8aadcf02","657b1c5497b5b4de8aadcf05","657b1c5497b5b4de8aadcf08","657b1c5497b5b4de8aadcf0b","657b26b3e61c6214415d873c","657b336bccbc4bac79a3296c","657ebbf8f3fd210287e5dc9b","65801da6b54993285f5dc870","658049b3f287217928f7fe99","658163619ead2e155a0e4a43","6581bd78d5ce2994a79f087d","658243e59bc48310cf15593b"];    
-    
+
         for (const article of articles) {
             // const writer = Math.floor(Math.random() * idwriter.length);
             // const reader = Math.floor(Math.random() * idReader.length);
@@ -317,9 +317,12 @@ exports.deleteArticle = async (req, res, next) => {
 
 exports.SearchArticle = async (req, res, next) => {
     try {
-        const tempsearchString = req.params.searchString;
 
-        const searchString = tempsearchString.replace(/\+/g, ' ');
+        const searchString = req.params.searchString;
+
+        const users = await User.find({ 'FullName': { $regex: searchString, $options: 'i' } });
+        const userIds = users.map(user => user._id);
+
 
         const datas = await Article.find({
             $or: [{
@@ -332,7 +335,12 @@ exports.SearchArticle = async (req, res, next) => {
                 Category: {
                     $in: [searchString]
                 }
-            } // Search by Category
+            }, // Search by Category
+            {
+                ID_author: {
+                    $in: userIds
+                }
+            } // Search by Writer
             ]
         });
 
