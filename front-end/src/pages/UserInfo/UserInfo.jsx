@@ -31,8 +31,8 @@ const UserInfo = () => {
             setBirthday(json.body.Birthday);
           }
           if (json.body.pending) {
-            if (json.body.pending === "false") {
-              setPending(false);
+            if (json.body.pending === "true") {
+              setPending(true);
             }
           }
           setFullName(json.body.FullName);
@@ -102,6 +102,23 @@ const UserInfo = () => {
           setPending(true);
         }
       });
+  };
+
+  const cancelUpgrade = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/v1/user/denyUpgrade/" + infoObj._id,
+        {
+          method: "PATCH",
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        setPending(false);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
@@ -201,7 +218,11 @@ const UserInfo = () => {
               </div>
             ) : infoObj.Role === "reader" && isPending ? (
               <div className="info-action-btn-container">
-                <div className="info-action-btn" id="info-upgrade-btn">
+                <div
+                  className="info-action-btn"
+                  id="info-upgrade-btn"
+                  onClick={cancelUpgrade}
+                >
                   Waiting to be approved
                 </div>
               </div>
