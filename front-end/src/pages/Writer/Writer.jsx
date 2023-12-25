@@ -14,6 +14,7 @@ const Writer = () => {
     fetch(`http://localhost:8000/api/v1/user/${id}`)
       .then((res) => res.json())
       .then((json) => {
+        console.log(json.data);
         setWriterInfo(json.data);
       });
   }, [id]);

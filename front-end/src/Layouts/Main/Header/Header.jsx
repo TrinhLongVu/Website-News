@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,7 +16,7 @@ import "./header.css";
 
 import { categoryList } from "../../../Global";
 
-const Header = () => {
+const Header = ({ userInfo, setUserInfo }) => {
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
@@ -59,24 +59,6 @@ const Header = () => {
   });
 
   const [searchField, setSearchField] = useState("");
-  const [userInfo, setUserInfo] = useState({});
-
-  useEffect(() => {
-    fetch("http://localhost:8000/api/v1/user/account/success", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.body) {
-          if (json.body.Role === "admin") {
-            navigate("/admin");
-          }
-          setUserInfo(json.body);
-        } else {
-          setUserInfo(null);
-        }
-      });
-  }, []);
 
   const logOut = () => {
     fetch("http://localhost:8000/api/v1/user/account/logout", {
