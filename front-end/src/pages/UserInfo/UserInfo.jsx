@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./user-info.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
 
 const UserInfo = () => {
+  const { userChange, changeUser } = useOutletContext();
   const [infoObj, setInfoObj] = useState({});
   const [isEditMode, setIsEditMode] = useState(false);
   const [isPending, setPending] = useState(false);
@@ -70,6 +71,7 @@ const UserInfo = () => {
       );
 
       if (response.ok) {
+        changeUser(!userChange);
         setIsEditMode(false);
       } else {
         console.error("Failed to update");
