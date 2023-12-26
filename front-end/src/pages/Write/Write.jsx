@@ -117,7 +117,7 @@ const Write = () => {
     }
   };
 
-  const [isPublished, setPublished] = useState(true);
+  const [isPublished, setPublished] = useState(false);
 
   const createNewArticle = async () => {
     let formData = new FormData();
@@ -138,8 +138,10 @@ const Write = () => {
         document.querySelector(".write-new-textarea").value = "";
         setSelectedCategory("");
         setThumbnail(null);
+        setPreviewThumbnail(null);
         setPreviewArticle(null);
       } else {
+        setPublished(false);
         console.error("Failed to create post");
       }
     } catch (error) {

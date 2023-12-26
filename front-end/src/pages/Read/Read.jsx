@@ -22,7 +22,7 @@ import "./read.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 const Read = () => {
   const { id } = useParams();
-  const { userInfo } = useOutletContext();
+  const { userInfo, userChange, changeUser } = useOutletContext();
   const [readingArticle, setReadingArticle] = useState({});
   const [articleCategory, setArticleCategory] = useState("");
   const [relatedArticles, setRelatedArticles] = useState([]);
@@ -44,9 +44,20 @@ const Read = () => {
           views: json.data.view,
           time: json.data.posted_time,
         };
+        if (userInfo && userInfo.ID_follow_writer) {
+          const foundID = userInfo.ID_follow_writer.find(
+            (id) => id === fetchedArticle.authorID
+          );
+
+          if (foundID) {
+            setFollow(true);
+          } else {
+            setFollow(false);
+          }
+        }
         setReadingArticle(fetchedArticle);
       });
-  }, [id]);
+  }, [userInfo]);
 
   const routeList = [
     {
@@ -87,6 +98,7 @@ const Read = () => {
       );
       const data = await response.json();
       if (data.status === "success") {
+        changeUser(!userChange);
         setFollow(!isFollowed);
       }
     } catch (error) {
