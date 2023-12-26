@@ -27,6 +27,7 @@ const Read = () => {
   const [articleCategory, setArticleCategory] = useState("");
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [isFollowed, setFollow] = useState(false);
+  const [isSaved, setSaved] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/v1/article/${id}`)
@@ -35,6 +36,7 @@ const Read = () => {
         setArticleCategory(json.data.Category[0]);
         const articleContent = json.data.Detail.split("\n");
         const fetchedArticle = {
+          ID: json.data._id,
           authorName: json.data.author_name,
           authorID: json.data.ID_author,
           authorAvt: json.data.imageAuthor,
@@ -44,20 +46,31 @@ const Read = () => {
           views: json.data.view,
           time: json.data.posted_time,
         };
-        if (userInfo && userInfo.ID_follow_writer) {
-          const foundID = userInfo.ID_follow_writer.find(
-            (id) => id === fetchedArticle.authorID
-          );
-
-          if (foundID) {
-            setFollow(true);
-          } else {
-            setFollow(false);
+        if (userInfo) {
+          if (userInfo.ID_follow_writer) {
+            const foundID = userInfo.ID_follow_writer.find(
+              (id) => id === fetchedArticle.authorID
+            );
+            if (foundID) {
+              setFollow(true);
+            } else {
+              setFollow(false);
+            }
+          }
+          if (userInfo.Saved_news) {
+            const foundID = userInfo.Saved_news.find(
+              (id) => id === fetchedArticle.ID
+            );
+            if (foundID) {
+              setSaved(true);
+            } else {
+              setSaved(false);
+            }
           }
         }
         setReadingArticle(fetchedArticle);
       });
-  }, [userInfo]);
+  }, [id, userInfo]);
 
   const routeList = [
     {
@@ -75,8 +88,6 @@ const Read = () => {
   ];
 
   const [isLiked, setLiked] = useState(false);
-
-  const [isSaved, setSaved] = useState(false);
 
   const likeArticle = () => {
     setLiked(!isLiked);
@@ -105,8 +116,28 @@ const Read = () => {
       console.error("Error fetching data:", error);
     }
   };
-  const saveArticle = () => {
-    setSaved(!isSaved);
+  const saveArticle = async () => {
+    const sentBody = {
+      _id: userInfo._id,
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/user/save/${readingArticle.ID}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sentBody),
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        setSaved(!isSaved);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
