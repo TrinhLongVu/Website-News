@@ -5,6 +5,8 @@ import "./user-info.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserInfo = () => {
   const { userChange, changeUser } = useOutletContext();
@@ -71,10 +73,29 @@ const UserInfo = () => {
       );
 
       if (response.ok) {
+        toast.success("Successfully update your information", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         changeUser(!userChange);
         setIsEditMode(false);
       } else {
-        console.error("Failed to update");
+        toast.error("Looks like you there is some error!!!\nPlease try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (error) {
       console.error("Error:", error);

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import Header from "./Header/Header";
 import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "./Footer/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const MainLayout = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
@@ -27,6 +29,18 @@ const MainLayout = () => {
       <Header userInfo={userInfo} setUserInfo={setUserInfo} />
       <Outlet context={{ userInfo, setUserInfo, userChange, changeUser }} />
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 };

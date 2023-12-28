@@ -12,6 +12,8 @@ import "./write.css";
 import ArticleFrame from "../../Components/Read/ArticleFrame/ArticleFrame";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Write = () => {
   const [showList, setShowList] = useState(false);
@@ -117,8 +119,6 @@ const Write = () => {
     }
   };
 
-  const [isPublished, setPublished] = useState(false);
-
   const createNewArticle = async () => {
     let formData = new FormData();
     formData.append("Title", articleTitle);
@@ -133,16 +133,40 @@ const Write = () => {
       });
 
       if (response.ok) {
-        setPublished(true);
+        toast.success("Your new article has been published!!!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         document.querySelector(".write-new-input").value = "";
         document.querySelector(".write-new-textarea").value = "";
+        document.querySelector(".write-new-select-title").style.color =
+          "#3e3232";
+        document.querySelector(".write-new-select-title").style.opacity =
+          "0.75";
         setSelectedCategory("");
         setThumbnail(null);
         setPreviewThumbnail(null);
         setPreviewArticle(null);
       } else {
-        setPublished(false);
-        console.error("Failed to create post");
+        toast.error(
+          "Looks like you haven't input enough information for your new article",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
       }
     } catch (error) {
       console.error("Error:", error);
@@ -248,9 +272,6 @@ const Write = () => {
               Publish
             </div>
           </div>
-          {isPublished && (
-            <div className="published-msg">Published Successfully</div>
-          )}
         </div>
       </div>
       {previewArticle && (
