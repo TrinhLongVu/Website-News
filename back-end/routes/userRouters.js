@@ -55,4 +55,16 @@ router
     .route('/getfollowing/:id') // :id of reader
     .get(userController.getFollowing)
 
+router 
+    .route('/admin/totalUser')
+    .get(userController.totalUser)
+    
+router 
+    .route('/admin/post')
+    .get(userController.post)
+
+router 
+    .route('/admin/view')
+    .get(userController.view)
+
 module.exports = router;

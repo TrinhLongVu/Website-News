@@ -225,7 +225,9 @@ exports.deleteUser = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        const deletedUser = await User.deleteOne({ _id });
+        const deletedUser = await User.deleteOne({
+            _id
+        });
         // const deletedUser = await User.deleteMany();
 
         if (!deletedUser) {
@@ -339,7 +341,9 @@ exports.getWriter = async (req, res, next) => {
 
         //== get Article of writer
         const ID_author = find_user_writer._id;
-        const Article_of_writer = await Article.find({ ID_author });
+        const Article_of_writer = await Article.find({
+            ID_author
+        });
 
 
         res.status(201).json({
@@ -546,7 +550,9 @@ exports.getSaveArticle = async (req, res, next) => {
                 const author = await User.findById(article.ID_author);
 
                 // Modify article data
-                let modifiedArticle = { ...article }._doc;
+                let modifiedArticle = {
+                    ...article
+                }._doc;
                 modifiedArticle.author_name = author.FullName;
                 modifiedArticle.imageAuthor = author.Image_Avatar;
 
@@ -627,8 +633,7 @@ exports.Save_Or_Unsave_Article = async (req, res, next) => {
                 return element !== _id_article;
             });
 
-        }
-        else {
+        } else {
             //  'Have not saved' => Saving
             //========================== PUSH ID =========================================
 
@@ -655,7 +660,9 @@ exports.Save_Or_Unsave_Article = async (req, res, next) => {
 
         res.status(201).json({
             status: 'success',
-            data: { update_user }
+            data: {
+                update_user
+            }
 
         })
     } catch (err) {
@@ -741,6 +748,121 @@ exports.denyUpgrade = async (req, res) => {
         res.status(400).json({
             status: "fail",
             msg: err
+        })
+    }
+}
+
+exports.totalUser = async (req, res) => {
+    try {
+        const statistics = [];
+
+        let currentDate = new Date()
+
+        const users = await User.find({});
+        for (let i = 0; i < 7; i++) {
+            const formattedDate = currentDate.toISOString().split('T')[0];
+            let quantity = 0;
+            for (const user of users) {
+                const day = new Date(formattedDate);
+                day.setDate(day.getDate() + 1);
+                if ((new Date(user.createAt) - new Date(formattedDate)) > 0 && (new Date(user.createAt) -  day) < 0) {
+                    quantity++;
+                }   
+            }
+            const data = {
+                day: formattedDate,
+                quantity: quantity
+            };
+
+            currentDate.setDate(currentDate.getDate() - 1);
+            statistics.push(data);
+        }
+        res.status(200).json({
+            status: "success",
+            data: statistics
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err.msg
+        })
+    }
+}
+
+exports.post = async (req, res) => {
+    try {
+        const statistics = [];
+
+        let currentDate = new Date()
+        for (let i = 0; i < 7; i++) {
+            const formattedDate = currentDate.toISOString().split('T')[0];
+            let day = new Date(formattedDate);
+            day.setDate(day.getDate() + 1);
+            
+            const quantity = await Article.countDocuments({
+                posted_time: {
+                    $gte: new Date(formattedDate),
+                    $lt: new Date(day)
+                }
+            })
+
+            const data = {
+                day: formattedDate,
+                quantity: quantity
+            };
+
+            currentDate.setDate(currentDate.getDate() - 1);
+            statistics.push(data);
+        }
+        res.status(200).json({
+            status: "success",
+            data: statistics
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err.msg
+        })
+    }
+}
+
+exports.view = async (req, res) => {
+    try {
+        const statistics = [];
+
+        let currentDate = new Date()
+        for (let i = 0; i < 7; i++) {
+            const formattedDate = currentDate.toISOString().split('T')[0];
+            let day = new Date(formattedDate);
+            day.setDate(day.getDate() + 1);
+            
+            const articles = await Article.find({
+                posted_time: {
+                    $gte: new Date(formattedDate),
+                    $lt: new Date(day)
+                }
+            })
+            let quantity = 0;
+            for (const article of articles) {
+                quantity += article.view
+            }
+
+            const data = {
+                day: formattedDate,
+                quantity: quantity
+            };
+
+            currentDate.setDate(currentDate.getDate() - 1);
+            statistics.push(data);
+        }
+        res.status(200).json({
+            status: "success",
+            data: statistics
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err.msg
         })
     }
 }
