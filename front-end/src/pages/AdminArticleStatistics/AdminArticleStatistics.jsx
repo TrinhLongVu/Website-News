@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import "chart.js/auto";
 import "./admin-article-statistics.css";
@@ -10,81 +10,106 @@ const AdminArticleStatistics = () => {
   const [displayViewsChart, setDisplayViewsChart] = useState(false);
   const [displayPublishedChart, setDisplayPublishedChart] = useState(false);
 
-  const generateData = () => {
-    const weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7"];
+  const fetchData = async () => {
+    try {
+      const [
+        totalUsersResponse,
+        totalArticlesResponse,
+        bydayUsersResponse,
+        bydayArticlesResponse,
+        bydayViewsResponse
+      ] = await Promise.all([
+        fetch("http://localhost:8000/api/v1/user/", { credentials: "include" }),
+        fetch("http://localhost:8000/api/v1/article/", { credentials: "include" }),
+        fetch("http://localhost:8000/api/v1/user/admin/totalUser", { credentials: "include" }),
+        fetch("http://localhost:8000/api/v1/user/admin/post", { credentials: "include" }),
+        fetch("http://localhost:8000/api/v1/user/admin/view", { credentials: "include" }),
+      ]);
 
-    const specificData = {
-      totalUsers: [10, 20, 30, 33, 40, 44, 50],
-      totalViews: [2123, 4056, 12692, 23098, 38690, 50210, 60373],
-      totalPublished: [2, 4, 11, 17, 33, 54, 60],
-    };
+      const [
+        totalUsersJson,
+        totalArticlesJson,
+        bydayUsersJson,
+        bydayArticlesJson,
+        bydayViewJson
+      ] = await Promise.all([
+        totalUsersResponse.json(),
+        totalArticlesResponse.json(),
+        bydayUsersResponse.json(),
+        bydayArticlesResponse.json(),
+        bydayViewsResponse.json(),
+      ]);
 
-    setStatistics(specificData);
+      const totalViewsFromArticles = totalArticlesJson.data.reduce(
+        (accumulator, article) => accumulator + parseInt(article.view, 10),
+        0
+      );
 
-    // Prepare data for Chart.js
-    const chartDataUsers = {
-      labels: weeks,
-      datasets: [
-        {
-          label: "Total Users",
-          data: specificData.totalUsers,
-          borderColor: "#007BFF",
-          fill: false,
-        },
-      ],
-    };
+      const fetchStatistics = {
+        totalUsers: totalUsersJson.data.length,
+        totalViews: totalViewsFromArticles,
+        totalPublished: totalArticlesJson.data.length,
+        bydayUsers: bydayUsersJson.data,
+        bydayPublished: bydayArticlesJson.data,
+        bydayViews: bydayViewJson.data,
+      };
 
-    const chartDataViews = {
-      labels: weeks,
-      datasets: [
-        {
-          label: "Total Views",
-          data: specificData.totalViews,
-          borderColor: "#28a745",
-          fill: false,
-        },
-      ],
-    };
+      const days = fetchStatistics.bydayUsers.map((entry) => entry.day).reverse();
+      const userQuantities = fetchStatistics.bydayUsers.map((entry) => entry.quantity).reverse();
+      const viewQuantities = fetchStatistics.bydayViews.map((entry) => entry.quantity).reverse();
+      const publishedQuantities = fetchStatistics.bydayPublished.map((entry) => entry.quantity).reverse();
 
-    const chartDataPublished = {
-      labels: weeks,
-      datasets: [
-        {
-          label: "Total Published",
-          data: specificData.totalPublished,
-          borderColor: "#FFC107",
-          fill: false,
-        },
-      ],
-    };
+      const chartDataUsers = {
+        labels: days,
+        datasets: [
+          {
+            label: "New Users",
+            data: userQuantities,
+            borderColor: "#007BFF",
+            fill: false,
+          },
+        ],
+      };
 
-    setChartData({ chartDataUsers, chartDataViews, chartDataPublished });
+      const chartDataViews = {
+        labels: days,
+        datasets: [
+          {
+            label: "Views Gain",
+            data: viewQuantities,
+            borderColor: "#28a745",
+            fill: false,
+          },
+        ],
+      };
+
+      const chartDataPublished = {
+        labels: days,
+        datasets: [
+          {
+            label: "New Published Articles",
+            data: publishedQuantities,
+            borderColor: "#FFC107",
+            fill: false,
+          },
+        ],
+      };
+
+      setStatistics(fetchStatistics);
+      setChartData({ chartDataUsers, chartDataViews, chartDataPublished });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
-    generateData();
+    fetchData();
   }, []);
 
   const toggleChartVisibility = (chartType) => {
-    switch (chartType) {
-      case "users":
-        setDisplayUsersChart(true);
-        setDisplayViewsChart(false);
-        setDisplayPublishedChart(false);
-        break;
-      case "views":
-        setDisplayUsersChart(false);
-        setDisplayViewsChart(true);
-        setDisplayPublishedChart(false);
-        break;
-      case "published":
-        setDisplayUsersChart(false);
-        setDisplayViewsChart(false);
-        setDisplayPublishedChart(true);
-        break;
-      default:
-        break;
-    }
+    setDisplayUsersChart(chartType === "users");
+    setDisplayViewsChart(chartType === "views");
+    setDisplayPublishedChart(chartType === "published");
   };
 
   return (
@@ -98,14 +123,11 @@ const AdminArticleStatistics = () => {
                   Total Users
                 </div>
                 <div className="article-statistics-h5 article-statistics-font-weight-bold">
-                  {statistics.totalUsers && statistics.totalUsers.length > 0
-                    ? statistics.totalUsers[statistics.totalUsers.length - 1]
-                    : 'N/A'}
+                  {statistics.totalUsers}
                 </div>
               </div>
             </div>
           </div>
-
           <div className="article-statistics-col">
             <div className="article-statistics-card" onClick={() => toggleChartVisibility("views")}>
               <div className="article-statistics-card-body">
@@ -113,14 +135,11 @@ const AdminArticleStatistics = () => {
                   Total Views
                 </div>
                 <div className="article-statistics-h5 article-statistics-font-weight-bold">
-                  {statistics.totalViews && statistics.totalViews.length > 0
-                    ? statistics.totalViews[statistics.totalViews.length - 1]
-                    : 'N/A'}
+                  {statistics.totalViews}
                 </div>
               </div>
             </div>
           </div>
-
           <div className="article-statistics-col">
             <div className="article-statistics-card" onClick={() => toggleChartVisibility("published")}>
               <div className="article-statistics-card-body">
@@ -128,9 +147,7 @@ const AdminArticleStatistics = () => {
                   Total Article Published
                 </div>
                 <div className="article-statistics-h5 article-statistics-font-weight-bold">
-                  {statistics.totalPublished && statistics.totalPublished.length > 0
-                    ? statistics.totalPublished[statistics.totalPublished.length - 1]
-                    : 'N/A'}
+                  {statistics.totalPublished}
                 </div>
               </div>
             </div>
@@ -140,7 +157,7 @@ const AdminArticleStatistics = () => {
         {displayUsersChart && (
           <div className="line-chart-container">
             {chartData && chartData.chartDataUsers && chartData.chartDataUsers.labels ? (
-              <Line data={chartData.chartDataUsers} options={{ scales: { x: [{ type: 'linear', position: 'bottom' }] } }} />
+              <Line data={chartData.chartDataUsers}  />
             ) : (
               <p>Loading chart...</p>
             )}
@@ -150,7 +167,7 @@ const AdminArticleStatistics = () => {
         {displayViewsChart && (
           <div className="line-chart-container">
             {chartData && chartData.chartDataViews && chartData.chartDataViews.labels ? (
-              <Line data={chartData.chartDataViews} options={{ scales: { x: [{ type: 'linear', position: 'bottom' }] } }} />
+              <Line data={chartData.chartDataViews}  />
             ) : (
               <p>Loading chart...</p>
             )}
@@ -160,7 +177,7 @@ const AdminArticleStatistics = () => {
         {displayPublishedChart && (
           <div className="line-chart-container">
             {chartData && chartData.chartDataPublished && chartData.chartDataPublished.labels ? (
-              <Line data={chartData.chartDataPublished} options={{ scales: { x: [{ type: 'linear', position: 'bottom' }] } }} />
+              <Line data={chartData.chartDataPublished}  />
             ) : (
               <p>Loading chart...</p>
             )}
@@ -172,3 +189,4 @@ const AdminArticleStatistics = () => {
 };
 
 export default AdminArticleStatistics;
+
