@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNewspaper } from "@fortawesome/free-regular-svg-icons";
@@ -8,24 +9,17 @@ import ArticleShelf from "../../Components/AricleShelf/ArticleShelf";
 import "./writer-user.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 const Written = () => {
-  const [userInfo, setUserInfo] = useState({});
+  const navigate = useNavigate();
+  const { userInfo } = useOutletContext();
   const [articleList, setArticleList] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8000/api/v1/user/account/success", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setUserInfo(json.body);
-      });
-  }, []);
+  if (userInfo.Role != "writer") {
+    navigate("*");
+  }
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/v1/user/article/${userInfo._id}`)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json.data);
         setArticleList(json.data);
       });
   }, [userInfo]);

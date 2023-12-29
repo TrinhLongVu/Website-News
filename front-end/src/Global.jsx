@@ -85,20 +85,34 @@ export const categoryList = [
 
 export const calcTime = (postedTime) => {
   const currentDate = new Date();
-  const postDate = new Date(postedTime);
+  const previousDate = new Date(postedTime);
 
-  const timeDifferenceInSeconds = Math.floor((currentDate - postDate) / 1000);
+  const timeDifferenceInSeconds = Math.floor(
+    (currentDate - previousDate) / 1000
+  );
 
-  if (timeDifferenceInSeconds < 60) {
-    return `${timeDifferenceInSeconds} seconds ago`;
-  } else if (timeDifferenceInSeconds < 3600) {
-    const minutes = Math.floor(timeDifferenceInSeconds / 60);
-    return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
-  } else if (timeDifferenceInSeconds < 86400) {
-    const hours = Math.floor(timeDifferenceInSeconds / 3600);
-    return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+  const secondsInMinute = 60;
+  const secondsInHour = 3600;
+  const secondsInDay = 86400;
+  const secondsInWeek = 604800;
+  const secondsInMonth = 2628000; // assuming a month has 30 days
+
+  if (timeDifferenceInSeconds < secondsInMinute) {
+    return timeDifferenceInSeconds + " seconds ago";
+  } else if (timeDifferenceInSeconds < secondsInHour) {
+    const minutes = Math.floor(timeDifferenceInSeconds / secondsInMinute);
+    return minutes === 1 ? "1 minute ago" : minutes + " minutes ago";
+  } else if (timeDifferenceInSeconds < secondsInDay) {
+    const hours = Math.floor(timeDifferenceInSeconds / secondsInHour);
+    return hours === 1 ? "1 hour ago" : hours + " hours ago";
+  } else if (timeDifferenceInSeconds < secondsInWeek) {
+    const days = Math.floor(timeDifferenceInSeconds / secondsInDay);
+    return days === 1 ? "1 day ago" : days + " days ago";
+  } else if (timeDifferenceInSeconds < secondsInMonth) {
+    const weeks = Math.floor(timeDifferenceInSeconds / secondsInWeek);
+    return weeks === 1 ? "1 week ago" : weeks + " weeks ago";
   } else {
-    const days = Math.floor(timeDifferenceInSeconds / 86400);
-    return `${days} ${days === 1 ? "day" : "days"} ago`;
+    const months = Math.floor(timeDifferenceInSeconds / secondsInMonth);
+    return months === 1 ? "1 month ago" : months + " months ago";
   }
 };
