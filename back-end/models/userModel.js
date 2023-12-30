@@ -60,6 +60,10 @@ const userSchema = new Schema({
     pending: {
         type: String,
         default: "false"
+    },
+    report_pending: {
+        type: String,
+        default: "false"
     }
 })
 // The same create table in sql server and table have name which is lowercase."article" 
