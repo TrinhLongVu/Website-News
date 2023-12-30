@@ -765,9 +765,9 @@ exports.totalUser = async (req, res) => {
             for (const user of users) {
                 const day = new Date(formattedDate);
                 day.setDate(day.getDate() + 1);
-                if ((new Date(user.createAt) - new Date(formattedDate)) > 0 && (new Date(user.createAt) -  day) < 0) {
+                if ((new Date(user.createAt) - new Date(formattedDate)) > 0 && (new Date(user.createAt) - day) < 0) {
                     quantity++;
-                }   
+                }
             }
             const data = {
                 day: formattedDate,
@@ -798,7 +798,7 @@ exports.post = async (req, res) => {
             const formattedDate = currentDate.toISOString().split('T')[0];
             let day = new Date(formattedDate);
             day.setDate(day.getDate() + 1);
-            
+
             const quantity = await Article.countDocuments({
                 posted_time: {
                     $gte: new Date(formattedDate),
@@ -835,7 +835,7 @@ exports.view = async (req, res) => {
             const formattedDate = currentDate.toISOString().split('T')[0];
             let day = new Date(formattedDate);
             day.setDate(day.getDate() + 1);
-            
+
             const articles = await Article.find({
                 posted_time: {
                     $gte: new Date(formattedDate),
@@ -865,4 +865,161 @@ exports.view = async (req, res) => {
             msg: err.msg
         })
     }
+}
+
+//===============================    REPORT, BAN WRITER     =====================================================
+
+exports.report_writer = async (req, res) => {
+    try {
+        const id_Writer = req.params.id;
+
+        // Find the user by ID 
+        const find_user_writer = await User.findById(id_Writer);
+
+        if (!find_user_writer) {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'User not found.',
+            });
+        }
+
+
+        //==== Check writer, If role is "writer"
+
+        if (find_user_writer.Role != "writer") {
+            // If the user with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Not Writer.',
+            });
+        }
+
+
+        const result = await User.updateMany({
+            _id: id_Writer
+        }, {
+            $set: {
+                report_pending: true
+            }
+        });
+        res.status(201).json({
+            status: 'success',
+            data: result
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+exports.get_report_writer = async (req, res) => {
+    try {
+        const report_pending_Writer = await User.find({
+            report_pending: 'true'
+        });
+        res.status(201).json({
+            status: 'success',
+            data: report_pending_Writer
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+}
+
+exports.Accept_Ban_Writer = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        // Find the writer by ID 
+        const findwriter = await User.findById(_id);
+
+        if (!findwriter) {
+            // If the writer with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'writer not found.',
+            });
+        }
+
+        if (findwriter.report_pending == "true" && findwriter.Role == "writer") {
+
+            findwriter.report_pending = "false";
+            findwriter.Role = "Ban writer";
+
+        }
+
+
+        const update = await User.findByIdAndUpdate(_id, findwriter, {
+            new: true
+        });
+
+        if (!update) {
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Update fail.',
+            });
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+    next();
+}
+
+exports.Deny_Ban_Writer = async (req, res, next) => {
+    try {
+
+        const _id = req.params.id;
+
+        // Find the writer by ID 
+        const findwriter = await User.findById(_id);
+
+        if (!findwriter) {
+            // If the writer with the specified ID is not found, return an error response
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'writer not found.',
+            });
+        }
+
+        findwriter.report_pending = "false";
+        findwriter.Role = "writer";
+
+
+        const update = await User.findByIdAndUpdate(_id, findwriter, {
+            new: true
+        });
+
+        if (!update) {
+            return res.status(404).json({
+                status: 'fail',
+                msg: 'Update fail.',
+            });
+        }
+
+        res.status(201).json({
+            status: 'success',
+            data: update
+        })
+    } catch (err) {
+        res.status(400).json({
+            status: "fail",
+            msg: err
+        })
+    }
+    next();
 }

@@ -47,7 +47,7 @@ router
     .route('/updateReaderToWriter/:id') // :id of reader
     .patch(userController.update_Reader_To_Writer)
 
-router 
+router
     .route('/denyUpgrade/:id')
     .patch(userController.denyUpgrade)
 
@@ -55,16 +55,34 @@ router
     .route('/getfollowing/:id') // :id of reader
     .get(userController.getFollowing)
 
-router 
+router
     .route('/admin/totalUser')
     .get(userController.totalUser)
-    
-router 
+
+router
     .route('/admin/post')
     .get(userController.post)
 
-router 
+router
     .route('/admin/view')
     .get(userController.view)
+
+
+//===============================    REPORT, BAN WRITER     =====================================================
+router
+    .route('/report/writer/:id')
+    .patch(userController.report_writer)
+
+router
+    .route('/admin/getReportPending')
+    .get(userController.get_report_writer)
+
+router
+    .route('/admin/AcceptBanWriter/:id') // Use to Ban a writer, writer is baned then role: "Ban writer"
+    .patch(userController.Accept_Ban_Writer)
+
+router
+    .route('/admin/DenylBanWriter/:id')  // Use to Deny or Cancel Ban a writer
+    .patch(userController.Deny_Ban_Writer)
 
 module.exports = router;
