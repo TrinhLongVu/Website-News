@@ -78,7 +78,7 @@ router
     .get(userController.get_report_writer)
 
 router
-    .route('/admin/AcceptBanWriter/:id') // Use to Ban a writer
+    .route('/admin/AcceptBanWriter/:id') // Use to Ban a writer, writer is baned then role: "Ban writer"
     .patch(userController.Accept_Ban_Writer)
 
 router
