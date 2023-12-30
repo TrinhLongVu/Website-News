@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Login = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
@@ -37,12 +37,10 @@ const Login = () => {
         }
       );
       const data = await response.json();
-      if (data.body.Role !== "Ban writer") {
+      if (data.body) {
         window.location.href = "/";
-      } else if (data.body.Role === "Ban writer") {
-        setError("This account has been banned.");
       } else {
-        setError("Something's incorrect! Please try again");
+        setError(true);
       }
     } catch (error) {
       console.error(error);
@@ -81,7 +79,11 @@ const Login = () => {
         <div className="forgot-pwd">
           <a href="">Forgot Password ?</a>
         </div>
-        {error !== "" && <div className="auth-error-msg">{error}</div>}
+        {error && (
+          <div className="auth-error-msg">
+            Something's incorrect! Please try again
+          </div>
+        )}
         <button onClick={login} className="submit-btn">
           LOGIN
         </button>

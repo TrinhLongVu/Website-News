@@ -18,7 +18,6 @@ const MainLayout = () => {
           if (json.body.Role === "admin") {
             navigate("/admin");
           }
-          console.log(json.body);
           setUserInfo(json.body);
         } else {
           setUserInfo(null);
