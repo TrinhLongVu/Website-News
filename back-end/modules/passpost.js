@@ -44,7 +44,7 @@ module.exports = passport => {
                 UserName: username.trim()
             });
             const rs = user.Password == Password
-            if (rs) {
+            if (rs && user.Role != 'Ban writer') {
                 return done(null, user);
             }
             return done(null, false, {
