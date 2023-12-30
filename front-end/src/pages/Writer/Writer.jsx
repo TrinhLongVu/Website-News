@@ -9,6 +9,8 @@ import ArticleShelf from "../../Components/AricleShelf/ArticleShelf";
 import { useState, useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Writer = () => {
   const { id } = useParams();
@@ -67,6 +69,30 @@ const Writer = () => {
     }
   };
 
+  const reportAuthor = async () => {
+    fetch("http://localhost:8000/api/v1/user/report/writer/" + writerInfo._id, {
+      method: "PATCH",
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === "success") {
+          document.querySelector("#writer-ban").style.backgroundColor = "black";
+          document.querySelector("#writer-ban").style.color = "red";
+          toast.success("Successfully reported this writer!!!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      });
+  };
+
   return (
     <>
       <Breadcrumbs
@@ -83,18 +109,24 @@ const Writer = () => {
             <div className="writer-banner-follow-num">1863 Followers</div>
           </div>
         </div>
-        <div className="writer-banner-action">
-          <div
-            className="writer-banner-btn"
-            id="writer-follow"
-            onClick={followAuthor}
-          >
-            <FontAwesomeIcon icon={isFollowed ? faUserCheck : faUserPlus} />
+        {userInfo && (
+          <div className="writer-banner-action">
+            <div
+              className="writer-banner-btn"
+              id="writer-follow"
+              onClick={followAuthor}
+            >
+              <FontAwesomeIcon icon={isFollowed ? faUserCheck : faUserPlus} />
+            </div>
+            <div
+              className="writer-banner-btn"
+              id="writer-ban"
+              onClick={reportAuthor}
+            >
+              <FontAwesomeIcon icon={faBan} />
+            </div>
           </div>
-          <div className="writer-banner-btn" id="writer-ban">
-            <FontAwesomeIcon icon={faBan} />
-          </div>
-        </div>
+        )}
       </div>
       <div className="writer-content">
         <ArticleShelf articles={writtenArticles} />

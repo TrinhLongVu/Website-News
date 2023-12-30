@@ -178,17 +178,19 @@ const Read = () => {
               <div className="read-author-follow">18.6k Followers</div>
             </div>
           </Link>
-          <div className="read-btn-box">
-            <div className="btn-like" onClick={likeArticle}>
-              <FontAwesomeIcon icon={isLiked ? faIsLiked : faLike} />
+          {userInfo && (
+            <div className="read-btn-box">
+              <div className="btn-like" onClick={likeArticle}>
+                <FontAwesomeIcon icon={isLiked ? faIsLiked : faLike} />
+              </div>
+              <div className="btn-subscribe" onClick={followAuthor}>
+                <FontAwesomeIcon icon={isFollowed ? faUserCheck : faUserPlus} />
+              </div>
+              <div className="btn-save" onClick={saveArticle}>
+                <FontAwesomeIcon icon={isSaved ? faIsSaved : faSave} />
+              </div>
             </div>
-            <div className="btn-subscribe" onClick={followAuthor}>
-              <FontAwesomeIcon icon={isFollowed ? faUserCheck : faUserPlus} />
-            </div>
-            <div className="btn-save" onClick={saveArticle}>
-              <FontAwesomeIcon icon={isSaved ? faIsSaved : faSave} />
-            </div>
-          </div>
+          )}
           <div className="related-article-title">
             <FontAwesomeIcon icon={faNewspaper} id="related-title-icon" />
             Related Articles
