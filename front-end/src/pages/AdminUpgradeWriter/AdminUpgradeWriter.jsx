@@ -3,6 +3,7 @@ import "./admin-upgrade-writer.css";
 
 const AdminUpgradeWriter = () => {
   const [pendingList, setPendingList] = useState([]);
+  const [actionHit, hitAction] = useState(false);
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/pending/getAll", {
       credentials: "include",
@@ -11,14 +12,40 @@ const AdminUpgradeWriter = () => {
       .then((json) => {
         setPendingList(json.data);
       });
-  }, []);
+  }, [actionHit]);
 
-  const acceptRequest = (id) => {
-    console.log("Accept upgrade writer request with " + id);
+  const acceptRequest = async (id) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/v1/user/updateReaderToWriter/" + id,
+        {
+          method: "PATCH",
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        hitAction(!actionHit);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
-  const denyRequest = (id) => {
-    console.log("Deny upgrade writer request with " + id);
+  const denyRequest = async (id) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/v1/user/denyUpgrade/" + id,
+        {
+          method: "PATCH",
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        hitAction(!actionHit);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (

@@ -1,10 +1,8 @@
 const express = require('express')
 
 const router = express.Router();
-const passport = require('passport')
 
 const userController = require('../controllers/userController')
-// const abc = require('../controllers/authenticationController')
 
 router
     .route('/')
@@ -30,7 +28,6 @@ router
     .route('/article/:id') // :id of writer
     .get(userController.getArticlesWritten)
 
-
 router
     .route('/upgrade/writer/:id')
     .patch(userController.upgrade)
@@ -42,26 +39,50 @@ router
 router
     .route('/getsavearticle/:id') // :id of user
     .get(userController.getSaveArticle)
-
-
-
 router
     .route('/save/:id') // :id of article
     .patch(userController.Save_Or_Unsave_Article)
-// req.body
-// {
-//     "_id": "657b1c5297b5b4de8aadced5"  // _id is ID of USER
-// }
-
-
 
 router
     .route('/updateReaderToWriter/:id') // :id of reader
     .patch(userController.update_Reader_To_Writer)
 
 router
+    .route('/denyUpgrade/:id')
+    .patch(userController.denyUpgrade)
+
+router
     .route('/getfollowing/:id') // :id of reader
     .get(userController.getFollowing)
 
+router
+    .route('/admin/totalUser')
+    .get(userController.totalUser)
+
+router
+    .route('/admin/post')
+    .get(userController.post)
+
+router
+    .route('/admin/view')
+    .get(userController.view)
+
+
+//===============================    REPORT, BAN WRITER     =====================================================
+router
+    .route('/report/writer/:id')
+    .patch(userController.report_writer)
+
+router
+    .route('/admin/getReportPending')
+    .get(userController.get_report_writer)
+
+router
+    .route('/admin/AcceptBanWriter/:id') // Use to Ban a writer, writer is baned then role: "Ban writer"
+    .patch(userController.Accept_Ban_Writer)
+
+router
+    .route('/admin/DenylBanWriter/:id')  // Use to Deny or Cancel Ban a writer
+    .patch(userController.Deny_Ban_Writer)
 
 module.exports = router;

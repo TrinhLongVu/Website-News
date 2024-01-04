@@ -25,21 +25,18 @@ const About = () => {
           </div>
           <div className="content">
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Egestas purus viverra accumsan in nisl nisi. Arcu cursus vitae
-              congue mauris rhoncus aenean vel elit scelerisque. In egestas erat
-              imperdiet sed euismod nisi porta lorem mollis. Morbi tristique
-              senectus et netus. Mattis pellentesque id nibh tortor id aliquet
-              lectus proin. Sapien faucibus et molestie ac feugiat sed lectus
-              vestibulum. Ullamcorper velit sed ullamcorper morbi tincidunt
-              ornare massa eget. Dictum varius duis at consectetur lorem. Nisi
-              vitae suscipit tellus mauris a diam maecenas sed enim. Velit ut
-              tortor pretium viverra suspendisse potenti nullam. Et molestie ac
-              feugiat sed lectus. Non nisi est sit amet facilisis magna.
-              Dignissim diam quis enim lobortis scelerisque fermentum. Odio ut
-              enim blandit volutpat maecenas volutpat. Ornare lectus sit amet
-              est placerat in egestas erat.
+              Welcome to "Mega Papers," your premier destination for a multifaceted 
+              digital news experience. From real-time updates in Breaking News to 
+              in-depth analyses in Politics and Governance, we provide a 
+              comprehensive view of global events. Explore the forefront of innovation 
+              through our Technology and Innovation section, gain financial insights 
+              in Business and Finance, and embark on a journey of scientific 
+              discovery in Science and Exploration. Celebrate the richness of human 
+              expression and lifestyle in our Culture and Lifestyle coverage, 
+              and engage with thought-provoking analyses in our Opinion and Analysis 
+              section. Mega Papers is your go-to platform for staying informed, 
+              entertained, and connected to the diverse facets of our ever-evolving 
+              world.
             </p>
           </div>
           <div className="intro-picture"></div>

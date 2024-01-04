@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./user-info.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserInfo = () => {
+  const { userChange, changeUser } = useOutletContext();
   const [infoObj, setInfoObj] = useState({});
   const [isEditMode, setIsEditMode] = useState(false);
   const [isPending, setPending] = useState(false);
@@ -31,8 +34,8 @@ const UserInfo = () => {
             setBirthday(json.body.Birthday);
           }
           if (json.body.pending) {
-            if (json.body.pending === "false") {
-              setPending(false);
+            if (json.body.pending === "true") {
+              setPending(true);
             }
           }
           setFullName(json.body.FullName);
@@ -70,9 +73,29 @@ const UserInfo = () => {
       );
 
       if (response.ok) {
+        toast.success("Successfully update your information", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        changeUser(!userChange);
         setIsEditMode(false);
       } else {
-        console.error("Failed to update");
+        toast.error("Looks like you there is some error!!!\nPlease try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -102,6 +125,23 @@ const UserInfo = () => {
           setPending(true);
         }
       });
+  };
+
+  const cancelUpgrade = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/v1/user/denyUpgrade/" + infoObj._id,
+        {
+          method: "PATCH",
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        setPending(false);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
@@ -201,7 +241,11 @@ const UserInfo = () => {
               </div>
             ) : infoObj.Role === "reader" && isPending ? (
               <div className="info-action-btn-container">
-                <div className="info-action-btn" id="info-upgrade-btn">
+                <div
+                  className="info-action-btn"
+                  id="info-upgrade-btn"
+                  onClick={cancelUpgrade}
+                >
                   Waiting to be approved
                 </div>
               </div>

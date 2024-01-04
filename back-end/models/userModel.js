@@ -10,6 +10,10 @@ const userSchema = new Schema({
         type: String,
         require: [true, 'A User must have a Password']
     },
+    createAt: {
+        type: Date,
+        default: new Date()
+    },
     Role: {
         type: String,
         default: 'reader',
@@ -54,6 +58,10 @@ const userSchema = new Schema({
         type: Array
     },
     pending: {
+        type: String,
+        default: "false"
+    },
+    report_pending: {
         type: String,
         default: "false"
     }

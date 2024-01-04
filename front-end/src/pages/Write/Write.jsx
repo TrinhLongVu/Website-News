@@ -11,12 +11,16 @@ import { useState, useEffect } from "react";
 import "./write.css";
 import ArticleFrame from "../../Components/Read/ArticleFrame/ArticleFrame";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import Loader from "../../Components/Loader/Loader";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Write = () => {
   const [showList, setShowList] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [userInfo, setUserInfo] = useState(null);
+  const [loadIdea, setLoadIdea] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -94,6 +98,7 @@ const Write = () => {
   };
 
   const giveIdea = async () => {
+    setLoadIdea(true);
     const ideaBody = {
       category: selectedCategory,
       ideas: contentField,
@@ -107,6 +112,7 @@ const Write = () => {
         body: JSON.stringify(ideaBody),
       });
       const data = await response.json();
+      setLoadIdea(false);
       document.querySelector(".write-new-input").value =
         data.data.article.title;
       document.querySelector(".write-new-textarea").value =
@@ -116,8 +122,6 @@ const Write = () => {
       console.error("Error fetching data:", error);
     }
   };
-
-  const [isPublished, setPublished] = useState(true);
 
   const createNewArticle = async () => {
     let formData = new FormData();
@@ -133,14 +137,40 @@ const Write = () => {
       });
 
       if (response.ok) {
-        setPublished(true);
+        toast.success("Your new article has been published!!!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         document.querySelector(".write-new-input").value = "";
         document.querySelector(".write-new-textarea").value = "";
+        document.querySelector(".write-new-select-title").style.color =
+          "#3e3232";
+        document.querySelector(".write-new-select-title").style.opacity =
+          "0.75";
         setSelectedCategory("");
         setThumbnail(null);
+        setPreviewThumbnail(null);
         setPreviewArticle(null);
       } else {
-        console.error("Failed to create post");
+        toast.error(
+          "Looks like you haven't input enough information for your new article",
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
       }
     } catch (error) {
       console.error("Error:", error);
@@ -206,8 +236,17 @@ const Write = () => {
               id="write-new-give-idea"
               onClick={giveIdea}
             >
-              <FontAwesomeIcon icon={faPen} className="write-new-control-ico" />
-              Generate Paragraph
+              {loadIdea ? (
+                <Loader />
+              ) : (
+                <>
+                  <FontAwesomeIcon
+                    icon={faPen}
+                    className="write-new-control-ico"
+                  />
+                  Generate Paragraph
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -246,9 +285,6 @@ const Write = () => {
               Publish
             </div>
           </div>
-          {isPublished && (
-            <div className="published-msg">Published Successfully</div>
-          )}
         </div>
       </div>
       {previewArticle && (
