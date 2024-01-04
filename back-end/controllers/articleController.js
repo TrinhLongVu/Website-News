@@ -6,9 +6,11 @@ const fs = require('fs');
 exports.getAllArticle = async (req, res, next) => {
     try {
         const datas = await Article.find()
+        // console.log(datas)
 
         const result = await Promise.all(datas.map(async (data) => {
             const user = await User.findById(data.ID_author);
+            console.log(user)
 
             // the cause is articles do not have attribute is imageAuthor then i must be parse them
             let article = {
@@ -36,18 +38,19 @@ exports.getArticle = async (req, res, next) => {
     try {
         const id = req.params.id;
         let data = await Article.findById(id)
-
         data.view = data.view + 1;
         await Article.findByIdAndUpdate(id, data, {
             new: true
         })
 
         const user = await User.findById(data.ID_author);
+        console.log(user)
         let article = {
             ...data
         }._doc;
         article.author_name = user.FullName
         article.imageAuthor = user.Image_Avatar
+        console.log(article)
 
         for (const comment of article.comments) {
             const user = await User.findById(comment.id_user)
@@ -118,15 +121,16 @@ exports.createAllArticle = async (req, res, next) => {
         // const idReader = ["657b1c5297b5b4de8aadced5","657b1c5297b5b4de8aadced8","657b1c5297b5b4de8aadcedb","657b1c5297b5b4de8aadcede","657b1c5397b5b4de8aadcee1","657b1c5397b5b4de8aadcee4","657b1c5397b5b4de8aadcee7","657b1c5397b5b4de8aadceea","657b1c5397b5b4de8aadceed","657b1c5397b5b4de8aadcef0","657b1c5397b5b4de8aadcef3","657b1c5397b5b4de8aadcef6","657b1c5497b5b4de8aadcef9","657b1c5497b5b4de8aadcefc","657b1c5497b5b4de8aadceff","657b1c5497b5b4de8aadcf02","657b1c5497b5b4de8aadcf05","657b1c5497b5b4de8aadcf08","657b1c5497b5b4de8aadcf0b","657b26b3e61c6214415d873c","657b336bccbc4bac79a3296c","657ebbf8f3fd210287e5dc9b","65801da6b54993285f5dc870","658049b3f287217928f7fe99","658163619ead2e155a0e4a43","6581bd78d5ce2994a79f087d","658243e59bc48310cf15593b"];    
 
         for (const article of articles) {
-            // const writer = Math.floor(Math.random() * idwriter.length);
-            // const reader = Math.floor(Math.random() * idReader.length);
-            // const randomWriter = idwriter[writer];
-            // article.ID_author = randomWriter;
-            // const array = article.comments;
-            // for (const comment of array) {
-            //     const randomReader = idwriter[reader];
-            //     comment.id_user = reader[randomReader]
-            // }
+            const writer = Math.floor(Math.random() * idwriter.length);
+            const reader = Math.floor(Math.random() * idReader.length);
+            const randomWriter = idwriter[writer];
+            article.ID_author = randomWriter;
+            const array = article.comments;
+            for (const comment of array) {
+                const randomReader = idReader[reader];
+                console.log(randomReader)
+                comment.id_user = randomReader
+            }
             await Article.create(article);
         }
         res.status(201).json({

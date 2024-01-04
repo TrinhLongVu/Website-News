@@ -9,9 +9,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./cmt-section.css";
+import { useOutletContext } from "react-router-dom";
 
 const CommentSection = ({ articleId }) => {
-  const [userInfo, setUserInfo] = useState(null);
+  const { userInfo } = useOutletContext();
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
   const [sentCmt, setSentCmt] = useState(false);
@@ -22,18 +23,6 @@ const CommentSection = ({ articleId }) => {
         setComments(json.data.comments);
       });
   }, [sentCmt, articleId]);
-
-  useEffect(() => {
-    fetch("http://localhost:8000/api/v1/user/account/success", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.body) {
-          setUserInfo(json.body);
-        }
-      });
-  }, []);
 
   const sendComment = async (event) => {
     const cmtContent = document.querySelector(".cmt-input-field").value;

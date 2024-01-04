@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useOutletContext, useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,32 +22,21 @@ import "./read.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
 const Read = () => {
   const { id } = useParams();
-
+  const { userInfo, userChange, changeUser } = useOutletContext();
   const [readingArticle, setReadingArticle] = useState({});
   const [articleCategory, setArticleCategory] = useState("");
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [isFollowed, setFollow] = useState(false);
-
-  const [userInfo, setUserInfo] = useState(null);
+  const [isSaved, setSaved] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/user/account/success", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.body) {
-          setUserInfo(json.body);
-        } else {
-          setUserInfo(null);
-        }
-      });
     fetch(`http://localhost:8000/api/v1/article/${id}`)
       .then((res) => res.json())
       .then((json) => {
         setArticleCategory(json.data.Category[0]);
         const articleContent = json.data.Detail.split("\n");
         const fetchedArticle = {
+          ID: json.data._id,
           authorName: json.data.author_name,
           authorID: json.data.ID_author,
           authorAvt: json.data.imageAuthor,
@@ -57,9 +46,31 @@ const Read = () => {
           views: json.data.view,
           time: json.data.posted_time,
         };
+        if (userInfo) {
+          if (userInfo.ID_follow_writer) {
+            const foundID = userInfo.ID_follow_writer.find(
+              (id) => id === fetchedArticle.authorID
+            );
+            if (foundID) {
+              setFollow(true);
+            } else {
+              setFollow(false);
+            }
+          }
+          if (userInfo.Saved_news) {
+            const foundID = userInfo.Saved_news.find(
+              (id) => id === fetchedArticle.ID
+            );
+            if (foundID) {
+              setSaved(true);
+            } else {
+              setSaved(false);
+            }
+          }
+        }
         setReadingArticle(fetchedArticle);
       });
-  }, [id]);
+  }, [id, userInfo]);
 
   const routeList = [
     {
@@ -77,8 +88,6 @@ const Read = () => {
   ];
 
   const [isLiked, setLiked] = useState(false);
-
-  const [isSaved, setSaved] = useState(false);
 
   const likeArticle = () => {
     setLiked(!isLiked);
@@ -100,14 +109,35 @@ const Read = () => {
       );
       const data = await response.json();
       if (data.status === "success") {
+        changeUser(!userChange);
         setFollow(!isFollowed);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-  const saveArticle = () => {
-    setSaved(!isSaved);
+  const saveArticle = async () => {
+    const sentBody = {
+      _id: userInfo._id,
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/user/save/${readingArticle.ID}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sentBody),
+        }
+      );
+      const data = await response.json();
+      if (data.status === "success") {
+        setSaved(!isSaved);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
@@ -148,17 +178,19 @@ const Read = () => {
               <div className="read-author-follow">18.6k Followers</div>
             </div>
           </Link>
-          <div className="read-btn-box">
-            <div className="btn-like" onClick={likeArticle}>
-              <FontAwesomeIcon icon={isLiked ? faIsLiked : faLike} />
+          {userInfo && (
+            <div className="read-btn-box">
+              <div className="btn-like" onClick={likeArticle}>
+                <FontAwesomeIcon icon={isLiked ? faIsLiked : faLike} />
+              </div>
+              <div className="btn-subscribe" onClick={followAuthor}>
+                <FontAwesomeIcon icon={isFollowed ? faUserCheck : faUserPlus} />
+              </div>
+              <div className="btn-save" onClick={saveArticle}>
+                <FontAwesomeIcon icon={isSaved ? faIsSaved : faSave} />
+              </div>
             </div>
-            <div className="btn-subscribe" onClick={followAuthor}>
-              <FontAwesomeIcon icon={isFollowed ? faUserCheck : faUserPlus} />
-            </div>
-            <div className="btn-save" onClick={saveArticle}>
-              <FontAwesomeIcon icon={isSaved ? faIsSaved : faSave} />
-            </div>
-          </div>
+          )}
           <div className="related-article-title">
             <FontAwesomeIcon icon={faNewspaper} id="related-title-icon" />
             Related Articles
