@@ -73,9 +73,17 @@ const Header = ({ userInfo, setUserInfo }) => {
       });
   };
 
+  const search = () => {
+    if (searchField === "") {
+      navigate("/search/!@$");
+    } else {
+      navigate(`/search/${searchField}`);
+    }
+  };
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      navigate(`/search/${searchField}`);
+      search();
     }
   };
 
@@ -157,7 +165,7 @@ const Header = ({ userInfo, setUserInfo }) => {
           placeholder="Search Articles"
           onKeyDown={handleKeyPress}
         />
-        <Link to={`/search/${searchField}`} id="search-btn">
+        <Link id="search-btn" onClick={search}>
           <FontAwesomeIcon icon={faMagnifyingGlass} id="search-ico" />
         </Link>
       </div>
