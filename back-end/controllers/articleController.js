@@ -294,10 +294,10 @@ exports.deleteArticle = async (req, res, next) => {
         const _id = req.params.id;
 
         // Find the user by ID and delete it
-        // const deletedArticle = await Article.deleteOne({
-        //     _id
-        // });
-        const deletedArticle = await Article.deleteMany();
+        const deletedArticle = await Article.deleteOne({
+            _id
+        });
+        // const deletedArticle = await Article.deleteMany();
 
         if (!deletedArticle) {
             // If the user with the specified ID is not found, return an error response
