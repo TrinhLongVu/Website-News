@@ -6,11 +6,9 @@ const fs = require('fs');
 exports.getAllArticle = async (req, res, next) => {
     try {
         const datas = await Article.find()
-        // console.log(datas)
 
         const result = await Promise.all(datas.map(async (data) => {
             const user = await User.findById(data.ID_author);
-            console.log(user)
 
             // the cause is articles do not have attribute is imageAuthor then i must be parse them
             let article = {
@@ -44,13 +42,11 @@ exports.getArticle = async (req, res, next) => {
         })
 
         const user = await User.findById(data.ID_author);
-        console.log(user)
         let article = {
             ...data
         }._doc;
         article.author_name = user.FullName
         article.imageAuthor = user.Image_Avatar
-        console.log(article)
 
         for (const comment of article.comments) {
             const user = await User.findById(comment.id_user)
@@ -128,7 +124,6 @@ exports.createAllArticle = async (req, res, next) => {
             const array = article.comments;
             for (const comment of array) {
                 const randomReader = idReader[reader];
-                console.log(randomReader)
                 comment.id_user = randomReader
             }
             await Article.create(article);
@@ -169,7 +164,6 @@ exports.getTops = async (req, res, next) => {
         const name = req.params.name;
         let datas = '';
         const limit = req.query.limit || 12;
-        console.log(limit)
         if (name == 'views') {
             datas = await Article.find({
                 view: {
@@ -419,7 +413,6 @@ exports.addComment = async (req, res, next) => {
 exports.setPriority = async (req, res) => {
     try {
         const idPriorityArticles = req.body.id.split(",");
-        console.log(idPriorityArticles)
         await Article.updateMany(
             {},
             { $set: { isPriority: false } }

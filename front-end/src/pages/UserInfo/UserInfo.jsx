@@ -64,7 +64,9 @@ const UserInfo = () => {
     formData.append("phone", phone);
     formData.append("address", address);
     formData.append("birthday", formatDate(birthday));
-    formData.append("image", changeAvt);
+    if (changeAvt) {
+      formData.append("image", changeAvt);
+    }
     try {
       setUpdating(true);
       const response = await fetch(

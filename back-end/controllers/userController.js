@@ -113,7 +113,6 @@ exports.createAllUser = async (req, res, next) => {
 
                 // If username is taken, log a message and continue to the next iteration
                 if (isTaken) {
-                    console.log(`Username '${UserName}' is already taken. Skipping user creation.`);
                     continue;
                 }
 
@@ -178,22 +177,25 @@ exports.updateUser = async (req, res, next) => {
             address,
             birthday
         } = req.body
-
-        const file = req.files.image;
-        const result = await cloudinary.uploader.upload(file.tempFilePath, {
-            public_id: `${Date.now()}`,
-            resource_type: "auto",
-            folder: "images"
-        })
-
+        
         const user = {
             FullName: fullname,
             Gender: gender,
             PhoneNumber: phone,
             Address: address,
-            Birthday: birthday,
-            Image_Avatar: result.url
+            Birthday: birthday
         }
+
+        if (req.files) {
+            const file = req.files.image;
+            const result = await cloudinary.uploader.upload(file.tempFilePath, {
+                public_id: `${Date.now()}`,
+                resource_type: "auto",
+                folder: "images"
+            })
+            user.Image_Avatar = result.url
+        }
+
 
         const update = await User.findByIdAndUpdate(_id, user, {
             new: true
@@ -613,8 +615,6 @@ exports.Save_Or_Unsave_Article = async (req, res, next) => {
         const _id_user = req.body._id;
         // Find the user by ID 
         const find_user_user = await User.findById(_id_user);
-
-        console.log(_id_article)
 
         if (!find_user_user) {
             // If the user with the specified ID is not found, return an error response
