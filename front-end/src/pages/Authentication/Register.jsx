@@ -3,10 +3,11 @@ import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(false);
   const registerUser = async () => {
     const email = document.querySelector("#register-email").value;
     const password = document.querySelector("#register-password").value;
@@ -14,7 +15,6 @@ const Register = () => {
       "#register-confirm-password"
     ).value;
     if (password === confirmedPassword) {
-      setError(false);
       const sendObj = {
         UserName: email,
         Password: password,
@@ -30,16 +30,55 @@ const Register = () => {
           body: JSON.stringify(sendObj),
         });
 
-        if (response.ok) {
+        const json = await response.json();
+        console.log(json);
+        if (json.status === "success") {
+          toast.success("Successfully created new account", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
           navigate("/authentication/login");
-        } else {
-          console.error("Failed to create post");
+        } else if (json.status === "fail") {
+          toast.error(json.msg, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
         }
       } catch (error) {
-        console.error("Error:", error);
+        toast.error("Something's error. Please try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } else {
-      setError(true);
+      toast.error("Passwords doesn't match", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
   return (
@@ -72,11 +111,6 @@ const Register = () => {
             placeholder="Confirm Password"
           />
         </div>
-        {error && (
-          <div className="auth-error-msg">
-            Password & Confirmed Password do not match
-          </div>
-        )}
         <div className="agreed-term">
           By clicking "Register" you agree to our terms and privacy policy.
         </div>
