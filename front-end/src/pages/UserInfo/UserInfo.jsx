@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import "./user-info.css";
 import Breadcrumbs from "../../Components/Breadcrumbs/Breadcrumbs";
+import Loader from "../../Components/Loader/Loader";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { format } from "date-fns";
 import { toast } from "react-toastify";
@@ -19,6 +20,7 @@ const UserInfo = () => {
   const [address, setAddress] = useState("");
   const [birthday, setBirthday] = useState("");
   const [changeAvt, setChangeAvt] = useState(null);
+  const [updating, setUpdating] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/user/account/success", {
@@ -64,6 +66,7 @@ const UserInfo = () => {
     formData.append("birthday", formatDate(birthday));
     formData.append("image", changeAvt);
     try {
+      setUpdating(true);
       const response = await fetch(
         `http://localhost:8000/api/v1/user/${infoObj._id}`,
         {
@@ -100,6 +103,7 @@ const UserInfo = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+    setUpdating(false);
   };
 
   const handleAvatarChange = (e) => {
@@ -252,32 +256,36 @@ const UserInfo = () => {
             ) : (
               <div></div>
             )}
-            <div className="info-action-btn-container">
-              {isEditMode ? (
-                <>
+            {updating ? (
+              <Loader />
+            ) : (
+              <div className="info-action-btn-container">
+                {isEditMode ? (
+                  <>
+                    <div
+                      className="info-action-btn"
+                      id="info-save-btn"
+                      onClick={saveInfoChanges}
+                    >
+                      Save
+                    </div>
+                    <div
+                      className="info-action-btn"
+                      onClick={setIsEditMode.bind(null, false)}
+                    >
+                      Cancel
+                    </div>
+                  </>
+                ) : (
                   <div
                     className="info-action-btn"
-                    id="info-save-btn"
-                    onClick={saveInfoChanges}
+                    onClick={setIsEditMode.bind(null, true)}
                   >
-                    Save
+                    Change Information
                   </div>
-                  <div
-                    className="info-action-btn"
-                    onClick={setIsEditMode.bind(null, false)}
-                  >
-                    Cancel
-                  </div>
-                </>
-              ) : (
-                <div
-                  className="info-action-btn"
-                  onClick={setIsEditMode.bind(null, true)}
-                >
-                  Change Information
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

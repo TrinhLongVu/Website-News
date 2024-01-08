@@ -21,6 +21,7 @@ const Write = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [userInfo, setUserInfo] = useState(null);
   const [loadIdea, setLoadIdea] = useState(false);
+  const [publishing, setPublishing] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -131,6 +132,7 @@ const Write = () => {
     formData.append("ID_author", userInfo._id);
     formData.append("image", thumbnail);
     try {
+      setPublishing(true);
       const response = await fetch("http://localhost:8000/api/v1/article", {
         method: "POST",
         body: formData,
@@ -175,6 +177,7 @@ const Write = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+    setPublishing(false);
   };
 
   return (
@@ -278,11 +281,17 @@ const Write = () => {
               id="write-new-control-publish"
               onClick={createNewArticle}
             >
-              <FontAwesomeIcon
-                icon={faPaperPlane}
-                className="write-new-control-ico"
-              />
-              Publish
+              {publishing ? (
+                <Loader />
+              ) : (
+                <>
+                  <FontAwesomeIcon
+                    icon={faPaperPlane}
+                    className="write-new-control-ico"
+                  />
+                  Publish
+                </>
+              )}
             </div>
           </div>
         </div>
