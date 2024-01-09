@@ -70,9 +70,6 @@ const Home = () => {
           <h2>
             <FontAwesomeIcon icon={faHeart} /> Most Liked
           </h2>
-          <Link to="/" className="show-all-btn">
-            Show all <FontAwesomeIcon icon={faChevronRight} />
-          </Link>
         </div>
         <div className="home-section-content">
           <div className="article-container">
@@ -87,9 +84,6 @@ const Home = () => {
           <h2>
             <FontAwesomeIcon icon={faMedal} /> Popular
           </h2>
-          <Link to="/" className="show-all-btn">
-            Show all <FontAwesomeIcon icon={faChevronRight} />
-          </Link>
         </div>
         <div className="home-section-content">
           <div className="article-container">
