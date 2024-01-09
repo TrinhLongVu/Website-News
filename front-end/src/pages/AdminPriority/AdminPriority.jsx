@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./admin-priority.css";
 import AdminArticle from "../../Components/Admin/AdminArticle/AdminArticle";
+import Loader from "../../Components/Loader/Loader";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminPriority = () => {
   const [articleList, setArticleList] = useState([]);
   const [topArticles, setTopArticles] = useState([]);
   const [change, setChange] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8000/api/v1/article/")
@@ -49,6 +53,7 @@ const AdminPriority = () => {
       }
     });
     try {
+      setLoading(true);
       const response = await fetch(
         "http://localhost:8000/api/v1/article/set/priority",
         {
@@ -64,10 +69,33 @@ const AdminPriority = () => {
       const data = await response.json();
       if (data.status === "success") {
         setChange(!change);
+        toast.success(
+          `Successfully displayed ${topArticles.length} articles in the "Most Read" section`,
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
         setTopArticles([]);
+        setLoading(false);
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      toast.error("Something's error. Please try again later", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -117,18 +145,24 @@ const AdminPriority = () => {
         </div>
       </div>
       <div className="admin-save-cancel-btn-container">
-        <button
-          className="admin-action-btn admin-save-btn"
-          onClick={handleSaveClick}
-        >
-          Save
-        </button>
-        <button
-          className="admin-action-btn admin-cancel-btn"
-          onClick={handleCancelClick}
-        >
-          Cancel
-        </button>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <button
+              className="admin-action-btn admin-save-btn"
+              onClick={handleSaveClick}
+            >
+              Save
+            </button>
+            <button
+              className="admin-action-btn admin-cancel-btn"
+              onClick={handleCancelClick}
+            >
+              Cancel
+            </button>
+          </>
+        )}
       </div>
     </>
   );

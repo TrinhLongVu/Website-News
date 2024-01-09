@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import "./admin-upgrade-writer.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminUpgradeWriter = () => {
   const [pendingList, setPendingList] = useState([]);
@@ -25,9 +27,28 @@ const AdminUpgradeWriter = () => {
       const data = await response.json();
       if (data.status === "success") {
         hitAction(!actionHit);
+        toast.success(`Successfully upgrade user to writer.`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      toast.error("Something's error. Please try again later.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -42,9 +63,28 @@ const AdminUpgradeWriter = () => {
       const data = await response.json();
       if (data.status === "success") {
         hitAction(!actionHit);
+        toast.success("Successfully denied user to writer.", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      toast.error("Something's error. Please try again later.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
