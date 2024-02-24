@@ -11,7 +11,9 @@ TheMegaPage is a GraphQL Based and React reading platform with essential reading
 2. npm run dev
 # Feature of application
 • Our Website creates a seamless online space where writers and readers can connect and interact around the news using Nodejs, Reactjs and mongodb
+
 • Implemented features including account upgrades, article saving, user profile editing, and subscription management, write article...
+
 • CHAT-GPT’s api application for writing articles for writers in content creation and editing.
 
 
